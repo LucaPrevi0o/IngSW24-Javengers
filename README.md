@@ -1,3 +1,6 @@
+>[!WARNING]
+> Prima di qualsiasi cosa, è necessario scaricare il [README](./README.md), creare un nuovo progetto da IntelliJ, copiarne tutte le dipendenze nella repository ed aggiungere nuovamente il [README](./README.md). In caso contrario non riusciamo ad avviare correttamente il progetto in fase di testing
+
 # Ingegneria del Software - Javengers
 ## Università degli Studi di Ferrara - Anno Accademico 2024-2025
 
