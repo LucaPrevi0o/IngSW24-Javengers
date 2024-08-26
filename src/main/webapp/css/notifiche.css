@@ -1,0 +1,161 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+/* --------- Sidebar --------- */
+.sidebar {
+    z-index: 99;
+    position: fixed;
+    background-color: #EAE0DA;
+    width: 250px;
+    height: 100%;
+    padding: 30px 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    margin: 20px 0;
+}
+
+.sidebar li {
+    border-radius: 5px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: black;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 15px 0;
+    border-radius: 5px;
+}
+
+.sidebar .notif {
+    background: url('../images/notif.png') no-repeat 5% 50%;
+    background-size: 20px;
+}
+
+.sidebar .settings {
+    background: url('../images/settings.png') no-repeat 5% 50%;
+    background-size: 20px;
+}
+
+.sidebar span {
+    margin-left: 50px;
+    font-size: 18px;
+}
+
+.sidebar li:hover {
+    background-color: #FFFAF6;
+}
+
+.sidebar .active {
+    background-color: #FFFAF6;
+}
+
+/* content */
+.content {
+    background-color: #FFFAF6;
+    margin-left: 250px;
+    padding: 25px;
+    height: 100%;
+}
+
+.content #read-button {
+    padding: 6px 12px;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #b3a093;
+    border-radius: 10px;
+    transition: box-shadow 0.2s;
+}
+.content #read-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 3px #5a5a5a;
+}
+
+.giorno {
+    color: #442108;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.ora {
+    font-size: 15px;
+}
+
+.lista-notifiche {
+    list-style-type: none;
+    padding: 10px 0;
+    min-width: 550px;
+}
+
+.notif-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.notif-container > img {
+    margin: 0 10px;
+}
+
+.lista-notifiche .notifica {
+    width: 90%;
+    border-radius: 10px;
+    margin: 8px 0;
+    background-color: #EAE0DA;
+    transition: box-shadow 0.3s;
+}
+
+.lista-notifiche .notifica:hover {
+    box-shadow: 0 0 5px #5a5a5a;
+}
+
+.lista-notifiche .notifica .da-leggere {
+    border: 3px solid #7d3e11;
+    border-radius: 10px;
+}
+
+.lista-notifiche a {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    padding: 10px 10px 5px;
+}
+
+.lista-notifiche .notif-content {
+    width: 100%;
+    font-size: 18px;
+}
+
+.lista-notifiche .notif-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.lista-notifiche img {
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.lista-notifiche span {
+}
