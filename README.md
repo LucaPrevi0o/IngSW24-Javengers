@@ -12,6 +12,9 @@
 * **Giovanni Pio Caterino**: *QA*
 * **Wissal Kharbouchi**: *non ricordo lol*
 
+>[!NOTE]
+> Qui si può aggiungere anche roba come il link di Trello (che ora non ricordo), qualche screenshot del progetto (quando sarà finito) e altre robe utili
+
 <hr>
 
 >[!NOTE]
