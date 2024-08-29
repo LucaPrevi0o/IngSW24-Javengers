@@ -1,16 +1,13 @@
 package it.unife.ingsw2024.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import jakarta.persistence.*;
+import lombok.*;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="NOTIFICATIONS")
@@ -19,12 +16,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Notification {
 
-    @Id private int id; //notification unique id (i still don't know for sure how to implement the fact that it's automatically set like in MySQL)
-    @OneToOne private User userSrc, userDst; //reference to User objects: the User account that generates the notification, the User account that receives the notification
-    private String notificationMsg; //notification content
-    private Timestamp notificationDate; //notification date/time reference
-    private boolean viewed; //reference for viewed notifications
+    @Column(name="id") @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id; //notification unique id (auto-incremented value)
+    @Column(name="UserSRC") @NonNull @JoinTable(name="USER", joinColumns=@JoinColumn(name="id")) @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class) private User userSrc; //reference to User account that generates the notification
+    @Column(name="UserDST") @NonNull @JoinTable(name="USER", joinColumns=@JoinColumn(name="id")) @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class) private User userDst; //reference to User account that receives the notification
+    @Column(name="NotificationMessage") private String notificationMsg; //notification content
+    @Column(name="NotificationDate") @NonNull private Date notificationDate; //notification date reference
+    @Column(name="NotificationTime") @NonNull private Time notificationTime; //notification date reference
+    @Column(name="viewed") private boolean viewed; //reference for viewed notifications
 
     //send a generic notification to a specific user (timestamp is automatically set to the current time)
-    public static Notification send(int id, User userSrc, User userDst, String notificationMsg) { return new Notification(id, userSrc, userDst, notificationMsg, Timestamp.valueOf(LocalDateTime.now()), false); }
+    public static Notification send(User userSrc, User userDst, String notificationMsg) { return new Notification(userSrc, userDst, notificationMsg, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())); }
+
+    public Notification(@NonNull User userSrc, @NonNull User userDst, String notificationMsg, @NonNull Date notificationDate, @NonNull Time notificationTime) {
+
+        this.userSrc=userSrc;
+        this.userDst=userDst;
+        this.notificationMsg=notificationMsg;
+        this.notificationDate=notificationDate;
+        this.notificationTime=notificationTime;
+    }
 }
