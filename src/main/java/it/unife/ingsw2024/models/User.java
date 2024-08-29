@@ -20,6 +20,9 @@ public class User {
     @ManyToMany private List<User> followers, followed; //list of User followers and followed accounts
     @OneToMany private List<Notification> recentNotifications; //list of notifications received
 
+    //if we have to make things look good, we somehow have to make a reference to a profile image to show on the web page
+    //otherwise we don't have a direct user-profile image correspondence and this will hunt me to death because it looks disgusting
+
     // --- --- ---
 
     //for now this has no actual effect on the database (i think)

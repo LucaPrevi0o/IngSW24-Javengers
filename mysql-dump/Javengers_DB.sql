@@ -57,6 +57,7 @@ CREATE TABLE `NOTIFICATIONS` (
   `UserSRC` int NOT NULL,
   `UserDST` int NOT NULL,
   `NotificationMessage` varchar(200) DEFAULT NULL,
+  `NotificationTimeStamp` datetime NOT NULL,
   `Viewed` tinyint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_NOTIFICATIONS_1_idx` (`UserSRC`,`UserDST`),
