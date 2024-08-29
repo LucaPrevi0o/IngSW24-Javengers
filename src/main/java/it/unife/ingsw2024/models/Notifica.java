@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyTable {
+public class Notifica {
     @Id /* Annotation per definire la primary key della tabella  */
     private Long id;
     private String description;

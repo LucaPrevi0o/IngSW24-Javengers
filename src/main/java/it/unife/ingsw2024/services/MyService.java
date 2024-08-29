@@ -1,7 +1,7 @@
 package it.unife.ingsw2024.services;
 
 
-import it.unife.ingsw2024.models.MyTable;
+import it.unife.ingsw2024.models.Notifica;
 import it.unife.ingsw2024.repositories.MyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,21 @@ public class MyService {
     private MyRepository myRepository;
 
     /* Metodo che effettua una select all sulla tabella Mysql */
-    public List<MyTable> getAll() {
+    public List<Notifica> getAll() {
         return myRepository.findAll();
     }
 
 
     /* Metodo che salva un record sulla tabella  */
-    public void insert(MyTable record){
+    public void insert(Notifica record){
         myRepository.save(record);
     }
 
     /* Metodo che inserisce dati e li recupera da un db H2 (in assenza di mysql) */
-    public List<MyTable> addElements() {
-        this.insert(new MyTable(1L, "Test 1"));
-        this.insert(new MyTable(2L, "Test 2"));
-        this.insert(new MyTable(3L, "Test 3"));
+    public List<Notifica> addElements() {
+        this.insert(new Notifica(1L, "Test 1"));
+        this.insert(new Notifica(2L, "Test 2"));
+        this.insert(new Notifica(3L, "Test 3"));
         return this.getAll();
     }
 

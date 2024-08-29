@@ -8,7 +8,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: root
-    url: jdbc:mysql://localhost:3306/test_schema
+    url: jdbc:mysql://localhost:3306/Javengers_DB
     username: root
   jpa:
     hibernate:

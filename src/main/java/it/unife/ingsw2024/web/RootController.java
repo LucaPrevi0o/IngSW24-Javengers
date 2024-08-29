@@ -1,6 +1,6 @@
 package it.unife.ingsw2024.web;
 
-import it.unife.ingsw2024.models.MyTable;
+import it.unife.ingsw2024.models.Notifica;
 import it.unife.ingsw2024.services.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +37,7 @@ public class RootController {
 
 
     @RequestMapping({"/testWithElements"})
-    public List<MyTable> addElements() {
+    public List<Notifica> addElements() {
         return this.myService.addElements();
     }
 }
