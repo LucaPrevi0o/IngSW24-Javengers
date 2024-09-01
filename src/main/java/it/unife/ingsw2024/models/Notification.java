@@ -17,8 +17,8 @@ import java.util.Set;
 public class Notification {
 
     @Column(name="id") @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id; //notification unique id (auto-incremented value)
-    @Column(name="UserSRC") @NonNull @JoinTable(name="USER", joinColumns=@JoinColumn(name="id")) @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class) private User userSrc; //reference to User account that generates the notification
-    @Column(name="UserDST") @NonNull @JoinTable(name="USER", joinColumns=@JoinColumn(name="id")) @ManyToOne(cascade=CascadeType.ALL, targetEntity=User.class) private User userDst; //reference to User account that receives the notification
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "UserSRC", referencedColumnName = "id") private User userSrc; //reference to User account that generates the notification
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "UserDST", referencedColumnName = "id") private User userDst; //reference to User account that receives the notification
     @Column(name="NotificationMessage") private String notificationMsg; //notification content
     @Column(name="NotificationDate") @NonNull private Date notificationDate; //notification date reference
     @Column(name="NotificationTime") @NonNull private Time notificationTime; //notification date reference

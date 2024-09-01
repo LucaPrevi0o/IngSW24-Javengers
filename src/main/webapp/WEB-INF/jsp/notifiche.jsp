@@ -1,7 +1,11 @@
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page import="java.time.LocalDate" %>
+<%@ page import="java.util.List" %>
+<%@ page import="it.unife.ingsw2024.models.Notification" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<% var loggedAccount=(User)request.getAttribute("loggedAccount"); %>
+<% /*var loggedAccount=(User)request.getAttribute("loggedAccount");*/
+    List<Notification> notifications = (List<Notification>) request.getAttribute("notifications");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,7 +34,7 @@
         <section class="content">
             <%@include file="../include/notif-bell.inc"%>
             <button id="read-button">Segna tutto come letto</button>
-            <% var notifications=loggedAccount.getRecentNotifications(); %>
+            <% /*var notifications=loggedAccount.getRecentNotifications();*/ %>
             <ul class="lista-notifiche">
                 <% for (var notification: notifications) { %>
                     <% var today=notifications.stream().filter(todayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()).toList(); %>
