@@ -16,16 +16,16 @@ import java.util.Set;
 @NoArgsConstructor
 public class Notification {
 
-    @Column(name="id") @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id; //notification unique id (auto-incremented value)
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "UserSRC", referencedColumnName = "id") private User userSrc; //reference to User account that generates the notification
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "UserDST", referencedColumnName = "id") private User userDst; //reference to User account that receives the notification
-    @Column(name="NotificationMessage") private String notificationMsg; //notification content
-    @Column(name="NotificationDate") @NonNull private Date notificationDate; //notification date reference
-    @Column(name="NotificationTime") @NonNull private Time notificationTime; //notification date reference
-    @Column(name="viewed") private boolean viewed; //reference for viewed notifications
+    @Id private int id; //notification unique id (auto-incremented value)
+    private int userSrc; //reference to User account that generates the notification
+    private int userDst; //reference to User account that receives the notification
+    private String notificationMsg; //notification content
+    private Date notificationDate; //notification date reference
+    private Time notificationTime; //notification date reference
+    private boolean viewed; //reference for viewed notifications
 
     //send a generic notification to a specific user (timestamp is automatically set to the current time)
-    public static Notification send(User userSrc, User userDst, String notificationMsg) { return new Notification(userSrc, userDst, notificationMsg, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())); }
+    /*public static Notification send(User userSrc, User userDst, String notificationMsg) { return new Notification(userSrc, userDst, notificationMsg, Date.valueOf(LocalDate.now()), Time.valueOf(LocalTime.now())); }
 
     public Notification(@NonNull User userSrc, @NonNull User userDst, String notificationMsg, @NonNull Date notificationDate, @NonNull Time notificationTime) {
 
@@ -35,4 +35,4 @@ public class Notification {
         this.notificationDate=notificationDate;
         this.notificationTime=notificationTime;
     }
-}
+*/}

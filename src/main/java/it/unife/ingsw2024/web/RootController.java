@@ -21,8 +21,9 @@ public class RootController {
 
     @RequestMapping("/notifiche")
     public String notifiche(Model model) {
-        System.out.println("Notifiche: " + this.myService.getAllByUserId(463));
-        model.addAttribute("notifications", this.myService.getAllByUserId(463));
+        System.out.println("Notifiche: " + this.myService.getAll());
+       /* model.addAttribute("notifications", this.myService.getAllByUserId(463));*/
+        model.addAttribute("notifications", this.myService.getAll());
         return "notifiche"; }
 
     @RequestMapping("/2nd")

@@ -14,18 +14,18 @@ import java.util.Optional;
 public class NotificationService {
 
     @Autowired private NotificationRepository notificationRepository;
-    @Autowired private UserRepository userRepository;
+    /*@Autowired private UserRepository userRepository;*/
 
     /* Metodo che effettua una select all sulla tabella Mysql */
     public List<Notification> getAll() {
         return notificationRepository.findAll();
     }
 
-    public List<Notification> getAllByUserId(int userId) {
+    /*public List<Notification> getAllByUserId(int userId) {
         User user = userRepository.findById(userId).orElse(null);
         return notificationRepository.findAllByUserDst(user);
 
-    }
+    }*/
 
     /* Metodo che salva un record sulla tabella  */
     public void insert(Notification record){
