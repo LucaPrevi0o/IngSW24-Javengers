@@ -7,12 +7,16 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: mysql0214
+    password: databasepassword
     url: jdbc:mysql://localhost:3306/Javengers_DB
     username: root
   jpa:
     hibernate:
       ddl-auto:
-        update
+        validate
+
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
       dialect:
         org.hibernate.dialect.MySQL8Dialect

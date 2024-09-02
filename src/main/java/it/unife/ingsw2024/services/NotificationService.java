@@ -1,15 +1,14 @@
 package it.unife.ingsw2024.services;
 
 import it.unife.ingsw2024.models.Notification;
-import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.repositories.NotificationRepository;
-import it.unife.ingsw2024.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
 /* Service class per interrogare il db  */
+
 @Service
 public class NotificationService {
 
@@ -19,6 +18,11 @@ public class NotificationService {
     /* Metodo che effettua una select all sulla tabella Mysql */
     public List<Notification> getAll() {
         return notificationRepository.findAll();
+    }
+
+    //METODO che prende una notifica da id se esiste
+    public Notification getById(int id){
+        return notificationRepository.findById(id).orElse(null);
     }
 
     /*public List<Notification> getAllByUserId(int userId) {

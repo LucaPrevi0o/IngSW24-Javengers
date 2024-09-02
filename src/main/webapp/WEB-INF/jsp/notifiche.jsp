@@ -44,7 +44,7 @@
                     <li class="notif-container">
                         <% for (var n: today) { %>
                             <div class="notifica">
-                                <% if (!n.isViewed()) { %><a class="da-leggere" href="">
+                                <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick">
                                 <% } else { %><a href=""><% } %>
                                     <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                     <div class="notif-content">

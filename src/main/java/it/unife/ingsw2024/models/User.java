@@ -13,7 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
 
-    @Column(name="id") @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id; //user unique id (auto-incremented value)
-    @Column(name="Username") private String username; //username
+    @Id
+    @Column(name = "id")
+    private int id; //user unique id (auto-incremented value)
+
+    @Column(name = "Username")
+    private String username; //username
 
 }

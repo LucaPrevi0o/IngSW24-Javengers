@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class RootController {
@@ -20,11 +21,26 @@ public class RootController {
     public String helloWorld() { return "hello"; }
 
     @RequestMapping("/notifiche")
-    public String notifiche(Model model) {
-        System.out.println("Notifiche: " + this.myService.getAll());
-       /* model.addAttribute("notifications", this.myService.getAllByUserId(463));*/
-        model.addAttribute("notifications", this.myService.getAll());
-        return "notifiche"; }
+    public void notifiche(Model model) {
+        List<Notification> notifications = this.myService.getAll();
+        System.out.println("Notifiche: " + notifications);
+        model.addAttribute("notifications", notifications);
+        //return "notifiche";
+    }
+
+    @RequestMapping("/notifclick")
+    public void  viewandredirect(int id)
+    {
+        //redirect yet to do, just simulating viewed notification behaviour as for now
+        Notification notifToUpdate = this.myService.getById(id);
+        System.out.println("viewed before:" + notifToUpdate.isViewed()+"\n");
+        System.out.println("notifToUpdate befediting: "+notifToUpdate+ "\n");
+        notifToUpdate.setViewed(true);
+        System.out.println("viewed after:" + notifToUpdate.isViewed()+"\n");
+        System.out.println("notifToUpdate afediting: "+notifToUpdate+ "\n");
+
+
+    }
 
     @RequestMapping("/2nd")
     public String secondSubPage() { return "test/list"; }
@@ -35,6 +51,7 @@ public class RootController {
         model.addAttribute("test", this.myService.getAll());
         return "testMysql";
     }
+
 
     @RequestMapping({"/testWithElements"})
     public List<Notification> addElements() { return this.myService.addElements(); }
