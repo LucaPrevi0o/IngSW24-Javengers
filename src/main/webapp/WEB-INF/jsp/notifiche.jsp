@@ -2,9 +2,11 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unife.ingsw2024.models.Notification" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% /*var loggedAccount=(User)request.getAttribute("loggedAccount");*/
     List<Notification> notifications = (List<Notification>) request.getAttribute("notifications");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -36,15 +38,29 @@
             <button id="read-button">Segna tutto come letto</button>
             <% /*var notifications=loggedAccount.getRecentNotifications();*/ %>
             <ul class="lista-notifiche">
-                <% for (var notification: notifications) { %>
-                    <% var today=notifications.stream().filter(todayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()).toList(); %>
-                    <% var yesterday=notifications.stream().filter(yesterdayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()-1).toList(); %>
-                    <% var lastWeek=notifications.stream().filter(lastWeekNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()<LocalDate.now().getDayOfYear()-1 && notification.getNotificationDate().toLocalDate().getDayOfYear()>=LocalDate.now().getDayOfYear()-7).toList(); %>
+                <%
+                    List<Notification> today = new ArrayList<Notification>();
+                    List<Notification> yesterday = new ArrayList<Notification>();
+                    List<Notification> lastWeek = new ArrayList<Notification>();
+                    for (var notification: notifications) { %>
+                    <%  today=notifications.stream().filter(todayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()).toList(); %>
+                    <%  yesterday=notifications.stream().filter(yesterdayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()-1).toList(); %>
+                    <%  lastWeek=notifications.stream().filter(lastWeekNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()<LocalDate.now().getDayOfYear()-1 && notification.getNotificationDate().toLocalDate().getDayOfYear()>=LocalDate.now().getDayOfYear()-7).toList();%>
+                <%
+                    System.out.println("TODAYCHECK:\nnotDATE: "+notification.getNotificationDate().toLocalDate().getDayOfYear());
+                    System.out.println("calDATE: "+LocalDate.now().getDayOfYear()+"\n");
+
+                    System.out.println("YESTERDAYCHECK:\nnotDATE: "+notification.getNotificationDate().toLocalDate().getDayOfYear());
+                    System.out.println("calDATE: "+(LocalDate.now().getDayOfYear()-1)+"\n");
+
+                    System.out.println("LASTWEEKCHECK:\nnotDATE: "+notification.getNotificationDate().toLocalDate().getDayOfYear());
+                    System.out.println("calDATE: "+LocalDate.now().getDayOfYear()+"\n");
+                } %>
                     <li class="giorno"><p>Oggi</p></li>
                     <li class="notif-container">
-                        <% for (var n: today) { %>
+                        <% System.out.println("today" + today + "\n"); for (var n: today) { %>
                             <div class="notifica">
-                                <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick">
+                                <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%=n.getId()%>">
                                 <% } else { %><a href=""><% } %>
                                     <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                     <div class="notif-content">
@@ -60,7 +76,7 @@
                     <li class="notif-container">
                         <% for (var n: yesterday) { %>
                             <div class="notifica">
-                                <% if (!n.isViewed()) { %><a class="da-leggere" href="">
+                                <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%=n.getId()%>">
                                 <% } else { %><a href=""><% } %>
                                     <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                     <div class="notif-content">
@@ -76,7 +92,7 @@
                     <li class="notif-container">
                         <% for (var n: lastWeek) { %>
                         <div class="notifica">
-                            <% if (!n.isViewed()) { %><a class="da-leggere" href="">
+                            <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%=n.getId()%>">
                             <% } else { %><a href=""><% } %>
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
@@ -88,7 +104,7 @@
                         <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                         <% } %>
                     </li>
-                <% } %>
+
             </ul>
         </section>
     </body>

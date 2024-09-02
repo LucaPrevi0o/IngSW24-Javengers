@@ -21,7 +21,7 @@ public class Notification {
     private int id; //notification unique id (auto-incremented value)
 
     @Column(name = "UserSRC")
-    private int UserSrc; //reference to User account that generates the notification
+    private int userSrc; //reference to User account that generates the notification
 
     @Column(name = "UserDST")
     private int UserDst; //reference to User account that receives the notification

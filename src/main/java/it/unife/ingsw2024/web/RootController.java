@@ -1,11 +1,13 @@
 package it.unife.ingsw2024.web;
 
 import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.repositories.NotificationRepository;
 import it.unife.ingsw2024.services.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
@@ -17,28 +19,50 @@ public class RootController {
     @Autowired
     NotificationService myService;
 
+//    @Autowired
+//    NotificationRepository myRepo;
+
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
 
+    @RequestMapping("/getbyuserdstidtest")
+    public String getbyname(Model model, @RequestParam int id) {
+        List<Notification> notifications = this.myService.getALlByUserDSTId(id);
+        System.out.println("Notifiche: " + notifications);
+        model.addAttribute("notifications", notifications);
+        return "notifiche";
+    }
+
     @RequestMapping("/notifiche")
-    public void notifiche(Model model) {
+    public String notifiche(Model model) {
         List<Notification> notifications = this.myService.getAll();
         System.out.println("Notifiche: " + notifications);
         model.addAttribute("notifications", notifications);
-        //return "notifiche";
+        return "notifiche";
     }
 
     @RequestMapping("/notifclick")
-    public void  viewandredirect(int id)
+    public String viewandredirect(@RequestParam int id, Model model)
     {
+        int nottype = 0;
+
         //redirect yet to do, just simulating viewed notification behaviour as for now
         Notification notifToUpdate = this.myService.getById(id);
-        System.out.println("viewed before:" + notifToUpdate.isViewed()+"\n");
-        System.out.println("notifToUpdate befediting: "+notifToUpdate+ "\n");
+//        System.out.println("ID:" + id + "\n");
+//        System.out.println("viewed before:" + notifToUpdate.isViewed()+"\n");
+//        System.out.println("notifToUpdate befediting: "+notifToUpdate+ "\n");
         notifToUpdate.setViewed(true);
-        System.out.println("viewed after:" + notifToUpdate.isViewed()+"\n");
-        System.out.println("notifToUpdate afediting: "+notifToUpdate+ "\n");
-
+//        System.out.println("viewed after:" + notifToUpdate.isViewed()+"\n");
+//        System.out.println("notifToUpdate afediting: "+notifToUpdate+ "\n");
+        this.myService.insert(notifToUpdate);
+        if(nottype==0)
+        {
+            return notifiche(model);
+        }
+        else
+        {
+            return "notifiche";
+        }
 
     }
 

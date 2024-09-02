@@ -5,7 +5,6 @@ import it.unife.ingsw2024.repositories.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 /* Service class per interrogare il db  */
 
@@ -25,11 +24,10 @@ public class NotificationService {
         return notificationRepository.findById(id).orElse(null);
     }
 
-    /*public List<Notification> getAllByUserId(int userId) {
-        User user = userRepository.findById(userId).orElse(null);
-        return notificationRepository.findAllByUserDst(user);
+    public List<Notification> getALlByUserDSTId(int id) {
+        return notificationRepository.findAllByUserDst(id);
 
-    }*/
+    }
 
     /* Metodo che salva un record sulla tabella  */
     public void insert(Notification record){
