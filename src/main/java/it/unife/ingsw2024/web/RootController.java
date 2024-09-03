@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 import java.util.List;
@@ -31,20 +33,20 @@ import java.util.List;
     public String notifiche(Model model) {
 
         List<Notification> notifications=this.notificationService.getAll();
-        System.out.println("Notifiche: "+notifications);
         model.addAttribute("notifications", notifications);
         return "notifiche";
     }
 
     @RequestMapping("/notifclick")
-    public String viewandredirect(Model model, @RequestParam int id)  {
+    public ModelAndView viewandredirect(Model model, @RequestParam int id)  {
 
-        int nottype=0;
         Notification toUpdate=this.notificationService.getById(id);
         toUpdate.setViewed(true);
         this.notificationService.insert(toUpdate);
-        if (nottype==0) return notifiche(model);
-        return "notifiche";
+
+        RedirectView redirectView = new RedirectView("/notifiche");
+        return new ModelAndView(redirectView);
+
     }
 
     @RequestMapping("/2nd")
