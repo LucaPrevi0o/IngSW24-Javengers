@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-/* Classe che definisce il repository (database)  */
+//notification DAO (list of allowed database operations, each one associated to a specific query)
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 
     @Query(value="SELECT n FROM Notification n WHERE n.UserDst = ?1")

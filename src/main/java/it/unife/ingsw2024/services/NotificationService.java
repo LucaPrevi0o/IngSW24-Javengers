@@ -6,26 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-/* Service class per interrogare il db  */
-
-@Service
-public class NotificationService {
+//notification service
+@Service public class NotificationService {
 
     @Autowired private NotificationRepository notificationRepository;
 
-    /* Metodo che effettua una select all sulla tabella Mysql */
+    //return every notification registered in database
     public List<Notification> getAll() { return notificationRepository.findAll(); }
 
-    //METODO che prende una notifica da id se esiste
-    public Notification getById(int id){ return notificationRepository.findById(id).orElse(null); }
+    //return a notification filtering data by id
+    public Notification getById(int id) { return notificationRepository.findById(id).orElse(null); }
 
+    //return every notification received by a specific user dst account
     public List<Notification> getALlByUserDSTId(int id) { return notificationRepository.findAllByUserDst(id); }
 
-    /* Metodo che salva un record sulla tabella  */
-    public void insert(Notification record){
-        notificationRepository.save(record);
-    }
+    //insert a new notification
+    public void insert(Notification record) { notificationRepository.save(record); }
 
-    /* Metodo che inserisce dati e li recupera da un db H2 (in assenza di mysql) */
+    //stuff
     public List<Notification> addElements() { return this.getAll(); }
 }

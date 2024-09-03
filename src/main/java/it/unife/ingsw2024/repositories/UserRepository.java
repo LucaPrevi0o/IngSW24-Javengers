@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-/* Classe che definisce il repository (database)  */
+//user DAO (list of allowed database operations, each one associated to a specific query)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.id = ?1 ")

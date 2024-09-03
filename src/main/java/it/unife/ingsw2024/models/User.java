@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
 
 @Entity
 @Table(name="USER")
@@ -13,11 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
 
-    @Id
-    @Column(name = "id")
+    @Id @Column(name="id")
     private int id; //user unique id (auto-incremented value)
 
-    @Column(name = "Username")
+    @Column(name="Username")
     private String username; //username
-
 }
