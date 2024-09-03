@@ -15,11 +15,14 @@ public class Notification {
     @Id @Column(name="id")
     private int id; //notification unique id (auto-incremented value)
 
-    @Column(name="UserSRC")
-    private int userSrc; //reference to User account id that generates the notification
 
-    @Column(name="UserDST")
-    private int UserDst; //reference to User account id that receives the notification
+    @ManyToOne
+    @JoinColumn(name="UserSRC", referencedColumnName = "id")
+    private User UserSrc; //reference to User account id that generates the notification
+
+    @ManyToOne
+    @JoinColumn(name="UserDST", referencedColumnName = "id")
+    private User UserDst; //reference to User account id that receives the notification
 
     @Column(name="NotificationMessage")
     private String NotificationMsg; //notification content
