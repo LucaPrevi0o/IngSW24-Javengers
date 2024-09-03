@@ -12,22 +12,14 @@ import java.util.List;
 public class NotificationService {
 
     @Autowired private NotificationRepository notificationRepository;
-    /*@Autowired private UserRepository userRepository;*/
 
     /* Metodo che effettua una select all sulla tabella Mysql */
-    public List<Notification> getAll() {
-        return notificationRepository.findAll();
-    }
+    public List<Notification> getAll() { return notificationRepository.findAll(); }
 
     //METODO che prende una notifica da id se esiste
-    public Notification getById(int id){
-        return notificationRepository.findById(id).orElse(null);
-    }
+    public Notification getById(int id){ return notificationRepository.findById(id).orElse(null); }
 
-    public List<Notification> getALlByUserDSTId(int id) {
-        return notificationRepository.findAllByUserDst(id);
-
-    }
+    public List<Notification> getALlByUserDSTId(int id) { return notificationRepository.findAllByUserDst(id); }
 
     /* Metodo che salva un record sulla tabella  */
     public void insert(Notification record){
@@ -35,8 +27,5 @@ public class NotificationService {
     }
 
     /* Metodo che inserisce dati e li recupera da un db H2 (in assenza di mysql) */
-    public List<Notification> addElements() {
-
-        return this.getAll();
-    }
+    public List<Notification> addElements() { return this.getAll(); }
 }

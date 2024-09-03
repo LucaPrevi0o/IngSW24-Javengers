@@ -16,18 +16,15 @@ import java.util.Optional;
 @Controller
 public class RootController {
 
-    @Autowired
-    NotificationService myService;
-
-//    @Autowired
-//    NotificationRepository myRepo;
+    @Autowired NotificationService myService;
 
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
 
     @RequestMapping("/getbyuserdstidtest")
     public String getbyname(Model model, @RequestParam int id) {
-        List<Notification> notifications = this.myService.getALlByUserDSTId(id);
+
+        List<Notification> notifications=this.myService.getALlByUserDSTId(id);
         System.out.println("Notifiche: " + notifications);
         model.addAttribute("notifications", notifications);
         return "notifiche";
@@ -35,6 +32,7 @@ public class RootController {
 
     @RequestMapping("/notifiche")
     public String notifiche(Model model) {
+
         List<Notification> notifications = this.myService.getAll();
         System.out.println("Notifiche: " + notifications);
         model.addAttribute("notifications", notifications);
@@ -42,28 +40,14 @@ public class RootController {
     }
 
     @RequestMapping("/notifclick")
-    public String viewandredirect(@RequestParam int id, Model model)
-    {
-        int nottype = 0;
+    public String viewandredirect(@RequestParam int id, Model model)  {
 
-        //redirect yet to do, just simulating viewed notification behaviour as for now
+        int nottype=0;
         Notification notifToUpdate = this.myService.getById(id);
-//        System.out.println("ID:" + id + "\n");
-//        System.out.println("viewed before:" + notifToUpdate.isViewed()+"\n");
-//        System.out.println("notifToUpdate befediting: "+notifToUpdate+ "\n");
         notifToUpdate.setViewed(true);
-//        System.out.println("viewed after:" + notifToUpdate.isViewed()+"\n");
-//        System.out.println("notifToUpdate afediting: "+notifToUpdate+ "\n");
         this.myService.insert(notifToUpdate);
-        if(nottype==0)
-        {
-            return notifiche(model);
-        }
-        else
-        {
-            return "notifiche";
-        }
-
+        if(nottype==0) return notifiche(model);
+        else return "notifiche";
     }
 
     @RequestMapping("/2nd")
@@ -75,7 +59,6 @@ public class RootController {
         model.addAttribute("test", this.myService.getAll());
         return "testMysql";
     }
-
 
     @RequestMapping({"/testWithElements"})
     public List<Notification> addElements() { return this.myService.addElements(); }

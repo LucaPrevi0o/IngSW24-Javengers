@@ -19,9 +19,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUserById(int id) {
-        return userRepository.findById(id);
-    }
+    public Optional<User> getUserById(int id) { return userRepository.findById(id); }
 
     /* Metodo che salva un record sulla tabella  */
     public void insert(User record){
@@ -29,8 +27,5 @@ public class UserService {
     }
 
     /* Metodo che inserisce dati e li recupera da un db H2 (in assenza di mysql) */
-    public List<User> addElements() {
-
-        return this.getAll();
-    }
+    public List<User> addElements() { return this.getAll(); }
 }

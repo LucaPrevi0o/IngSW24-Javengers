@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="NOTIFICATIONS")
+@Table(name="notifications")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
