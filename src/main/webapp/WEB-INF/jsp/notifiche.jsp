@@ -39,7 +39,7 @@
                     today=notifications.stream().filter(todayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()).toList();
                     yesterday=notifications.stream().filter(yesterdayNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()==LocalDate.now().getDayOfYear()-1).toList();
                     lastWeek=notifications.stream().filter(lastWeekNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()<LocalDate.now().getDayOfYear()-1 && notification.getNotificationDate().toLocalDate().getDayOfYear()>=LocalDate.now().getDayOfYear()-7).toList();
-                    lastMonth=notifications.stream().filter(lastWeekNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()<LocalDate.now().getDayOfYear()-7 && notification.getNotificationDate().toLocalDate().getMonthValue()==LocalDate.now().getMonthValue()).toList();
+                    lastMonth=notifications.stream().filter(lastMonthNotification -> notification.getNotificationDate().toLocalDate().getDayOfYear()<LocalDate.now().getDayOfYear()-7 && notification.getNotificationDate().toLocalDate().getDayOfYear()>=LocalDate.now().getDayOfYear()-30).toList();
                 } %>
                 <li class="giorno"><p>Oggi</p></li>
                 <li class="notif-container">
@@ -50,7 +50,7 @@
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
                                     <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
-                                    <span class="ora"><%= n.getNotificationTime().toLocalTime() %></span>
+                                    <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
                             </a>
                         </div>
@@ -66,7 +66,7 @@
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
                                     <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
-                                    <span class="ora"><%= n.getNotificationTime().toLocalTime() %></span>
+                                    <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
                             </a>
                         </div>
@@ -82,7 +82,7 @@
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
                                     <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
-                                    <span class="ora"><%= n.getNotificationTime().toLocalTime() %></span>
+                                    <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
                             </a>
                         </div>
@@ -98,7 +98,7 @@
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
                                     <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
-                                    <span class="ora"><%= n.getNotificationTime().toLocalTime() %></span>
+                                    <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
                             </a>
                         </div>
