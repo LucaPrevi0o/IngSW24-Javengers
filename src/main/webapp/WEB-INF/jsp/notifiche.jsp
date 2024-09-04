@@ -1,24 +1,15 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.util.List" %>
 <%@ page import="it.unife.ingsw2024.models.Notification" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Objects" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="org.hibernate.type.descriptor.DateTimeUtils" %>
-<%@ page import="org.springframework.cglib.core.Local" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% var notifications=(List<Notification>)request.getAttribute("notifications");
-    List<Notification> today=new ArrayList<>(), yesterday=new ArrayList<>(), lastWeek=new ArrayList<>(), lastMonth=new ArrayList<>(), older=new ArrayList<>();
-    LocalDate todaysDate = LocalDate.now();
-    for (var notification: notifications) {
-        today=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate)).toList();
-        System.out.println("TODAYCHECK: " + notification.getNotificationDate().toLocalDate() + " " + LocalDate.now());
-        yesterday=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate.minusDays(1))).toList();
-        lastWeek=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(7)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(1))).toList();
-        lastMonth=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(30)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(7))).toList();
-        older=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(30))).toList();
-    }
+    List<Notification> today, yesterday, lastWeek, lastMonth, older;
+    LocalDate todaysDate=LocalDate.now();
+    today=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate)).toList();
+    yesterday=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate.minusDays(1))).toList();
+    lastWeek=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(7)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(1))).toList();
+    lastMonth=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(30)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(7))).toList();
+    older=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(30))).toList();
 %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +37,7 @@
             </ul>
         </nav>
         <section class="content">
-            <%@include file="../include/notif-bell.inc"%>
+            <%@include file="../include/notif-bell.jsp"%>
             <button id="read-button">Segna tutto come letto</button>
             <ul class="lista-notifiche">
                 <% if(!today.isEmpty()) {%><li class="giorno"><p>Oggi</p></li><%}%>
