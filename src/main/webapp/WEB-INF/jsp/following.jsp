@@ -21,20 +21,28 @@
                     <span>@<%= selectedUser.getUsername() %></span>
                 </section>
             <section class="following-container">
-                <div class="followers">
-                    <h2>Followers</h2>
-                    <span><%= followerList.size() %></span>
+                <section class="followers">
+                    <div class="followers-header">
+                        <h2>Followers</h2>
+                        <span><%= followerList.size() %></span>
+                    </div>
+                    <div class="followers-list">
                     <% for (var f: followerList) { %>
-                        <a href="/following?id=<%= f.getId() %>"><p>@<b><%= f.getUsername() %></b>:</p></a>
+                        <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
                     <% } %>
-                </div>
-                <div class="followed">
-                    <h2>Following</h2>
-                    <span><%= followedList.size() %></span>
+                    </div>
+                </section>
+                <section class="followed">
+                    <div class="followers-header">
+                        <h2>Following</h2>
+                        <span><%= followedList.size() %></span>
+                    </div>
+                    <div class="followers-list">
                     <% for (var f: followedList) { %>
-                    <a href="/following?id=<%= f.getId() %>"><p>@<b><%= f.getUsername() %></b>:</p></a>
+                    <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
                     <% } %>
-                </div>
+                    </div>
+                </section>
             </section>
             <button class="segui-button">Segui</button>
             </div>
