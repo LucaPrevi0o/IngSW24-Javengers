@@ -16,7 +16,7 @@ import java.util.Optional;
     public List<User> getAll() { return userRepository.findAll(); }
 
     //return a user account filtering data by user id
-    public Optional<User> getUserById(int id) { return userRepository.findById(id); }
+    public User getUserById(int id) { return userRepository.findById(id).orElse(null); }
 
     //register a new user account
     public void insert(User record) { userRepository.save(record); }

@@ -1,7 +1,9 @@
 package it.unife.ingsw2024.web;
 
 import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.services.NotificationService;
+import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import java.util.List;
 @Controller public class RootController {
 
     @Autowired NotificationService notificationService;
+    @Autowired UserService userService;
 
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
@@ -50,9 +53,21 @@ import java.util.List;
     }
 
     @RequestMapping("/following")
-    public String following(Model model) {
+    public String following(Model model, @RequestParam Integer id) {
+        /* Per la notification bell */
         List<Notification> notifications=this.notificationService.getAll();
         model.addAttribute("notifications", notifications);
+
+        /* Per il display dell'username */
+        User selectedUser = this.userService.getUserById(id);
+        model.addAttribute("selectedUser", selectedUser);
+
+        /* Per il display del numero di followers/following */
+        Integer followersNumber = 0;
+        Integer followingNumber = 0;
+        model.addAttribute("followersNumber", followersNumber);
+        model.addAttribute("followingNumber", followingNumber);
+
         return "following";
     }
 

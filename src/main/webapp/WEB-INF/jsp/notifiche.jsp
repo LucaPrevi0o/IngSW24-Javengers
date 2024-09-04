@@ -36,42 +36,46 @@
             <ul class="lista-notifiche">
                 <% if(!today.isEmpty()) {%><li class="giorno"><p>Oggi</p></li><%}%>
                 <% for (var n: today) { %>
-                    <li class="notif-container">
-                        <div class="notifica">
-                            <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%= n.getId() %>">
-                            <% } else { %><a href=""><% } %>
-                                <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
-                                <div class="notif-content">
-                                    <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
-                                    <hr style="margin-bottom: 5px; margin-top: 2px">
-                                    <div class="notif-details">
-                                        <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
-                                        <p><%= n.getNotificationMsg() %></p>
-                                    </div>
-                                    <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
+                <li class="notif-container">
+                    <div class="notifica">
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                        <% } else { %><div class="notif-wrapper"><% } %>
+                        <a href="/following?id=<%=n.getUserSrc().getId()%>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                        <div class="notif-content">
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
+                            <a href="/notifclick?id=<%= n.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>
+                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                        <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                    </li>
+                    </div>
+                    </div>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                </li>
                 <% } %>
                 <% if(!yesterday.isEmpty()) {%><li class="giorno"><p>Ieri</p></li><%}%>
                 <% for (var n: yesterday) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%= n.getId() %>">
-                            <% } else { %><a href=""><% } %>
-                        <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
+                        <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                            <% } else { %><div class="notif-wrapper"><% } %>
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                         <div class="notif-content">
-                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details">
-                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
-                                <p><%= n.getNotificationMsg() %></p>
-                            </div>
+                            <a href="/notifclick?id=<%= n.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p><%= n.getNotificationMsg() %></p>
+                                </div>
+                            </a>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                    </a>
+                    </div>
                     </div>
                     <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
@@ -80,63 +84,69 @@
                 <% for (var n: lastWeek) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%= n.getId() %>">
-                            <% } else { %><a href=""><% } %>
-                        <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                        <% } else { %><div class="notif-wrapper"><% } %>
+                        <a href="/following?id=<%=n.getUserSrc().getId()%>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                         <div class="notif-content">
-                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details">
-                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
-                                <p><%= n.getNotificationMsg() %></p>
-                            </div>
+                            <a href="/notifclick?id=<%= n.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p><%= n.getNotificationMsg() %></p>
+                                </div>
+                            </a>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                    </a>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                    </div>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
                 <% if(!lastMonth.isEmpty()) {%><li class="giorno"><p>Ultimo mese</p></li><%}%>
                 <% for (var n: lastMonth) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%= n.getId() %>">
-                            <% } else { %><a href=""><% } %>
-                        <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                        <% } else { %><div class="notif-wrapper"><% } %>
+                        <a href="/following?id=<%=n.getUserSrc().getId()%>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                         <div class="notif-content">
-                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details">
-                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
-                                <p><%= n.getNotificationMsg() %></p>
-                            </div>
+                            <a href="/notifclick?id=<%= n.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p><%= n.getNotificationMsg() %></p>
+                                </div>
+                            </a>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                    </a>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                    </div>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
                 <% if(!older.isEmpty()) {%><li class="giorno"><p>Meno recenti</p></li><%}%>
                 <% for (var n: older) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><a class="da-leggere" href="/notifclick?id=<%= n.getId() %>">
-                            <% } else { %><a href=""><% } %>
-                        <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                        <% } else { %><div class="notif-wrapper"><% } %>
+                        <a href="/following?id=<%=n.getUserSrc().getId()%>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                         <div class="notif-content">
-                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <a href="/following?id=<%=n.getUserSrc().getId()%>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details">
-                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
-                                <p><%= n.getNotificationMsg() %></p>
-                            </div>
+                            <a href="/notifclick?id=<%= n.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p><%= n.getNotificationMsg() %></p>
+                                </div>
+                            </a>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                    </a>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                    </div>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
             </ul>

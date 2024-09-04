@@ -37,7 +37,8 @@ html, body {
 }
 
 .utente-container span {
-    font-size: 21px;
+    font-size: 23px;
+    font-weight: bold;
 }
 
 .following-container {
