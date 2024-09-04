@@ -9,58 +9,6 @@ html, body {
     height: 100%;
 }
 
-/* --------- Sidebar --------- */
-.sidebar {
-    z-index: 99;
-    position: fixed;
-    background-color: #EAE0DA;
-    width: 250px;
-    height: 100%;
-    padding: 30px 20px;
-}
-
-.sidebar ul {
-    list-style-type: none;
-    margin: 20px 0;
-}
-
-.sidebar li {
-    border-radius: 5px;
-}
-
-.sidebar a {
-    text-decoration: none;
-    color: black;
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-    padding: 15px 0;
-    border-radius: 5px;
-}
-
-.sidebar .notif {
-    background: url('../images/notif.png') no-repeat 5% 50%;
-    background-size: 20px;
-}
-
-.sidebar .settings {
-    background: url('../images/settings.png') no-repeat 5% 50%;
-    background-size: 20px;
-}
-
-.sidebar span {
-    margin-left: 50px;
-    font-size: 18px;
-}
-
-.sidebar li:hover {
-    background-color: #FFFAF6;
-}
-
-.sidebar .active {
-    background-color: #FFFAF6;
-}
-
 /* content */
 .content {
     background-color: #FFFAF6;

@@ -49,6 +49,13 @@ import java.util.List;
         return new ModelAndView(redirectView);
     }
 
+    @RequestMapping("/following")
+    public String following(Model model) {
+        List<Notification> notifications=this.notificationService.getAll();
+        model.addAttribute("notifications", notifications);
+        return "following";
+    }
+
     @RequestMapping("/2nd")
     public String secondSubPage() { return "test/list"; }
 

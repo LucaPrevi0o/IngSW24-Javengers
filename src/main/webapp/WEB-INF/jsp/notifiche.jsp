@@ -29,13 +29,7 @@
         </script>
     </head>
     <body>
-        <nav class="sidebar">
-            <h1>Notifiche</h1>
-            <ul>
-                <li class="notif"><a href=""><span>Notifiche</span></a></li>
-                <li class="settings"><a href=""><span>Impostazioni</span></a></li>
-            </ul>
-        </nav>
+        <%@include file="../include/sidebar.jsp"%>
         <section class="content">
             <%@include file="../include/notif-bell.jsp"%>
             <button id="read-button">Segna tutto come letto</button>

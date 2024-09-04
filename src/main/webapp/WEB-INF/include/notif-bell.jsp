@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+<%@ page import="it.unife.ingsw2024.models.Notification" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% var nonRead=((List<Notification>)request.getAttribute("notifications")).stream().filter(n -> !n.isViewed()).toList(); %>
 
