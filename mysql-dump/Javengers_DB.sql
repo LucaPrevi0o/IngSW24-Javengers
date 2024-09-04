@@ -1,10 +1,11 @@
+DROP DATABASE IF EXISTS `Javengers_DB`;
 CREATE DATABASE  IF NOT EXISTS `Javengers_DB` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `Javengers_DB`;
--- MySQL dump 10.13  Distrib 8.0.39, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
 --
 -- Host: localhost    Database: Javengers_DB
 -- ------------------------------------------------------
--- Server version	8.0.39
+-- Server version	8.0.39-0ubuntu0.24.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,14 +26,14 @@ DROP TABLE IF EXISTS `FOLLOWERS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `FOLLOWERS` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `Followed` int NOT NULL,
-  `Follower` int NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_FOLLOWERS_1_idx` (`Followed`),
-  KEY `fk_FOLLOWERS_2_idx` (`Follower`),
-  CONSTRAINT `fk_FOLLOWERS_1` FOREIGN KEY (`Followed`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_FOLLOWERS_2` FOREIGN KEY (`Follower`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+                             `id` int NOT NULL AUTO_INCREMENT,
+                             `Followed` int NOT NULL,
+                             `Follower` int NOT NULL,
+                             PRIMARY KEY (`id`),
+                             KEY `fk_FOLLOWERS_1_idx` (`Followed`),
+                             KEY `fk_FOLLOWERS_2_idx` (`Follower`),
+                             CONSTRAINT `fk_FOLLOWERS_1` FOREIGN KEY (`Followed`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                             CONSTRAINT `fk_FOLLOWERS_2` FOREIGN KEY (`Follower`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -53,18 +54,19 @@ DROP TABLE IF EXISTS `NOTIFICATIONS`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `NOTIFICATIONS` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `UserSRC` int NOT NULL,
-  `UserDST` int NOT NULL,
-  `NotificationMessage` varchar(200) DEFAULT NULL,
-  `NotificationDate` date NOT NULL,
-  `NotificationTime` time NOT NULL,
-  `Viewed` tinyint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_NOTIFICATIONS_1_idx` (`UserSRC`,`UserDST`),
-  KEY `fk_NOTIFICATIONS_2_idx` (`UserDST`),
-  CONSTRAINT `fk_NOTIFICATIONS_1` FOREIGN KEY (`UserSRC`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  CONSTRAINT `fk_NOTIFICATIONS_2` FOREIGN KEY (`UserDST`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+                                 `id` int NOT NULL AUTO_INCREMENT,
+                                 `UserSRC` int NOT NULL,
+                                 `UserDST` int NOT NULL,
+                                 `NotificationMessage` varchar(200) DEFAULT NULL,
+                                 `NotificationDate` date NOT NULL,
+                                 `NotificationTime` time NOT NULL,
+                                 `NotificationType` int NOT NULL,
+                                 `Viewed` tinyint NOT NULL,
+                                 PRIMARY KEY (`id`),
+                                 KEY `fk_NOTIFICATIONS_1_idx` (`UserSRC`,`UserDST`),
+                                 KEY `fk_NOTIFICATIONS_2_idx` (`UserDST`),
+                                 CONSTRAINT `fk_NOTIFICATIONS_1` FOREIGN KEY (`UserSRC`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+                                 CONSTRAINT `fk_NOTIFICATIONS_2` FOREIGN KEY (`UserDST`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,7 +76,7 @@ CREATE TABLE `NOTIFICATIONS` (
 
 LOCK TABLES `NOTIFICATIONS` WRITE;
 /*!40000 ALTER TABLE `NOTIFICATIONS` DISABLE KEYS */;
-INSERT INTO `NOTIFICATIONS` VALUES (1,1,2,'aaa','2024-07-10','15:34:00',1),(2,1,2,'aaaa','2024-08-27','21:05:00',0),(3,1,2,'aaaaa','2024-09-02','13:56:00',0),(4,2,3,'aaaaaa','2024-08-30','05:43:00',1),(5,3,2,'aaaaaaa','2024-09-03','12:40:00',0),(6,3,2,'aaaaaaaa','2024-08-10','13:08:00',0);
+INSERT INTO `NOTIFICATIONS` VALUES (1,1,2,'10 luglio (molto vecchia)','2024-07-10','15:34:00',0,1),(2,1,3,'27 agosto (meno vecchia)','2024-08-27','21:05:00',1,0),(3,1,2,'2 settembre (l\'altro ieri)','2024-09-02','13:56:00',0,0),(4,2,3,'30 agosto (abbastanza indietro)','2024-08-30','05:43:00',0,1),(5,3,2,'3 settembre (la più recente)','2024-09-03','12:40:00',2,0),(6,3,2,'10 agosto (un po\' datata)','2024-08-10','13:08:00',1,0);
 /*!40000 ALTER TABLE `NOTIFICATIONS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,11 +88,11 @@ DROP TABLE IF EXISTS `USER`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `USER` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `Username` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `Username_UNIQUE` (`Username`)
+                        `id` int NOT NULL AUTO_INCREMENT,
+                        `Username` varchar(45) NOT NULL,
+                        PRIMARY KEY (`id`),
+                        UNIQUE KEY `id_UNIQUE` (`id`),
+                        UNIQUE KEY `Username_UNIQUE` (`Username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,7 +102,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'a'),(2,'b'),(3,'c');
+INSERT INTO `USER` VALUES (1,'luigi_neri'),(2,'marcobianchi00'),(3,'xx_antonio_xx');
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -113,4 +115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-03 10:31:42
+-- Dump completed on 2024-09-04 11:39:43

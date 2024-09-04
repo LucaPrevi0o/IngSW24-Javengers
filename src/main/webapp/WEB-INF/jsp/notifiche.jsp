@@ -50,7 +50,10 @@
                                 <div class="notif-content">
                                     <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
                                     <hr style="margin-bottom: 5px; margin-top: 2px">
-                                    <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
+                                    <div class="notif-details">
+                                        <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                        <p><%= n.getNotificationMsg() %></p>
+                                    </div>
                                     <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
                             </a>
@@ -68,7 +71,10 @@
                         <div class="notif-content">
                             <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
+                            <div class="notif-details">
+                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                <p><%= n.getNotificationMsg() %></p>
+                            </div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
                     </a>
@@ -86,7 +92,10 @@
                         <div class="notif-content">
                             <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
+                            <div class="notif-details">
+                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                <p><%= n.getNotificationMsg() %></p>
+                            </div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
                     </a>
@@ -104,7 +113,10 @@
                         <div class="notif-content">
                             <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
+                            <div class="notif-details">
+                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                <p><%= n.getNotificationMsg() %></p>
+                            </div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
                     </a>
@@ -122,7 +134,10 @@
                         <div class="notif-content">
                             <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
+                            <div class="notif-details">
+                                <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                <p><%= n.getNotificationMsg() %></p>
+                            </div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
                     </a>

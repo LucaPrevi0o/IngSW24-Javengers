@@ -15,7 +15,6 @@ public class Notification {
     @Id @Column(name="id")
     private int id; //notification unique id (auto-incremented value)
 
-
     @ManyToOne
     @JoinColumn(name="UserSRC", referencedColumnName = "id")
     private User UserSrc; //reference to User account id that generates the notification
@@ -33,6 +32,19 @@ public class Notification {
     @Column(name="NotificationTime")
     private Time notificationTime; //notification date reference
 
+    @Column(name="NotificationType")
+    private int notificationType; //notification type (message, follower, event subscription...)
+
     @Column(name="Viewed", columnDefinition="TINYINT(1)")
     private boolean Viewed; //reference for viewed notifications
+
+    public String getNotificationLiteralType() {
+
+        return switch (notificationType) {
+            case 0 -> "Messaggi";
+            case 1 -> "Follower";
+            case 2 -> "Eventi";
+            default -> "NULL";
+        };
+    }
 }

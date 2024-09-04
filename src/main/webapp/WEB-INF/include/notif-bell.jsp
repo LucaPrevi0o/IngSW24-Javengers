@@ -27,7 +27,10 @@
                 <a href="">
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <div class="notif-details">
-                            <p>@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <p>
+                                <b style="color: cornflowerblue">(<%= n.getNotificationLiteralType().charAt(0) %>)</b>
+                                @<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:
+                            </p>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <p><%= n.getNotificationMsg() %></p>
                         </div>
