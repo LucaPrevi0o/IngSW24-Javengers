@@ -45,7 +45,7 @@ html, body {
     border: solid 1px black;
     display: flex;
     flex-direction: row;
-    background-color: white;
+    background-color: #ece3d7;
     padding: 20px;
     border-radius: 10px;
 }
@@ -65,12 +65,20 @@ html, body {
     margin-bottom: 10px;
 }
 
+.following-container .list-container {
+    background-color: white;
+    border: black 1px solid;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
 .following-container .followers-list {
-    padding: 0 20px;
+    padding: 5px 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 125px;
+    min-width: 200px;
+    height: 125px;
     overflow-y: auto;
 }
 

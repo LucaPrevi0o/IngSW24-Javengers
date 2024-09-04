@@ -26,10 +26,12 @@
                         <h2>Followers</h2>
                         <span><%= followerList.size() %></span>
                     </div>
-                    <div class="followers-list">
-                    <% for (var f: followerList) { %>
-                        <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
-                    <% } %>
+                    <div class="list-container">
+                        <div class="followers-list">
+                        <% for (var f: followerList) { %>
+                            <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
+                        <% } %>
+                        </div>
                     </div>
                 </section>
                 <section class="followed">
@@ -37,10 +39,12 @@
                         <h2>Following</h2>
                         <span><%= followedList.size() %></span>
                     </div>
-                    <div class="followers-list">
-                    <% for (var f: followedList) { %>
-                    <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
-                    <% } %>
+                    <div class="list-container" style="">
+                        <div class="followers-list">
+                        <% for (var f: followedList) { %>
+                        <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
+                        <% } %>
+                        </div>
                     </div>
                 </section>
             </section>
