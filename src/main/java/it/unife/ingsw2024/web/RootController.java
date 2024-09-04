@@ -1,7 +1,6 @@
 package it.unife.ingsw2024.web;
 
 import it.unife.ingsw2024.models.Notification;
-import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,18 +54,18 @@ import java.util.List;
     @RequestMapping("/following")
     public String following(Model model, @RequestParam Integer id) {
         /* Per la notification bell */
-        List<Notification> notifications=this.notificationService.getAll();
+        var notifications=this.notificationService.getAll();
         model.addAttribute("notifications", notifications);
 
         /* Per il display dell'username */
-        User selectedUser = this.userService.getUserById(id);
+        var selectedUser = this.userService.getUserById(id);
         model.addAttribute("selectedUser", selectedUser);
 
         /* Per il display del numero di followers/following */
-        Integer followersNumber = 0;
-        Integer followingNumber = 0;
-        model.addAttribute("followersNumber", followersNumber);
-        model.addAttribute("followingNumber", followingNumber);
+        var followerList = this.userService.getFollowerList(id);
+        var followedList = this.userService.getFollowedList(id);
+        model.addAttribute("followerList", followerList);
+        model.addAttribute("followedList", followedList);
 
         return "following";
     }

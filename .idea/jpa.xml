@@ -4,4 +4,13 @@
     <option name="reLastEntityCreationPackage" value="src/main/java/it/unife/ingsw2024" />
     <option name="reverseEngineeringLastDbConnectionId" value="39544473-aa04-41c6-9310-b7c80ad89eb8__Javengers_DB" />
   </component>
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit name="Default">
+        <packages>
+          <package value="it.unife.ingsw2024" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
 </project>
