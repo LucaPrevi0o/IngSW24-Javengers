@@ -20,11 +20,12 @@ import java.util.List;
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
 
-    @RequestMapping("/getbyuserdstidtest")
-    public String getbyname(Model model, @RequestParam int id) {
+    @RequestMapping("/getByUserId")
+    public String getByUserId(Model model, @RequestParam int id) {
 
         List<Notification> notifications=this.notificationService.getALlByUserDSTId(id);
-        System.out.println("Notifiche: "+notifications);
+        System.out.println("Notifiche: ");
+        for (var n: notifications) System.out.println(n);
         model.addAttribute("notifications", notifications);
         return "notifiche";
     }
@@ -38,7 +39,7 @@ import java.util.List;
     }
 
     @RequestMapping("/notifclick")
-    public ModelAndView viewandredirect(Model model, @RequestParam int id)  {
+    public ModelAndView viewandredirect(@RequestParam int id)  {
 
         Notification toUpdate=this.notificationService.getById(id);
         toUpdate.setViewed(true);
@@ -46,7 +47,6 @@ import java.util.List;
 
         RedirectView redirectView = new RedirectView("/notifiche");
         return new ModelAndView(redirectView);
-
     }
 
     @RequestMapping("/2nd")

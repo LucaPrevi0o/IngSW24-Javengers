@@ -27,6 +27,8 @@
                 <a href="">
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <div class="notif-details">
+                            <p>@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
                             <p><%= n.getNotificationMsg() %></p>
                         </div>
                         <img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="20" width="20" style="margin-left: 10px;"/>

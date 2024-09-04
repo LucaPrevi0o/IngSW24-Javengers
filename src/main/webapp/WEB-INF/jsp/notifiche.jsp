@@ -2,14 +2,14 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unife.ingsw2024.models.Notification" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<% var notifications=(List<Notification>)request.getAttribute("notifications");
-    List<Notification> today, yesterday, lastWeek, lastMonth, older;
+<%
+    var notifications=(List<Notification>)request.getAttribute("notifications");
     LocalDate todaysDate=LocalDate.now();
-    today=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate)).toList();
-    yesterday=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate.minusDays(1))).toList();
-    lastWeek=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(7)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(1))).toList();
-    lastMonth=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(30)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(7))).toList();
-    older=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(30))).toList();
+    var today=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate)).toList();
+    var yesterday=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isEqual(todaysDate.minusDays(1))).toList();
+    var lastWeek=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(7)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(1))).toList();
+    var lastMonth=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isAfter(todaysDate.minusDays(30)) && n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(7))).toList();
+    var older=notifications.stream().filter(n -> n.getNotificationDate().toLocalDate().isBefore(todaysDate.minusDays(30))).toList();
 %>
 <!DOCTYPE html>
 <html>
@@ -48,6 +48,8 @@
                             <% } else { %><a href=""><% } %>
                                 <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                                 <div class="notif-content">
+                                    <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                                    <hr style="margin-bottom: 5px; margin-top: 2px">
                                     <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
                                     <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                                 </div>
@@ -64,6 +66,8 @@
                             <% } else { %><a href=""><% } %>
                         <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                         <div class="notif-content">
+                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
                             <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
@@ -80,6 +84,8 @@
                             <% } else { %><a href=""><% } %>
                         <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                         <div class="notif-content">
+                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
                             <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
@@ -96,6 +102,8 @@
                             <% } else { %><a href=""><% } %>
                         <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                         <div class="notif-content">
+                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
                             <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
@@ -112,6 +120,8 @@
                             <% } else { %><a href=""><% } %>
                         <img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/>
                         <div class="notif-content">
+                            <p>@<b><%= n.getUserSrc().getUsername() %></b>:</p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
                             <div class="notif-details"><p><%= n.getNotificationMsg() %></p></div>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
