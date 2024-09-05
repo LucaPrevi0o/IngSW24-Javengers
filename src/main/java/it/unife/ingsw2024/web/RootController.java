@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller public class RootController {
@@ -25,45 +26,63 @@ import java.util.List;
     @RequestMapping("/getByUserId")
     public String getByUserId(Model model, @RequestParam int id) {
 
-        List<Notification> notifications=this.notificationService.getALlByUserDSTId(id);
-        System.out.println("Notifiche: ");
-        for (var n: notifications) System.out.println(n);
+        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+        var user=this.userService.getUserById(id);
         model.addAttribute("notifications", notifications);
+        model.addAttribute("user", user);
         return "notifiche";
+    }
+
+    @RequestMapping("/setAllAsRead")
+    public ModelAndView setAllAsRead(@RequestParam int id) {
+
+        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+        for (var n: notifications) n.setViewed(true);
+        this.notificationService.insertAll(notifications);
+
+        RedirectView redirectView = new RedirectView("/getByUserId?id="+id);
+        return new ModelAndView(redirectView);
     }
 
     @RequestMapping("/notifiche")
-    public String notifiche(Model model) {
+    public String notifiche(Model model, @RequestParam int id) {
 
         List<Notification> notifications=this.notificationService.getAll();
+        var user=this.userService.getUserById(id);
         model.addAttribute("notifications", notifications);
+        model.addAttribute("user", user);
         return "notifiche";
     }
 
+
+
     @RequestMapping("/notifclick")
-    public ModelAndView viewandredirect(@RequestParam int id)  {
+    public ModelAndView viewandredirect(@RequestParam int id, @RequestParam int userId)  {
 
         Notification toUpdate=this.notificationService.getById(id);
         toUpdate.setViewed(true);
         this.notificationService.insert(toUpdate);
 
-        RedirectView redirectView = new RedirectView("/notifiche");
+        RedirectView redirectView = new RedirectView("/getByUserId?id="+userId);
         return new ModelAndView(redirectView);
     }
 
     @RequestMapping("/following")
-    public String following(Model model, @RequestParam Integer id) {
+    public String following(Model model, @RequestParam int id, @RequestParam int loggedId) {
+
         /* Per la notification bell */
-        var notifications=this.notificationService.getAll();
+        var notifications=this.notificationService.getAllByUserDstId(loggedId);
         model.addAttribute("notifications", notifications);
 
         /* Per il display dell'username */
-        var selectedUser = this.userService.getUserById(id);
-        model.addAttribute("selectedUser", selectedUser);
+        var selectedUser=this.userService.getUserById(id);
+        var user = this.userService.getUserById(loggedId);
 
         /* Per il display del numero di followers/following */
         var followerList = this.userService.getFollowerList(id);
         var followedList = this.userService.getFollowedList(id);
+        model.addAttribute("selectedUser", selectedUser);
+        model.addAttribute("user", user);
         model.addAttribute("followerList", followerList);
         model.addAttribute("followedList", followedList);
 

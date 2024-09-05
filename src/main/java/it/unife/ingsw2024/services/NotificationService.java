@@ -18,10 +18,12 @@ import java.util.List;
     public Notification getById(int id) { return notificationRepository.findById(id).orElse(null); }
 
     //return every notification received by a specific user dst account
-    public List<Notification> getALlByUserDSTId(int id) { return notificationRepository.findAllByUserDst(id); }
+    public List<Notification> getAllByUserDstId(int id) { return notificationRepository.findAllByUserDst(id); }
 
     //insert a new notification
     public void insert(Notification record) { notificationRepository.save(record); }
+
+    public void insertAll(List<Notification> recordSet) { notificationRepository.saveAll(recordSet); }
 
     //stuff
     public List<Notification> addElements() { return this.getAll(); }

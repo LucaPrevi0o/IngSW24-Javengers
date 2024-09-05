@@ -1,6 +1,7 @@
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
+    var user=(User) request.getAttribute("user");
     var selectedUser =(User) request.getAttribute("selectedUser");
     var followerList =(List<User>) request.getAttribute("followerList");
     var followedList =(List<User>) request.getAttribute("followedList");
@@ -8,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Following</title>
+        <title>Profilo di @<%= selectedUser.getUsername()%> - @<%= user.getUsername() %></title>
         <link rel="stylesheet" href="../../css/following.css" type="text/css" media="screen">
     </head>
     <body>
@@ -29,7 +30,7 @@
                     <div class="list-container">
                         <div class="followers-list">
                         <% for (var f: followerList) { %>
-                            <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
+                            <a href="/following?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<%= f.getUsername() %></p></a>
                         <% } %>
                         </div>
                     </div>
@@ -42,7 +43,7 @@
                     <div class="list-container" style="">
                         <div class="followers-list">
                         <% for (var f: followedList) { %>
-                        <a href="/following?id=<%= f.getId() %>"><p>@<%= f.getUsername() %></p></a>
+                        <a href="/following?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<%= f.getUsername() %></p></a>
                         <% } %>
                         </div>
                     </div>
