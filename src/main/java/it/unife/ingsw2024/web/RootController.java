@@ -10,9 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller public class RootController {
@@ -40,7 +37,15 @@ import java.util.List;
         for (var n: notifications) n.setViewed(true);
         this.notificationService.insertAll(notifications);
 
-        RedirectView redirectView = new RedirectView("/getByUserId?id="+id);
+        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        return new ModelAndView(redirectView);
+    }
+
+    @RequestMapping("/follow")
+    public ModelAndView followProfile(@RequestParam int id, @RequestParam int followedId) {
+
+        this.userService.follow(id, followedId);
+        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
         return new ModelAndView(redirectView);
     }
 
@@ -54,8 +59,6 @@ import java.util.List;
         return "notifiche";
     }
 
-
-
     @RequestMapping("/notifclick")
     public ModelAndView viewandredirect(@RequestParam int id, @RequestParam int userId)  {
 
@@ -63,7 +66,7 @@ import java.util.List;
         toUpdate.setViewed(true);
         this.notificationService.insert(toUpdate);
 
-        RedirectView redirectView = new RedirectView("/getByUserId?id="+userId);
+        RedirectView redirectView=new RedirectView("/getByUserId?id="+userId);
         return new ModelAndView(redirectView);
     }
 
@@ -76,11 +79,11 @@ import java.util.List;
 
         /* Per il display dell'username */
         var selectedUser=this.userService.getUserById(id);
-        var user = this.userService.getUserById(loggedId);
+        var user=this.userService.getUserById(loggedId);
 
         /* Per il display del numero di followers/following */
-        var followerList = this.userService.getFollowerList(id);
-        var followedList = this.userService.getFollowedList(id);
+        var followerList=this.userService.getFollowerList(id);
+        var followedList=this.userService.getFollowedList(id);
         model.addAttribute("selectedUser", selectedUser);
         model.addAttribute("user", user);
         model.addAttribute("followerList", followerList);
