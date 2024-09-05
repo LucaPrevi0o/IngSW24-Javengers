@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("select u from User u where u.id in (select fm.followedId from FollowerMapping fm where fm.followerId = ?1)")
     List<User> findFollowedById(int id);
+
+    @Query(value="insert into FOLLOWERS values (?1, ?2)", nativeQuery=true)
+    void follow(int followerId, int followedId);
 }

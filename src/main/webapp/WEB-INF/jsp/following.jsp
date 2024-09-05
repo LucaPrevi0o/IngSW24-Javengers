@@ -2,9 +2,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
     var user=(User)request.getAttribute("user");
-    var selectedUser=(User) request.getAttribute("selectedUser");
-    var followerList=(List<User>) request.getAttribute("followerList");
-    var followedList=(List<User>) request.getAttribute("followedList");
+    var selectedUser=(User)request.getAttribute("selectedUser");
+    var followerList=(List<User>)request.getAttribute("followerList");
+    var followedList=(List<User>)request.getAttribute("followedList");
  %>
 <!DOCTYPE html>
 <html>
@@ -49,7 +49,7 @@
                         </div>
                     </section>
                 </section>
-                <% if (user.getId()!=selectedUser.getId()) { %><button class="segui-button">Segui</button><% } %>
+                <% if (user.getId()!=selectedUser.getId()) { %><a href="<%= request.getContextPath() %>/follow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Segui</button></a><% } %>
             </div>
         </section>
     </body>

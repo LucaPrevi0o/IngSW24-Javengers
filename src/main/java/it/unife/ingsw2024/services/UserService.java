@@ -23,4 +23,6 @@ import java.util.List;
     public List<User> getFollowerList(int id) { return userRepository.findFollowersById(id); }
 
     public List<User> getFollowedList(int id) { return userRepository.findFollowedById(id); }
+
+    public void follow(int followerId, int followedId) { this.userRepository.follow(followerId, followedId); }
 }
