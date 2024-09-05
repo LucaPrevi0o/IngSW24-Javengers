@@ -4,6 +4,8 @@ import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 //user service
@@ -24,5 +26,6 @@ import java.util.List;
 
     public List<User> getFollowedList(int id) { return userRepository.findFollowedById(id); }
 
+    @Transactional
     public void follow(int followerId, int followedId) { this.userRepository.follow(followerId, followedId); }
 }

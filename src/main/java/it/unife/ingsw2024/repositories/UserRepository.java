@@ -2,6 +2,7 @@ package it.unife.ingsw2024.repositories;
 
 import it.unife.ingsw2024.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.id in (select fm.followedId from FollowerMapping fm where fm.followerId = ?1)")
     List<User> findFollowedById(int id);
 
-    @Query(value="insert into FOLLOWERS values (?1, ?2)", nativeQuery=true)
-    void follow(int followerId, int followedId);
+    @Modifying
+    @Query(value="insert into FOLLOWERS (followed, follower) values (?1, ?2)", nativeQuery=true)
+    int follow(int followerId, int followedId);
 }
