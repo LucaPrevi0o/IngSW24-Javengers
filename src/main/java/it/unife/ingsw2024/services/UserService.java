@@ -28,4 +28,7 @@ import java.util.List;
 
     @Transactional
     public void follow(int followerId, int followedId) { this.userRepository.follow(followerId, followedId); }
+
+    @Transactional
+    public void unfollow(int followerId, int followedId) { this.userRepository.unfollow(followerId, followedId); }
 }

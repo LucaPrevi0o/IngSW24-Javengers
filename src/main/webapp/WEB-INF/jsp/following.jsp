@@ -49,7 +49,12 @@
                         </div>
                     </section>
                 </section>
-                <% if (user.getId()!=selectedUser.getId()) { %><a href="<%= request.getContextPath() %>/follow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Segui</button></a><% } %>
+                <% if (user.getId()!=selectedUser.getId()) { %>
+                <%-- Se l'id dell'utente loggato è presente nella lista di followers dell'utente allora viene visualizzato il pulsante "Smetti di seguire", altrimenti il pulsante segui --%>
+                <% if (followedList.stream().filter(item -> item.getId() == loggedUser.getId()).findAny().orElse(null) != null) {%><a href="<%= request.getContextPath() %>/unfollow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Smetti di seguire</button></a>
+                <%} else {%>
+                <a href="<%= request.getContextPath() %>/follow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Segui</button></a>
+                <% }} %>
             </div>
         </section>
     </body>

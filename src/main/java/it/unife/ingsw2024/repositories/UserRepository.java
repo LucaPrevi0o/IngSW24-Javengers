@@ -21,5 +21,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Modifying
     @Query(value="insert into FOLLOWERS (followed, follower) values (?1, ?2)", nativeQuery=true)
-    int follow(int followerId, int followedId);
+    void follow(int followerId, int followedId);
+
+    @Modifying
+    @Query(value="delete from FOLLOWERS where followed = ?1 and follower = ?2", nativeQuery=true)
+    void unfollow(int followerId, int followedId);
 }

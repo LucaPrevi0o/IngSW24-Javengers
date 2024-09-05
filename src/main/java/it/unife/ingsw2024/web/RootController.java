@@ -49,6 +49,14 @@ import java.util.List;
         return new ModelAndView(redirectView);
     }
 
+    @RequestMapping("/unfollow")
+    public ModelAndView unfollowProfile(@RequestParam int id, @RequestParam int followedId) {
+
+        this.userService.unfollow(id, followedId);
+        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        return new ModelAndView(redirectView);
+    }
+
     @RequestMapping("/notifiche")
     public String notifiche(Model model, @RequestParam int id) {
 
