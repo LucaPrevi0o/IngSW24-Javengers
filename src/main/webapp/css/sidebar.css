@@ -13,11 +13,11 @@
     margin: 20px 0;
 }
 
-.sidebar li {
+.sidebar .sidebar-li {
     border-radius: 5px;
 }
 
-.sidebar a {
+.sidebar .sidebar-link {
     text-decoration: none;
     color: black;
     display: inline-block;
@@ -25,6 +25,23 @@
     height: 100%;
     padding: 15px 0;
     border-radius: 5px;
+}
+
+.sidebar .username {
+    margin-bottom: 10px;
+}
+
+.sidebar .username-link {
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar .username-link b {
+    color: brown;
+}
+
+.sidebar .username-link b:hover {
+    color: #bf5555;
 }
 
 .sidebar .notif {
@@ -42,7 +59,7 @@
     font-size: 18px;
 }
 
-.sidebar li:hover {
+.sidebar .sidebar-li:hover {
     background-color: #FFFAF6;
 }
 

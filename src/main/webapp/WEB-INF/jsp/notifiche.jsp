@@ -29,11 +29,11 @@
                 <% for (var n: today) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
-                        <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
                         <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
@@ -43,9 +43,9 @@
                             </a>
                             <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                         </div>
-                        </div>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                    </div>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
                 <% if (!yesterday.isEmpty()) { %><li class="giorno"><p>Ieri</p></li><% } %>
@@ -54,9 +54,9 @@
                     <div class="notifica">
                         <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                             <% } else { %><div class="notif-wrapper"><% } %>
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                            <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
                         <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
@@ -77,9 +77,9 @@
                     <div class="notifica">
                             <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
-                        <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
                         <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
                 <% if(!lastMonth.isEmpty()) {%><li class="giorno"><p>Ultimo mese</p></li><%}%>
@@ -100,9 +100,9 @@
                     <div class="notifica">
                             <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
-                        <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
                         <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
@@ -114,18 +114,18 @@
                         </div>
                     </div>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
                 <% if(!older.isEmpty()) {%><li class="giorno"><p>Meno recenti</p></li><%}%>
                 <% for (var n: older) { %>
                 <li class="notif-container">
                     <div class="notifica">
-                        <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
+                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
-                        <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
                         <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p>@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
+                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b><%= n.getUserSrc().getUsername() %></b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
+                            <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
                 </li>
                 <% } %>
             </ul>

@@ -59,6 +59,10 @@ html, body {
     margin: 0 10px;
 }
 
+.notif-wrapper img:hover {
+    opacity: 0.6;
+}
+
 .lista-notifiche .notifica {
     width: 90%;
     border-radius: 10px;
@@ -77,6 +81,10 @@ html, body {
     padding: 10px 10px 5px;
 }
 
+.lista-notifiche .notif-wrapper > a {
+    display: inline-block;
+}
+
 .lista-notifiche .notifica .da-leggere {
     border: 3px solid #7d3e11;
     border-radius: 10px;
@@ -92,6 +100,14 @@ html, body {
     font-size: 18px;
 }
 
+.lista-notifiche .notif-content .username:hover {
+    color: #7c6662;
+}
+
+.lista-notifiche .notif-content p {
+    display: inline-block;
+}
+
 .lista-notifiche .notif-details {
     display: flex;
     flex-direction: column;
@@ -101,10 +117,11 @@ html, body {
     padding: 10px;
 }
 
+.lista-notifiche .notif-details:hover {
+    background-color: #f4f0ed;
+}
+
 .lista-notifiche img {
     border-radius: 50px;
     margin-right: 10px;
-}
-
-.lista-notifiche span {
 }

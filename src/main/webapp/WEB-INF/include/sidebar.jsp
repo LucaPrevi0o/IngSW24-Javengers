@@ -4,8 +4,8 @@
 <nav class="sidebar">
     <h1>Notifiche</h1>
     <ul>
-        <li>@<b style="color: brown"><%= loggedUser.getUsername() %></b></li>
-        <li class="notif"><a href="/getByUserId?id=<%= loggedUser.getId() %>"><span>Notifiche</span></a></li>
-        <li class="settings"><a href=""><span>Impostazioni</span></a></li>
+        <li class="username"><a class="username-link" href="/following?id=<%=loggedUser.getId()%>&loggedId=<%=loggedUser.getId()%>">@<b><%= loggedUser.getUsername() %></b></a></li>
+        <li class="sidebar-li notif"><a class="sidebar-link" href="/getByUserId?id=<%= loggedUser.getId() %>"><span>Notifiche</span></a></li>
+        <li class="sidebar-li settings"><a class="sidebar-link" href=""><span>Impostazioni</span></a></li>
     </ul>
 </nav>
