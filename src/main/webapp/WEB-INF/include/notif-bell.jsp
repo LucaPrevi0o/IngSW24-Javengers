@@ -36,7 +36,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <p><%= n.getNotificationMsg() %></p>
                         </div>
-                        <img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="20" width="20" style="margin-left: 10px;"/>
+                        <!--img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="20" width="20" style="margin-left: 10px;"/-->
                     </div>
                 <span class="data-ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
                 </a>
