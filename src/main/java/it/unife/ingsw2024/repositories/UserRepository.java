@@ -20,10 +20,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findFollowedById(int id);
 
     @Modifying
-    @Query(value="insert into FOLLOWERS (followed, follower) values (?1, ?2)", nativeQuery=true)
+    @Query(value="insert into FOLLOWERS (follower, followed) values (?1, ?2)", nativeQuery=true)
     void follow(int followerId, int followedId);
 
     @Modifying
-    @Query(value="delete from FOLLOWERS where followed = ?1 and follower = ?2", nativeQuery=true)
+    @Query(value="delete from FOLLOWERS where follower = ?1 and followed = ?2", nativeQuery=true)
     void unfollow(int followerId, int followedId);
 }

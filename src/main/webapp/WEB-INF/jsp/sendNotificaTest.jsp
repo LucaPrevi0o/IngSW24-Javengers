@@ -10,7 +10,6 @@
         <script type="text/javascript">
             var stompClient = null;
 
-            var msg=document.querySelector("#message").value;
             var socket = new SockJS('/ws');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
@@ -19,6 +18,8 @@
 
             function sendMessage() {
                 var title = "Nuova notifica";
+                var msg=document.querySelector("#message").value;
+
                 stompClient.send('/app/application', {}, JSON.stringify({
 
                     srcUser: "@<%= user.getUsername() %>", //username of user that sends notification
