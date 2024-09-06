@@ -17,12 +17,14 @@
             var parsedBody=JSON.parse(result.body);
             var parsedParsedBody=atob(parsedBody.payload);
             var parsedParsedParsedBody=JSON.parse(parsedParsedBody);
-            console.log("printing \"result\" content: [title="+parsedParsedParsedBody.title+", text="+parsedParsedParsedBody.text+"]");
 
             newNotif.innerHTML = `
                 <div class="push-notif-content">
                     <p>`+parsedParsedParsedBody.title+`</p>
-                    <div class="push-notif-details"><p>`+parsedParsedParsedBody.text+`</p></div>
+                    <div class="push-notif-details">
+                        <p>`+parsedParsedParsedBody.srcUser+`</p>
+                        <p>`+parsedParsedParsedBody.text+`</p>
+                    </div>
                 </div>
                 <div onclick="closeNotification(`+ id +`)" class="close-push-notif">
                     <img src="../../images/cross.png" alt="Close" height="20" width="20"/>

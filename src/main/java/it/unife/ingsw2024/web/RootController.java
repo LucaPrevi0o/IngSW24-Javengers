@@ -30,7 +30,12 @@ import java.util.List;
     }
 
     @RequestMapping("/sendNotifica")
-    public String sendNotificaTest() { return "sendNotificaTest"; }
+    public String sendNotificaTest(Model model, @RequestParam int id) {
+
+        var user=this.userService.getUserById(id);
+        model.addAttribute("user", user);
+        return "sendNotificaTest";
+    }
 
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
