@@ -2,8 +2,11 @@ package it.unife.ingsw2024.services;
 
 import it.unife.ingsw2024.models.Notification;
 import it.unife.ingsw2024.repositories.NotificationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.beans.Transient;
 import java.util.List;
 
 //notification service
@@ -24,6 +27,9 @@ import java.util.List;
     public void insert(Notification record) { notificationRepository.save(record); }
 
     public void insertAll(List<Notification> recordSet) { notificationRepository.saveAll(recordSet); }
+
+    @Transactional
+    public void deleteAllRead(int id) { notificationRepository.deleteAllRead(id); }
 
     //stuff
     public List<Notification> addElements() { return this.getAll(); }

@@ -32,9 +32,16 @@ import java.util.List;
     @RequestMapping("/sendNotifica")
     public String sendNotificaTest() { return "sendNotificaTest"; }
 
-
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
+
+    @RequestMapping("/deleteAllRead")
+    public ModelAndView deleteAllRead(@RequestParam int id) {
+
+        this.notificationService.deleteAllRead(id);
+        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        return new ModelAndView(redirectView);
+    }
 
     @RequestMapping("/getByUserId")
     public String getByUserId(Model model, @RequestParam int id) {

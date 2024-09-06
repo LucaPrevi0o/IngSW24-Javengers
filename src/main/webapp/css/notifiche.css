@@ -18,7 +18,7 @@ html, body {
     min-width: 500px;
 }
 
-.content #read-button {
+.content #read-button, .content #delete-button {
     padding: 6px 12px;
     color: white;
     border: none;
@@ -28,7 +28,7 @@ html, body {
     border-radius: 10px;
     transition: box-shadow 0.2s;
 }
-.content #read-button:hover {
+.content #read-button:hover, .content #delete-button:hover {
     cursor: pointer;
     box-shadow: 0 0 3px #5a5a5a;
 }
