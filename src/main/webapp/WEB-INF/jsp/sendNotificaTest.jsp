@@ -19,6 +19,7 @@
             function sendMessage() {
                 var title = "Nuova notifica";
                 var userId=document.querySelector("#userId").value;
+                var type=document.querySelector("#type").value;
                 var msg=document.querySelector("#message").value;
                 var now = new Date();
                 var date = now.toLocaleDateString('en-CA');
@@ -30,7 +31,7 @@
                     userSrcId: <%= user.getId() %>,
                     notificationDate: date,
                     notificationTime: time,
-                    notificationType: 0, //da sistemare
+                    notificationType: type,
                     title: title, //notification title
                     notificationMsg: msg })) //notification text
             }
@@ -41,6 +42,8 @@
             <p>Send notification as user <%= user.getId() %> (@<%= user.getUsername() %>)</p>
             <label for="userId">Insert the destination user id here: </label>
             <input type="text" placeholder="Insert user id..." id="userId">
+            <label for="type">Insert the type here: </label>
+            <input type="text" placeholder="Insert type..." id="type">
             <label for="message">Insert message here: </label>
             <input type="text" placeholder="Insert message..." id="message">
             <button onclick="sendMessage()">Send message</button>

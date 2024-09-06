@@ -63,7 +63,7 @@ import java.util.List;
         System.out.println("notification: " + notification);
 
         /* Aggiungo la notifica al db */
-        // ... potrebbe dare problemi perchè id è settato a 0
+        this.notificationService.insert(notification);
 
         return message;
     }
