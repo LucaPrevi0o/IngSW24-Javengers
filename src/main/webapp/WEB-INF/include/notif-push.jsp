@@ -20,10 +20,13 @@
 
             newNotif.innerHTML = `
                 <div class="push-notif-content">
-                    <p>`+parsedParsedParsedBody.title+`</p>
+                    <p>`+ parsedParsedParsedBody.title +`</p>
                     <div class="push-notif-details">
-                        <p>`+parsedParsedParsedBody.srcUser+`</p>
-                        <p>`+parsedParsedParsedBody.text+`</p>
+                        <p>`+ parsedParsedParsedBody.usernameSrc+`</p>
+                        <p>`+ parsedParsedParsedBody.notificationDate +`</p>
+                        <p>`+ parsedParsedParsedBody.notificationTime +`</p>
+                        <p>`+ parsedParsedParsedBody.notificationType +`</p>
+                        <p>`+ parsedParsedParsedBody.notificationMsg +`</p>
                     </div>
                 </div>
                 <div onclick="closeNotification(`+ id +`)" class="close-push-notif">

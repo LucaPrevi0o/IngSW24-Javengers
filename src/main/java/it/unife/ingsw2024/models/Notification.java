@@ -1,5 +1,6 @@
 package it.unife.ingsw2024.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
@@ -17,18 +18,20 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name="UserSRC", referencedColumnName = "id")
-    private User UserSrc; //reference to User account id that generates the notification
+    private User userSrc; //reference to User account id that generates the notification
 
     @ManyToOne
     @JoinColumn(name="UserDST", referencedColumnName = "id")
-    private User UserDst; //reference to User account id that receives the notification
+    private User userDst; //reference to User account id that receives the notification
 
     @Column(name="NotificationMessage")
-    private String NotificationMsg; //notification content
+    private String notificationMsg; //notification content
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd")
     @Column(name="NotificationDate")
-    private Date NotificationDate; //notification date reference
+    private Date notificationDate; //notification date reference
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(name="NotificationTime")
     private Time notificationTime; //notification date reference
 
@@ -36,7 +39,7 @@ public class Notification {
     private int notificationType; //notification type (message, follower, event subscription...)
 
     @Column(name="Viewed", columnDefinition="TINYINT(1)")
-    private boolean Viewed; //reference for viewed notifications
+    private boolean viewed; //reference for viewed notifications
 
     public String getNotificationLiteralType() {
 

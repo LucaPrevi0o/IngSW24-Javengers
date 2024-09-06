@@ -20,12 +20,19 @@
                 var title = "Nuova notifica";
                 var userId=document.querySelector("#userId").value;
                 var msg=document.querySelector("#message").value;
+                var now = new Date();
+                var date = now.toLocaleDateString('en-CA');
+                let time = now.toLocaleTimeString('en-GB');
 
                 stompClient.send('/app/application/' + userId, {}, JSON.stringify({
 
-                    srcUser: "@<%= user.getUsername() %>", //username of user that sends notification
+                    usernameSrc: "@<%= user.getUsername() %>", //username of user that sends notification
+                    userSrcId: <%= user.getId() %>,
+                    notificationDate: date,
+                    notificationTime: time,
+                    notificationType: 0, //da sistemare
                     title: title, //notification title
-                    text: msg })) //notification text
+                    notificationMsg: msg })) //notification text
             }
         </script>
     </head>

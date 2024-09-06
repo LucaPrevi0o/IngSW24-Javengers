@@ -1,6 +1,10 @@
 package it.unife.ingsw2024.web;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +37,34 @@ import java.util.List;
     @MessageMapping("/application/{userId}")
     @SendTo("/private/{userId}/messages")
     public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
+        /* Decodifico il body del messaggio che contiene la notifica */
+        String payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
+
+        /* Creo la notifica da aggiungere al database decodificandola con Jackson in un oggetto di tipo Notifica */
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        Notification notification = objectMapper.readValue(payload, Notification.class);
+
+        /* Inserisco userDst e userSrc */
+        User userDst = this.userService.getUserById(Integer.parseInt(userId));
+        User userSrc = null;
+
+        /* UserSrc lo ottengo dall'attributo userSrcId salvato nell'oggetto Json */
+        JsonNode rootNode = objectMapper.readTree(payload);
+        JsonNode userSrcIdNode = rootNode.get("userSrcId");
+        if (userSrcIdNode != null) {
+            int userSrcId = userSrcIdNode.asInt();
+            userSrc = this.userService.getUserById(userSrcId);
+        }
+
+        notification.setUserDst(userDst);
+        notification.setUserSrc(userSrc);
+
+        System.out.println("notification: " + notification);
+
+        /* Aggiungo la notifica al db */
+        // ... potrebbe dare problemi perchè id è settato a 0
+
         return message;
     }
 
