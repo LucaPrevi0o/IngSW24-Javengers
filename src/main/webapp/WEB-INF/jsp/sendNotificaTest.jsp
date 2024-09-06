@@ -15,8 +15,9 @@
             });
 
             function sendMessage() {
-                var text = "testo messaggio"
-                stompClient.send('/app/application', {}, JSON.stringify({ from: "from", text: text }))
+                var title = "Titolo della notifica"
+                var text = "chi riceve questa notifica odia JavaScript con tutto il suo cuore"
+                stompClient.send('/app/application', {}, JSON.stringify({ title: title, text: text }))
             }
         </script>
     </head>
