@@ -41,9 +41,11 @@ public class Notification {
     public String getNotificationLiteralType() {
 
         return switch (notificationType) {
+
             case 0 -> "Messaggi";
             case 1 -> "Follower";
             case 2 -> "Eventi";
+            case 3 -> "Pagamenti";
             default -> "NULL";
         };
     }
