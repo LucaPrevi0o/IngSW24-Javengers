@@ -10,7 +10,7 @@
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log(frame);
-        stompClient.subscribe('/all/messages', function(result) {
+        stompClient.subscribe('/private/'+ <%=user.getId()%> +'/messages', function(result) {
             let newNotif = document.createElement("li");
             newNotif.className = "push-notif-container";
             newNotif.id = "push-notif-" + id;

@@ -4,6 +4,7 @@ import it.unife.ingsw2024.models.Notification;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -26,6 +27,12 @@ import java.util.List;
     @MessageMapping("/application")
     @SendTo("/all/messages")
     public Message send(final Message message) throws Exception {
+        return message;
+    }
+
+    @MessageMapping("/application/{userId}")
+    @SendTo("/private/{userId}/messages")
+    public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
         return message;
     }
 

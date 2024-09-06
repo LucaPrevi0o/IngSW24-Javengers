@@ -18,9 +18,10 @@
 
             function sendMessage() {
                 var title = "Nuova notifica";
+                var userId=document.querySelector("#userId").value;
                 var msg=document.querySelector("#message").value;
 
-                stompClient.send('/app/application', {}, JSON.stringify({
+                stompClient.send('/app/application/' + userId, {}, JSON.stringify({
 
                     srcUser: "@<%= user.getUsername() %>", //username of user that sends notification
                     title: title, //notification title
@@ -31,6 +32,8 @@
     <body>
         <section class="content">
             <p>Send notification as user <%= user.getId() %> (@<%= user.getUsername() %>)</p>
+            <label for="userId">Insert the destination user id here: </label>
+            <input type="text" placeholder="Insert user id..." id="userId">
             <label for="message">Insert message here: </label>
             <input type="text" placeholder="Insert message..." id="message">
             <button onclick="sendMessage()">Send message</button>
