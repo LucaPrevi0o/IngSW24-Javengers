@@ -23,6 +23,7 @@
         <%@include file="../include/sidebar.jsp"%>
         <section class="content">
             <%@include file="../include/notif-bell.jsp"%>
+            <%@include file="../include/notif-push.jsp"%>
             <a href="<%= request.getContextPath() %>/setAllAsRead?id=<%= user.getId() %>"><button id="read-button">Segna tutto come letto</button></a>
             <ul class="lista-notifiche">
                 <% if (!today.isEmpty()) { %><li class="giorno"><p>Oggi</p></li><% } %>

@@ -10,12 +10,28 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+
 import java.util.List;
 
 @Controller public class RootController {
 
     @Autowired NotificationService notificationService;
     @Autowired UserService userService;
+    @Autowired SimpMessagingTemplate simpMessagingTemplate;
+
+    @MessageMapping("/application")
+    @SendTo("/all/messages")
+    public Message send(final Message message) throws Exception {
+        return message;
+    }
+
+    @RequestMapping("/sendNotifica")
+    public String sendNotificaTest() { return "sendNotificaTest"; }
+
 
     @RequestMapping("/")
     public String helloWorld() { return "hello"; }
