@@ -16,6 +16,7 @@
         <%@include file="../include/sidebar.jsp"%>
         <section class="content">
             <%@include file="../include/notif-bell.jsp"%>
+            <%@include file="../include/notif-push.jsp"%>
             <div class="container">
                 <section class="utente-container">
                     <img id="propic" src="../../images/propic.jpg" alt="Profile picture" width="60" height="60"/>
