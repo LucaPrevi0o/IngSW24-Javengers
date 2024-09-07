@@ -14,9 +14,9 @@
 
             testVal++;
             testVal--;
-            if (testVal===0) return "Eventi";
+            if (testVal===0) return "Messaggi";
             else if (testVal===1) return "Follower";
-            else if (testVal===2) return "Messaggi";
+            else if (testVal===2) return "Eventi";
             else if (testVal===3) return "Pagamenti";
         }
 

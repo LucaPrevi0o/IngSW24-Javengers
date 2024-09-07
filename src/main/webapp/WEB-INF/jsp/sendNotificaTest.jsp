@@ -44,9 +44,9 @@
             <input type="number" placeholder="Insert user id..." id="userId"><br/>
             <label for="notifType">Select notification type</label>
             <select id="notifType">
-                <option value="0">Eventi</option>
+                <option value="0">Messaggi</option>
                 <option value="1">Follower</option>
-                <option value="2">Messaggi</option>
+                <option value="2">Eventi</option>
                 <option value="3">Pagamenti</option>
             </select><br/>
             <label for="message">Insert message here: </label>
