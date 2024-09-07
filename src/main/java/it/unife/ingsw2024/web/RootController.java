@@ -130,11 +130,10 @@ import java.util.List;
     }
 
     @RequestMapping("/settings")
-    public ModelAndView settings() {
+    public String settings() {
 
         //this.userService.unfollow(id, followedId);
-        RedirectView redirectView=new RedirectView("/settings");
-        return new ModelAndView(redirectView);
+        return "settings";
     }
 
     @RequestMapping("/unfollow")
