@@ -19,7 +19,7 @@
             function sendMessage() {
                 var title = "Nuova notifica";
                 var userId=document.querySelector("#userId").value;
-                var type=document.querySelector("#type").value;
+                var type=document.querySelector("#notifType").value;
                 var msg=document.querySelector("#message").value;
                 var now = new Date();
                 var date = now.toLocaleDateString('en-CA');
@@ -27,7 +27,7 @@
 
                 stompClient.send('/app/application/' + userId, {}, JSON.stringify({
 
-                    usernameSrc: "@<%= user.getUsername() %>", //username of user that sends notification
+                    usernameSrc: "<%= user.getUsername() %>", //username of user that sends notification
                     userSrcId: <%= user.getId() %>,
                     notificationDate: date,
                     notificationTime: time,
@@ -41,12 +41,17 @@
         <section class="content">
             <p>Send notification as user <%= user.getId() %> (@<%= user.getUsername() %>)</p>
             <label for="userId">Insert the destination user id here: </label>
-            <input type="text" placeholder="Insert user id..." id="userId">
-            <label for="type">Insert the type here: </label>
-            <input type="text" placeholder="Insert type..." id="type">
+            <input type="number" placeholder="Insert user id..." id="userId"><br/>
+            <label for="notifType">Select notification type</label>
+            <select id="notifType">
+                <option value="0">Eventi</option>
+                <option value="1">Follower</option>
+                <option value="2">Messaggi</option>
+                <option value="3">Pagamenti</option>
+            </select><br/>
             <label for="message">Insert message here: </label>
-            <input type="text" placeholder="Insert message..." id="message">
-            <button onclick="sendMessage()">Send message</button>
+            <input type="text" placeholder="Insert message..." id="message"><br/><br/>
+            <button onclick="sendMessage()">Send notification</button>
         </section>
     </body>
 </html>
