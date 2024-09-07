@@ -51,6 +51,47 @@
             `;
 
             document.getElementById("push-notif-list").prepend(newNotif);
+
+            /* Se sono nella jsp notifiche aggiungo la notifica in cima */
+            /* Aggiungo categoria "adesso" */
+            if(document.getElementById("lista-notifiche")) {
+                let adesso = document.getElementById("adesso");
+
+                if(!adesso){
+                    adesso = document.createElement("li");
+                    adesso.id = "adesso";
+                    adesso.className = "giorno";
+                    adesso.innerHTML = `<p>Adesso</p>`;
+                    document.getElementById("lista-notifiche").prepend(adesso);
+                }
+
+                /* Aggiungo notifica in cima */
+                let notifica = document.createElement("li");
+                notifica.innerHTML = `
+                <li class="notif-container">
+                    <div class="notifica">
+                        <div class="da-leggere notif-wrapper">
+                        <div><a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
+                        <div class="notif-content">
+                            <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.usernameSrc +`</b>:</p></a>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
+                            <a href="<%= request.getContextPath() %>/notifclick?id=0&userId=<%= user.getId() %>">
+                                <div class="notif-details">
+                                    <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
+                                    <p>`+ jsonData.notificationMsg +`</p>
+                                </div>
+                            </a>
+                            <span class="ora">`+ jsonData.notificationDate +` - `+ jsonData.notificationTime +`</span>
+                        </div>
+                    </div>
+                    </div>
+                    <img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/>
+                </li>
+                `;
+
+                adesso.after(notifica);
+            }
+
             id++;
         });
     });
@@ -63,6 +104,4 @@
 
 </script>
 <ul id="push-notif-list">
-
-
 </ul>

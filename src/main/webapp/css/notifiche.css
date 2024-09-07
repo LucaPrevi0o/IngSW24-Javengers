@@ -43,7 +43,7 @@ html, body {
     font-size: 15px;
 }
 
-.lista-notifiche {
+#lista-notifiche {
     list-style-type: none;
     padding: 10px 0;
     min-width: 550px;
@@ -63,7 +63,7 @@ html, body {
     opacity: 0.6;
 }
 
-.lista-notifiche .notifica {
+#lista-notifiche .notifica {
     width: 90%;
     border-radius: 10px;
     margin: 8px 0;
@@ -71,44 +71,44 @@ html, body {
     transition: box-shadow 0.3s;
 }
 
-.lista-notifiche .notifica:hover {
+#lista-notifiche .notifica:hover {
     box-shadow: 0 0 5px #5a5a5a;
 }
 
-.lista-notifiche .notif-wrapper {
+#lista-notifiche .notif-wrapper {
     display: flex;
     flex-direction: row;
     padding: 10px 10px 5px;
 }
 
-.lista-notifiche .notif-wrapper > a {
+#lista-notifiche .notif-wrapper > a {
     display: inline-block;
 }
 
-.lista-notifiche .notifica .da-leggere {
+#lista-notifiche .notifica .da-leggere {
     border: 3px solid #7d3e11;
     border-radius: 10px;
 }
 
-.lista-notifiche a {
+#lista-notifiche a {
     text-decoration: none;
     color: black;
 }
 
-.lista-notifiche .notif-content {
+#lista-notifiche .notif-content {
     width: 100%;
     font-size: 18px;
 }
 
-.lista-notifiche .notif-content .username:hover {
+#lista-notifiche .notif-content .username:hover {
     color: #7c6662;
 }
 
-.lista-notifiche .notif-content p {
+#lista-notifiche .notif-content p {
     display: inline-block;
 }
 
-.lista-notifiche .notif-details {
+#lista-notifiche .notif-details {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -117,11 +117,11 @@ html, body {
     padding: 10px;
 }
 
-.lista-notifiche .notif-details:hover {
+#lista-notifiche .notif-details:hover {
     background-color: #f4f0ed;
 }
 
-.lista-notifiche img {
+#lista-notifiche img {
     border-radius: 50px;
     margin-right: 10px;
 }
