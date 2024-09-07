@@ -125,7 +125,7 @@ import java.util.List;
     public ModelAndView followProfile(@RequestParam int id, @RequestParam int followedId) {
 
         this.userService.follow(id, followedId);
-        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        RedirectView redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
         return new ModelAndView(redirectView);
     }
 
@@ -140,7 +140,7 @@ import java.util.List;
     public ModelAndView unfollowProfile(@RequestParam int id, @RequestParam int followedId) {
 
         this.userService.unfollow(id, followedId);
-        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        RedirectView redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
         return new ModelAndView(redirectView);
     }
 
