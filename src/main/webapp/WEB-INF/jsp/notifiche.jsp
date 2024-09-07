@@ -26,6 +26,17 @@
             <%@include file="../include/notif-push.jsp"%>
             <a href="<%= request.getContextPath() %>/setAllAsRead?id=<%= user.getId() %>"><button id="read-button">Segna tutto come letto</button></a>
             <a href="<%= request.getContextPath() %>/deleteAllRead?id=<%= user.getId() %>"><button id="delete-button">Elimina notifiche lette</button></a>
+            <label for="search_notiftype">Qui possiamo metterci un filtro per cercare le ricerche in base al tipo di notifica</label>
+            <select id="search_notiftype">
+                <option value="0">Messaggi</option>
+                <option value="1">Follower</option>
+                <option value="2">Eventi</option>
+                <option value="3">Pagamenti</option>
+            </select><br/>
+            <label for="search_notifcontent">Qui possiamo metterci un filtro per cercare le ricerche in base al contenuto</label>
+            <input type="search" id="search_notifcontent" placeholder="Cerca..."><br/>
+            <label for="search_notifuser">Qui possiamo metterci un filtro per cercare le ricerche in base al nome utente</label>
+            <input type="search" id="search_notifuser" placeholder="Username..."><br/>
             <ul id="lista-notifiche">
                 <% if (!today.isEmpty()) { %><li class="giorno"><p>Oggi</p></li><% } %>
                 <% for (var n: today) { %>
