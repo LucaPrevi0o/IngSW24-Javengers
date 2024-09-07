@@ -26,7 +26,7 @@
             <%@include file="../include/notif-push.jsp"%>
             <a href="<%= request.getContextPath() %>/setAllAsRead?id=<%= user.getId() %>"><button id="read-button">Segna tutto come letto</button></a>
             <a href="<%= request.getContextPath() %>/deleteAllRead?id=<%= user.getId() %>"><button id="delete-button">Elimina notifiche lette</button></a>
-            <label for="search_notiftype">Qui possiamo metterci un filtro per cercare le ricerche in base al tipo di notifica</label>
+            <label for="search_notiftype">Qui possiamo metterci un filtro per cercare le ricerche in base al tipo di notifica</label><br/>
             <select id="search_notiftype">
                 <option value="0">Messaggi</option>
                 <option value="1">Follower</option>
