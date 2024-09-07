@@ -3,12 +3,15 @@ package it.unife.ingsw2024.web;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import it.unife.ingsw2024.models.Notification;
 import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
@@ -60,12 +63,22 @@ import java.util.List;
         notification.setUserDst(userDst);
         notification.setUserSrc(userSrc);
 
-        System.out.println("notification: " + notification);
-
         /* Aggiungo la notifica al db */
-        this.notificationService.insert(notification);
+        Notification insertedNotification = this.notificationService.insert(notification);
+        int insNotifId = insertedNotification.getId();
 
-        return message;
+        // Faccio il parsing del payload in un JsonNode per aggiungere insNotifId
+        ObjectNode updatedPayloadNode = (ObjectNode) rootNode;
+        updatedPayloadNode.put("insNotifId", insNotifId);
+        String updatedPayload = objectMapper.writeValueAsString(updatedPayloadNode);
+
+        /* Creo il messaggio aggiornato con l'insNotifId */
+        MessageHeaders headers = message.getHeaders();
+        Message updatedMessage = new GenericMessage<>(updatedPayload.getBytes(), headers);
+
+        System.out.println("Messagio aggiornato: " + updatedPayload);
+
+        return updatedMessage;
     }
 
     @RequestMapping("/sendNotifica")

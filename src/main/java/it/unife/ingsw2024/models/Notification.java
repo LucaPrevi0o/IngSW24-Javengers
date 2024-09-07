@@ -14,6 +14,7 @@ import java.sql.Time;
 public class Notification {
 
     @Id @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; //notification unique id (auto-incremented value)
 
     @ManyToOne

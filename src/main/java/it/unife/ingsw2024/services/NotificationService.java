@@ -24,7 +24,8 @@ import java.util.List;
     public List<Notification> getAllByUserDstId(int id) { return notificationRepository.findAllByUserDst(id); }
 
     //insert a new notification
-    public void insert(Notification record) { notificationRepository.save(record); }
+    @Transactional
+    public Notification insert(Notification record) { return notificationRepository.save(record); }
 
     public void insertAll(List<Notification> recordSet) { notificationRepository.saveAll(recordSet); }
 

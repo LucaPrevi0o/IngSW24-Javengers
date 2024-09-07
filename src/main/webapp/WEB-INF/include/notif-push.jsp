@@ -38,7 +38,7 @@
                         </a>
                     </p>
                     <div class="push-notif-details">
-                        <a href=\" <%= request.getContextPath() %> /notifclick?id=` + id + `&userId=<%= user.getId() %>\">
+                        <a href=\" <%= request.getContextPath() %> /notifclick?id=` + jsonData.insNotifId + `&userId=<%= user.getId() %>\">
                             <p style="font-size: 21px;"><b style="color: cornflowerblue">`+ getLiteralType(jsonData.notificationType)+ `</b></p>
                             <p style="font-size: 20px;">`+ jsonData.notificationMsg +`</p>
                         </a>
@@ -75,7 +75,7 @@
                         <div class="notif-content">
                             <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.usernameSrc +`</b>:</p></a>
                             <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=0&userId=<%= user.getId() %>">
+                            <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.insNotifId +`&userId=<%= user.getId() %>">
                                 <div class="notif-details">
                                     <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
                                     <p>`+ jsonData.notificationMsg +`</p>
