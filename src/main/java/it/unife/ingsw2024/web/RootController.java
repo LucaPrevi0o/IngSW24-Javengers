@@ -129,6 +129,14 @@ import java.util.List;
         return new ModelAndView(redirectView);
     }
 
+    @RequestMapping("/settings")
+    public ModelAndView settings() {
+
+        //this.userService.unfollow(id, followedId);
+        RedirectView redirectView=new RedirectView("/settings");
+        return new ModelAndView(redirectView);
+    }
+
     @RequestMapping("/unfollow")
     public ModelAndView unfollowProfile(@RequestParam int id, @RequestParam int followedId) {
 
