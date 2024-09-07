@@ -17,6 +17,11 @@
     background-color: #b6a79c;
 }
 
+.push-notif-container a {
+    text-decoration: none;
+    color: black;
+}
+
 .push-notif-content {
     display: flex;
     flex-direction: column;
@@ -30,13 +35,27 @@
 
 .push-notif-details {
     border-radius: 5px;
-    padding: 10px;
     min-height: 60px;
     background-color: white;
 }
 
-.push-notif-details > p {
-    font-size: 21px;
+.push-notif-details:hover {
+    background-color: #efebe8;
+}
+
+#username-push {
+    color: brown;
+}
+
+#username-push:hover {
+    color: #d66868;
+}
+
+.push-notif-details > a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
 }
 
 .close-push-notif {

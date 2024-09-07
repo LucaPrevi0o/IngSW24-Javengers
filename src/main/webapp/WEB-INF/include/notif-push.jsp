@@ -34,13 +34,13 @@
                 <div class="push-notif-content">
                     <p>`+ jsonData.title +` -
                         <a href=\"<%= request.getContextPath() %>/following?id=` + jsonData.userSrcId + `&loggedId=<%= user.getId() %>\">
-                            @<b style="color: brown">`+jsonData.usernameSrc+`</b>
+                            @<b id="username-push">`+jsonData.usernameSrc+`</b>
                         </a>
                     </p>
                     <div class="push-notif-details">
                         <a href=\" <%= request.getContextPath() %> /notifclick?id=` + id + `&userId=<%= user.getId() %>\">
-                            <p><b style="color: cornflowerblue">`+ getLiteralType(jsonData.notificationType)+ `</b></p>
-                            <p>`+ jsonData.notificationMsg +`</p>
+                            <p style="font-size: 21px;"><b style="color: cornflowerblue">`+ getLiteralType(jsonData.notificationType)+ `</b></p>
+                            <p style="font-size: 20px;">`+ jsonData.notificationMsg +`</p>
                         </a>
                     </div>
                     <p>`+ jsonData.notificationDate +` - `+ jsonData.notificationTime +`</p>
