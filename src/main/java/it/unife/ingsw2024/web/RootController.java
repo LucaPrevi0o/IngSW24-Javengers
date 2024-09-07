@@ -130,9 +130,12 @@ import java.util.List;
     }
 
     @RequestMapping("/settings")
-    public String settings() {
+    public String settings(Model model, @RequestParam int id) {
+        var user=this.userService.getUserById(id);
+        model.addAttribute("user", user);
 
         //this.userService.unfollow(id, followedId);
+
         return "settings";
     }
 
