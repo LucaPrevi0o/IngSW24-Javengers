@@ -1,6 +1,7 @@
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
+    String titoloSidebar = "Profilo utente";
     var user=(User)request.getAttribute("user");
     var selectedUser=(User)request.getAttribute("selectedUser");
     var followerList=(List<User>)request.getAttribute("followerList");

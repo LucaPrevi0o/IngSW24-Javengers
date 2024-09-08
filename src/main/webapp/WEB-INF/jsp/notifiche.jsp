@@ -4,6 +4,7 @@
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
+    String titoloSidebar = "Notifiche";
     var user=(User)request.getAttribute("user");
     var notifications=(List<Notification>)request.getAttribute("notifications");
     var todaysDate=LocalDate.now();

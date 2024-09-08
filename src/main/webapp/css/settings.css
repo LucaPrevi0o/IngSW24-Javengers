@@ -9,10 +9,105 @@ html, body {
     height: 100%;
 }
 
-/* content */
+/* --- Content --- */
 .content {
     background-color: #FFFAF6;
     margin-left: 250px;
-    padding: 25px;
+    padding: 28px;
     height: 100%;
+}
+
+.content > h1 {
+    font-size: 28px;
+    margin: 0 0 10px 10px;
+}
+
+#settings-container {
+    min-width: 500px;
+    max-width: 900px;
+    background-color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 5px solid #c69a85;
+}
+
+#settings-container h2 {
+    font-size: 25px;
+    margin: 5px 0;
+}
+
+#blocked-users-settings, #notif-settings {
+    padding: 10px;
+}
+
+/* --- Impostazioni utenti bloccati --- */
+
+#blocked-users-settings > ul {
+    list-style-type: none;
+}
+
+#blocked-users-settings li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    border-bottom: 1px solid #7d3c0e;
+    padding-bottom: 5px;
+}
+
+#blocked-users-settings a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+}
+
+#blocked-users-settings b {
+    color: brown;
+}
+
+#blocked-users-settings b:hover {
+    color: #681717;
+}
+
+.unblock-button {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    font-size: 18px;
+    background-color: #8a746a;
+    border-radius: 5px;
+    transition: box-shadow 0.2s;
+}
+
+.unblock-button:hover {
+    cursor: pointer;
+    background-color: #ab9586;
+}
+
+/* --- Impostazioni notifiche --- */
+
+#notif-settings-container {
+    padding: 10px 0;
+}
+
+#notif-settings-container > p {
+    font-size: 21px;
+}
+
+.notif-settings-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    padding: 10px 0;
+    border-bottom: 1px solid #7d3c0e;
+}
+
+.notif-settings-option input {
+    width: 18px;
+    height: 18px;
+}
+
+.notif-settings-option input:hover {
+    cursor: pointer;
 }
