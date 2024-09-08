@@ -36,7 +36,7 @@
                     notificationTime: time,
                     notificationType: 1,
                     title: title, //notification title
-                    notificationMsg: "@<%= user.getUsername() %>" + " ha cominciato a seguirti" })) //notification text
+                    notificationMsg: "@<b><%= user.getUsername() %></b> ha cominciato a seguirti" })) //notification text
             }
 
             function sendNotifica(){

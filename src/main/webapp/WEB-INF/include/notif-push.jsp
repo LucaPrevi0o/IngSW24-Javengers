@@ -29,6 +29,7 @@
             var resultBody = JSON.parse(result.body);
             var payload = atob(resultBody.payload);
             var jsonData = JSON.parse(payload);
+            console.log(jsonData.notificationMsg);
 
             newNotif.innerHTML = `
                 <div class="push-notif-content">
@@ -71,19 +72,21 @@
                 <li class="notif-container">
                     <div class="notifica">
                         <div class="da-leggere notif-wrapper">
-                        <div><a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.usernameSrc +`</b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.insNotifId +`&userId=<%= user.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
-                                    <p>`+ jsonData.notificationMsg +`</p>
-                                </div>
-                            </a>
-                            <span class="ora">`+ jsonData.notificationDate +` - `+ jsonData.notificationTime +`</span>
+                            <div>
+                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                            </div>
+                            <div class="notif-content">
+                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= user.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.usernameSrc +`</b>:</p></a>
+                                <hr style="margin-bottom: 5px; margin-top: 2px">
+                                <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.insNotifId +`&userId=<%= user.getId() %>">
+                                    <div class="notif-details">
+                                        <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
+                                        <p>`+ jsonData.notificationMsg +`</p>
+                                    </div>
+                                </a>
+                                <span class="ora">`+ jsonData.notificationDate +` - `+ jsonData.notificationTime +`</span>
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/>
                 </li>
