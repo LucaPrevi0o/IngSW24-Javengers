@@ -11,6 +11,8 @@
     <body>
         <%@include file="../include/sidebar.jsp"%>
         <section class="content">
+            <%@include file="../include/notif-bell.jsp"%>
+            <%@include file="../include/notif-push.jsp"%>
             <h1>Impostazioni profilo</h1>
             <h2><label for="blocked_users_list">Lista utenti bloccati</label></h2>
             <ul id="blocked_users_list">

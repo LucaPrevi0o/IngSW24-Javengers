@@ -134,8 +134,12 @@ import java.util.List;
 
         var user=this.userService.getUserById(id);
         var blockedUsers=this.userService.getBlockedUsersList(id);
+        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+
+        model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
         model.addAttribute("blockedUsers", blockedUsers);
+
         return "settings";
     }
 
