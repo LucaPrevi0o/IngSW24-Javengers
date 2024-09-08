@@ -89,7 +89,7 @@
                 <%} else {%>
                 <a href="<%= request.getContextPath() %>/follow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button onclick="sendNotifica()" class="segui-button">Segui</button></a>
                 <% }} %>
-                <button id="block">Blocca utente</button>
+                <a href="<%= request.getContextPath() %>/block?blockedId=<%= selectedUser.getId() %>&userId=<%= user.getId() %>"><button id="block">Blocca utente</button></a>
             </div>
         </section>
     </body>

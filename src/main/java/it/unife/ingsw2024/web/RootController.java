@@ -168,6 +168,14 @@ import java.util.List;
         return new ModelAndView(redirectView);
     }
 
+    @RequestMapping("/block")
+    public ModelAndView block(@RequestParam int blockedId, @RequestParam int userId)  {
+
+        this.userService.block(blockedId, userId);
+        RedirectView redirectView=new RedirectView("/settings?id="+userId);
+        return new ModelAndView(redirectView);
+    }
+
     @RequestMapping("/following")
     public String following(Model model, @RequestParam int id, @RequestParam int loggedId) {
 
