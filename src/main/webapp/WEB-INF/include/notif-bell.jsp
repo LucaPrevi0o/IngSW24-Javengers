@@ -1,7 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="it.unife.ingsw2024.models.Notification" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<% var nonRead=((List<Notification>)request.getAttribute("notifications")).stream().filter(n -> !n.isViewed()).toList(); %>
+<%
+    var bellUser=(User)request.getAttribute("user");
+    var nonRead=((List<Notification>)request.getAttribute("notifications")).stream().filter(n -> !n.isViewed()).toList();
+%>
 
 <link rel="stylesheet" href="../../css/notif-bell.css" type="text/css" media="screen">
 <script language="javascript">
@@ -23,7 +26,7 @@
         <img src="../../images/notif.png" alt="" width="30" height="30" />
     </div>
     <ul id="notifiche-container">
-        <li><button id="vedi-tutto">Vedi tutto</button></li>
+        <li><a href="<%= request.getContextPath() %>/notifiche?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a></li>
         <% for (var n: nonRead) { %>
             <li class="notifica da-leggere">
                 <a href="">

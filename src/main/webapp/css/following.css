@@ -9,7 +9,7 @@ html, body {
     height: 100%;
 }
 
-/* content */
+/* --- Content --- */
 .content {
     background-color: #FFFAF6;
     margin-left: 250px;
@@ -40,6 +40,8 @@ html, body {
     font-size: 23px;
     font-weight: bold;
 }
+
+/* --- Following e Followers --- */
 
 .following-container {
     border: solid 1px black;
@@ -114,6 +116,8 @@ html, body {
     font-size: 23px;
 }
 
+/* --- Pulsanti segui/blocca utente --- */
+
 .segui-button {
     width: 250px;
     padding: 10px;
@@ -127,6 +131,23 @@ html, body {
 }
 
 .segui-button:hover {
+    cursor: pointer;
+    background-color: #a29082;
+}
+
+#block {
+    width: 250px;
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    background-color: #867466;
+    border-radius: 10px;
+    transition: box-shadow 0.2s, background-color 0.2s;
+}
+
+#block:hover {
     cursor: pointer;
     background-color: #a29082;
 }
