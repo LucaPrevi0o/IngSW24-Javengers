@@ -70,7 +70,7 @@
                 /* Aggiungo notifica in cima */
                 let notifica = document.createElement("li");
                 notifica.innerHTML = `
-                <li class="notif-container">
+                <li class="notif-container"  tipoNotifica="`+ jsonData.notificationType +`" usernameSrc="`+ jsonData.usernameSrc +`">
                     <div class="notifica">
                         <div class="da-leggere notif-wrapper">
                             <div>
