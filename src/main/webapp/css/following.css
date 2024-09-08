@@ -15,6 +15,7 @@ html, body {
     margin-left: 250px;
     padding: 25px;
     height: 100%;
+    min-width: 620px;
 }
 
 .container {
@@ -118,36 +119,23 @@ html, body {
 
 /* --- Pulsanti segui/blocca utente --- */
 
-.segui-button {
+.segui-button, #block-button{
     width: 250px;
+    margin: 0 10px;
     padding: 10px;
     font-size: 20px;
     color: white;
     border: none;
     font-weight: bold;
-    background-color: #867466;
     border-radius: 10px;
-    transition: box-shadow 0.2s, background-color 0.2s;
+    transition: background-color 0.2s;
 }
 
-.segui-button:hover {
-    cursor: pointer;
-    background-color: #a29082;
-}
-
-#block {
-    width: 250px;
-    padding: 10px;
-    font-size: 20px;
-    color: white;
-    border: none;
-    font-weight: bold;
+.segui-button, #block-button {
     background-color: #867466;
-    border-radius: 10px;
-    transition: box-shadow 0.2s, background-color 0.2s;
 }
 
-#block:hover {
-    cursor: pointer;
-    background-color: #a29082;
+.segui-button:hover, #block-button:hover {
+     cursor: pointer;
+     background-color: #a29082;
 }

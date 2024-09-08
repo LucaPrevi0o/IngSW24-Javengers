@@ -15,6 +15,7 @@ html, body {
     margin-left: 250px;
     padding: 28px;
     height: 100%;
+    min-width: 500px;
 }
 
 .content > h1 {

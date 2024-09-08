@@ -9,7 +9,7 @@ html, body {
     height: 100%;
 }
 
-/* content */
+/* --- Content --- */
 .content {
     background-color: #FFFAF6;
     margin-left: 250px;
@@ -20,6 +20,8 @@ html, body {
 
 .content #read-button, .content #delete-button {
     padding: 6px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
     color: white;
     border: none;
     font-size: 18px;
@@ -39,15 +41,13 @@ html, body {
     font-size: 18px;
 }
 
-.ora {
-    font-size: 15px;
-}
-
 #lista-notifiche {
     list-style-type: none;
     padding: 10px 0;
     min-width: 550px;
 }
+
+/* --- Singola notifica --- */
 
 .notif-container {
     display: flex;
@@ -55,8 +55,15 @@ html, body {
     align-items: center;
 }
 
+/* Icona "da leggere" */
 .notif-container > img {
     margin: 0 10px;
+}
+
+/* Immagine del profilo */
+#lista-notifiche img {
+    border-radius: 50px;
+    margin-right: 10px;
 }
 
 .notif-wrapper img:hover {
@@ -121,7 +128,6 @@ html, body {
     background-color: #f4f0ed;
 }
 
-#lista-notifiche img {
-    border-radius: 50px;
-    margin-right: 10px;
+.ora {
+    font-size: 15px;
 }
