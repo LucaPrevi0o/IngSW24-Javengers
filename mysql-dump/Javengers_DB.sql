@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS `Javengers_DB`;
+DROP SCHEMA IF EXISTS `Javengers_DB`;
 CREATE DATABASE  IF NOT EXISTS `Javengers_DB` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `Javengers_DB`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
@@ -19,6 +19,35 @@ USE `Javengers_DB`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `BLOCKED_USERS`
+--
+
+DROP TABLE IF EXISTS `BLOCKED_USERS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `BLOCKED_USERS` (
+                                 `id` int NOT NULL AUTO_INCREMENT,
+                                 `BlockedUser` int NOT NULL,
+                                 `BlockerUser` int NOT NULL,
+                                 PRIMARY KEY (`id`),
+                                 KEY `blocked_user_idx` (`BlockedUser`),
+                                 KEY `blocker_user_idx` (`BlockerUser`),
+                                 CONSTRAINT `blocked_user` FOREIGN KEY (`BlockedUser`) REFERENCES `USER` (`id`),
+                                 CONSTRAINT `blocker_user` FOREIGN KEY (`BlockerUser`) REFERENCES `USER` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `BLOCKED_USERS`
+--
+
+LOCK TABLES `BLOCKED_USERS` WRITE;
+/*!40000 ALTER TABLE `BLOCKED_USERS` DISABLE KEYS */;
+INSERT INTO `BLOCKED_USERS` VALUES (1,1,3),(2,4,3),(4,2,3),(5,5,3);
+/*!40000 ALTER TABLE `BLOCKED_USERS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `FOLLOWERS`
 --
 
@@ -34,7 +63,7 @@ CREATE TABLE `FOLLOWERS` (
                              KEY `fk_FOLLOWERS_2_idx` (`Follower`),
                              CONSTRAINT `fk_FOLLOWERS_1` FOREIGN KEY (`Followed`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
                              CONSTRAINT `fk_FOLLOWERS_2` FOREIGN KEY (`Follower`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +72,7 @@ CREATE TABLE `FOLLOWERS` (
 
 LOCK TABLES `FOLLOWERS` WRITE;
 /*!40000 ALTER TABLE `FOLLOWERS` DISABLE KEYS */;
+INSERT INTO `FOLLOWERS` VALUES (4,2,6),(5,1,2),(6,4,2),(8,2,4),(13,2,3),(14,6,2),(15,3,2),(16,3,5);
 /*!40000 ALTER TABLE `FOLLOWERS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +97,7 @@ CREATE TABLE `NOTIFICATIONS` (
                                  KEY `fk_NOTIFICATIONS_2_idx` (`UserDST`),
                                  CONSTRAINT `fk_NOTIFICATIONS_1` FOREIGN KEY (`UserSRC`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
                                  CONSTRAINT `fk_NOTIFICATIONS_2` FOREIGN KEY (`UserDST`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +106,7 @@ CREATE TABLE `NOTIFICATIONS` (
 
 LOCK TABLES `NOTIFICATIONS` WRITE;
 /*!40000 ALTER TABLE `NOTIFICATIONS` DISABLE KEYS */;
-INSERT INTO `NOTIFICATIONS` VALUES (1,1,2,'10 luglio (molto vecchia)','2024-07-10','15:34:00',0,1),(2,1,3,'27 agosto (meno vecchia)','2024-08-27','21:05:00',1,0),(3,1,2,'2 settembre (l\'altro ieri)','2024-09-02','13:56:00',0,0),(4,2,3,'30 agosto (abbastanza indietro)','2024-08-30','05:43:00',0,1),(5,3,2,'3 settembre (la più recente)','2024-09-03','12:40:00',2,0),(6,3,2,'10 agosto (un po\' datata)','2024-08-10','13:08:00',1,0);
+INSERT INTO `NOTIFICATIONS` VALUES (46,2,3,'@<b>marcobianchi00</b> ha cominciato a seguirti','2024-09-08','10:58:15',1,0),(47,5,3,'@<b>chiara0214</b> ha cominciato a seguirti','2024-09-08','11:01:00',1,0);
 /*!40000 ALTER TABLE `NOTIFICATIONS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +123,7 @@ CREATE TABLE `USER` (
                         PRIMARY KEY (`id`),
                         UNIQUE KEY `id_UNIQUE` (`id`),
                         UNIQUE KEY `Username_UNIQUE` (`Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,7 +132,7 @@ CREATE TABLE `USER` (
 
 LOCK TABLES `USER` WRITE;
 /*!40000 ALTER TABLE `USER` DISABLE KEYS */;
-INSERT INTO `USER` VALUES (1,'luigi_neri'),(2,'marcobianchi00'),(3,'xx_antonio_xx');
+INSERT INTO `USER` VALUES (5,'chiara0214'),(4,'giacomo_98'),(6,'luca_previ0o'),(1,'luigi_neri'),(2,'marcobianchi00'),(3,'xx_antonio_xx');
 /*!40000 ALTER TABLE `USER` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -115,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-04 11:39:43
+-- Dump completed on 2024-09-08 11:04:06
