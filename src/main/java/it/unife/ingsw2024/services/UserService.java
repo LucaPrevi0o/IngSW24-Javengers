@@ -5,7 +5,6 @@ import it.unife.ingsw2024.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 //user service
@@ -25,6 +24,8 @@ import java.util.List;
     public List<User> getFollowerList(int id) { return userRepository.findFollowersById(id); }
 
     public List<User> getFollowedList(int id) { return userRepository.findFollowedById(id); }
+
+    public List<User> getBlockedUsersList(int id) { return userRepository.findBlockedById(id); }
 
     @Transactional
     public void follow(int followerId, int followedId) { this.userRepository.follow(followerId, followedId); }
