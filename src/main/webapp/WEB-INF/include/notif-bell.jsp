@@ -26,7 +26,7 @@
         <img src="../../images/notif.png" alt="" width="30" height="30" />
     </div>
     <ul id="notifiche-container">
-        <li><a href="<%= request.getContextPath() %>/notifiche?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a></li>
+        <li><a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a></li>
         <% for (var n: nonRead) { %>
             <li class="notifica da-leggere">
                 <a href="">
