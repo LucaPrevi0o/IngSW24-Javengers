@@ -1,4 +1,6 @@
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% var blockedUsers=(List<User>)request.getAttribute("blockedUsers"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,9 +13,12 @@
             <h1>Impostazioni profilo</h1>
             <h2><label for="blocked_users_list">Lista utenti bloccati</label></h2>
             <ul id="blocked_users_list">
-                <li>Utente che non esiste <button>Sblocca utente</button></li>
-                <li>Utente sconosciuto <button>Sblocca utente</button></li>
-                <li>Chi si è azzardato a nominare questo utente <button>Sblocca utente</button></li>
+                <% for (var user: blockedUsers) { %>
+                    <li>
+                        @<b><%= user.getUsername() %></b>
+                        <button>Sblocca utente</button>
+                    </li>
+                <% } %>
             </ul>
             <hr/>
             <h2>Preferenze notifiche</h2>

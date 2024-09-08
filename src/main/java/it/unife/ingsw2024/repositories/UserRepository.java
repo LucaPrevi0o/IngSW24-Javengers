@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.id in (select fm.followedId from FollowerMapping fm where fm.followerId = ?1)")
     List<User> findFollowedById(int id);
 
-    @Query("select bl from BlockedUserMapping bl where bl.blockerUserId = ?1")
+    @Query("select u from User u where u.id in (select bl.blockedUserId from BlockedUserMapping bl where bl.blockerUserId = ?1)")
     List<User> findBlockedById(int id);
 
     @Modifying
