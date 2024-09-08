@@ -20,7 +20,7 @@
         <title>Notifiche - @<%= user.getUsername() %></title>
         <link rel="stylesheet" href="../../css/notifiche.css" type="text/css" media="screen">
         <script type="text/javascript">
-            function changeViewTipo(selectedNotifType){
+            function changeViewByType(selectedNotifType){
                 /* Resetto la view rimettendo tutti i display a flex */
                 Array.from(document.querySelectorAll('.notif-container')).forEach(
                     (notif) => {
@@ -43,7 +43,7 @@
 
             }
 
-            function changeViewUsername(username){
+            function changeViewByUsername(username){
                 /* Converto tutto a lowercase per fare un confronto case-insensitive */
                 var searchUsername = username.toLowerCase();
 
@@ -59,9 +59,26 @@
                 });
             }
 
+            function changeViewByContent(selectedContent){
+                /* Converto tutto a lowercase per fare un confronto case-insensitive */
+                var content = selectedContent.toLowerCase();
+
+                /* Per ogni elemento con classe .notif-container setto display=none se l'attributo contenutoNotifica è diverso da quello selezionato */
+                Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => {
+                    var notifContent = notif.getAttribute('contenutoNotifica').toLowerCase();
+
+                    if (notifContent.includes(content)) {
+                        notif.style.display = "flex";
+                    } else {
+                        notif.style.display = "none";
+                    }
+                });
+            }
+
             function onLoadHandler() {
-                document.getElementById("search_notiftype").addEventListener("change", (event) => changeViewTipo(event.currentTarget.value));
-                document.getElementById("search_notifuser").addEventListener("input", (event) => changeViewUsername(event.currentTarget.value));
+                document.getElementById("search_notiftype").addEventListener("change", (event) => changeViewByType(event.currentTarget.value));
+                document.getElementById("search_notifuser").addEventListener("input", (event) => changeViewByUsername(event.currentTarget.value));
+                document.getElementById("search_notifcontent").addEventListener("input", (event) => changeViewByContent(event.currentTarget.value));
             }
 
             window.addEventListener("load", onLoadHandler);
@@ -84,12 +101,12 @@
             </select><br/>
             <label for="search_notifuser">Cerca in base al nome utente:</label>
             <input type="search" id="search_notifuser" placeholder="Username..."><br/>
-            <label for="search_notifcontent">Qui possiamo metterci un filtro per cercare le ricerche in base al contenuto (no pls)</label>
+            <label for="search_notifcontent">Cerca in base al contenuto:</label>
             <input type="search" id="search_notifcontent" placeholder="Cerca..."><br/>
             <ul id="lista-notifiche">
                 <% if (!today.isEmpty()) { %><li class="giorno"><p>Oggi</p></li><% } %>
                 <% for (var n: today) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>">
+                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
                     <div class="notifica">
                         <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
@@ -112,7 +129,7 @@
                 <% } %>
                 <% if (!yesterday.isEmpty()) { %><li class="giorno"><p>Ieri</p></li><% } %>
                 <% for (var n: yesterday) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>">
+                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
                     <div class="notifica">
                         <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                             <% } else { %><div class="notif-wrapper"><% } %>
@@ -135,7 +152,7 @@
                 <% } %>
                 <% if(!lastWeek.isEmpty()) {%><li class="giorno"><p>Ultima settimana</p></li><%}%>
                 <% for (var n: lastWeek) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>">
+                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
                     <div class="notifica">
                             <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
@@ -158,7 +175,7 @@
                 <% } %>
                 <% if(!lastMonth.isEmpty()) {%><li class="giorno"><p>Ultimo mese</p></li><%}%>
                 <% for (var n: lastMonth) { %>
-                <li class="notif-container"  tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>">
+                <li class="notif-container"  tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
                     <div class="notifica">
                             <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
@@ -181,7 +198,7 @@
                 <% } %>
                 <% if(!older.isEmpty()) {%><li class="giorno"><p>Meno recenti</p></li><%}%>
                 <% for (var n: older) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>">
+                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
                     <div class="notifica">
                             <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
                         <% } else { %><div class="notif-wrapper"><% } %>
