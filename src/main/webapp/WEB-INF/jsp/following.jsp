@@ -6,6 +6,7 @@
     var selectedUser=(User)request.getAttribute("selectedUser");
     var followerList=(List<User>)request.getAttribute("followerList");
     var followedList=(List<User>)request.getAttribute("followedList");
+    var blockedUsers=(List<User>)request.getAttribute("blockedUsers");
  %>
 <!DOCTYPE html>
 <html>
@@ -86,12 +87,18 @@
                 </section>
                 <div id="buttons-container">
                     <% if (user.getId()!=selectedUser.getId()) { %>
-                    <%-- Se l'id dell'utente loggato è presente nella lista di followers dell'utente allora viene visualizzato il pulsante "Smetti di seguire", altrimenti il pulsante segui --%>
-                    <% if (followerList.stream().filter(item -> item.getId() == loggedUser.getId()).findAny().orElse(null) != null) {%><a href="<%= request.getContextPath() %>/unfollow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Smetti di seguire</button></a>
+                    <%-- Se l'id dell'utente loggato è presente nella lista di followers dell'utente allora viene visualizzato il pulsante "Smetti di seguire", altrimenti il pulsante "Segui" --%>
+                    <% if (followerList.stream().filter(item -> item.getId() == user.getId()).findAny().orElse(null) != null) {%>
+                    <a href="<%= request.getContextPath() %>/unfollow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button class="segui-button">Smetti di seguire</button></a>
                     <%} else {%>
                     <a href="<%= request.getContextPath() %>/follow?id=<%= user.getId() %>&followedId=<%= selectedUser.getId() %>"><button onclick="sendNotifica()" class="segui-button">Segui</button></a>
-                    <% }} %>
-                    <a href="<%= request.getContextPath() %>/block?blockedId=<%= selectedUser.getId() %>&userId=<%= user.getId() %>"><button id="block-button">Blocca utente</button></a>
+                    <% } %>
+                    <%-- Se l'id dell'utente di questo profilo è presente nella lista di utenti bloccati dell'utente allora viene visualizzato il pulsante "Sblocca utente", altrimenti il pulsante "Blocca utente" --%>
+                    <% if (blockedUsers.stream().filter(item -> item.getId() == selectedUser.getId()).findAny().orElse(null) != null) {%>
+                    <a href="<%= request.getContextPath() %>/unblock?blockedId=<%= selectedUser.getId() %>&userId=<%= user.getId() %>"><button class="block-button">Sblocca utente</button></a>
+                    <%} else {%>
+                    <a href="<%= request.getContextPath() %>/block?blockedId=<%= selectedUser.getId() %>&userId=<%= user.getId() %>"><button class="block-button">Blocca utente</button></a>
+                    <%}}%>
                 </div>
             </div>
         </section>

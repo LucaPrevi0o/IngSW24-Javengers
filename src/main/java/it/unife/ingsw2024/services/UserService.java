@@ -35,4 +35,7 @@ import java.util.List;
 
     @Transactional
     public void block(int blockedId, int blockerId) { this.userRepository.block(blockedId, blockerId); }
+
+    @Transactional
+    public void unblock(int blockedId, int blockerId) { this.userRepository.unblock(blockedId, blockerId); }
 }

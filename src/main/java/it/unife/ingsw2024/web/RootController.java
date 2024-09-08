@@ -76,7 +76,7 @@ import java.util.List;
         MessageHeaders headers = message.getHeaders();
         Message updatedMessage = new GenericMessage<>(updatedPayload.getBytes(), headers);
 
-        System.out.println("Messagio aggiornato: " + updatedPayload);
+        System.out.println("Messaggio aggiornato: " + updatedPayload);
 
         return updatedMessage;
     }
@@ -180,6 +180,14 @@ import java.util.List;
         return new ModelAndView(redirectView);
     }
 
+    @RequestMapping("/unblock")
+    public ModelAndView unblock(@RequestParam int blockedId, @RequestParam int userId)  {
+
+        this.userService.unblock(blockedId, userId);
+        RedirectView redirectView=new RedirectView("/settings?id="+userId);
+        return new ModelAndView(redirectView);
+    }
+
     @RequestMapping("/following")
     public String following(Model model, @RequestParam int id, @RequestParam int loggedId) {
 
@@ -198,6 +206,10 @@ import java.util.List;
         model.addAttribute("user", user);
         model.addAttribute("followerList", followerList);
         model.addAttribute("followedList", followedList);
+
+        /* Per il pulsante blocca/sblocca */
+        var blockedUsers=this.userService.getBlockedUsersList(loggedId);
+        model.addAttribute("blockedUsers", blockedUsers);
 
         return "following";
     }

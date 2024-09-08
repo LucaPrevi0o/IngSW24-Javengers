@@ -33,4 +33,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value="insert into BLOCKED_USERS (BlockedUser, BlockerUser) value (?1, ?2)", nativeQuery=true)
     void block(int blockedUserId, int userId);
+
+    @Modifying
+    @Query(value="delete from BLOCKED_USERS where BlockedUser = ?1 and BlockerUser = ?2", nativeQuery=true)
+    void unblock(int blockedUserId, int userId);
 }

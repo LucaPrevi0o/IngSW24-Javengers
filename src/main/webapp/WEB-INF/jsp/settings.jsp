@@ -24,7 +24,7 @@
                         <% for (var user: blockedUsers) { %>
                             <li>
                                 <a href="<%= request.getContextPath() %>/following?id=<%= user.getId() %>&loggedId=<%= activeUser.getId() %>">@<b><%= user.getUsername() %></b></a>
-                                <button class="unblock-button">Sblocca utente</button>
+                                <a href="<%= request.getContextPath() %>/unblock?blockedId=<%= user.getId() %>&userId=<%= activeUser.getId() %>"><button class="unblock-button">Sblocca utente</button></a>
                             </li>
                         <% } %>
                     </ul>
