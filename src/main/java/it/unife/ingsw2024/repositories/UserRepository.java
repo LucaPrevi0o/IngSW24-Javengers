@@ -26,4 +26,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value="delete from FOLLOWERS where follower = ?1 and followed = ?2", nativeQuery=true)
     void unfollow(int followerId, int followedId);
+
+    @Modifying
+    @Query(value="insert into BLOCKED_USERS (BlockedUser, BlockerUser) value (?1, ?2)", nativeQuery=true)
+    void block(int blockedUserId, int userId);
 }

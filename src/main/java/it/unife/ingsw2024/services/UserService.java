@@ -31,4 +31,7 @@ import java.util.List;
 
     @Transactional
     public void unfollow(int followerId, int followedId) { this.userRepository.unfollow(followerId, followedId); }
+
+    @Transactional
+    public void block(int blockedId, int blockerId) { this.userRepository.block(blockedId, blockerId); }
 }
