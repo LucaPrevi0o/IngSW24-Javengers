@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<% var activeUser=(User)request.getAttribute("user"); %>
 <% var blockedUsers=(List<User>)request.getAttribute("blockedUsers"); %>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,7 @@
             <ul id="blocked_users_list">
                 <% for (var user: blockedUsers) { %>
                     <li>
-                        @<b><%= user.getUsername() %></b>
+                        <a href="<%= request.getContextPath() %>/following?id=<%= user.getId() %>&loggedId=<%= activeUser.getId() %>">@<b style="color: brown"><%= user.getUsername() %></b></a>
                         <button>Sblocca utente</button>
                     </li>
                 <% } %>
