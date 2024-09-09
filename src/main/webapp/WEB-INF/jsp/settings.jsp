@@ -11,6 +11,25 @@
     <head>
         <title>Impostazioni</title>
         <link rel="stylesheet" href="../../css/settings.css" type="text/css" media="screen">
+        <script>
+            function updatePreferences() {
+
+                let messages=document.querySelector("#message_notif").checked;
+                let followers=document.querySelector("#follower_notif").checked;
+                let events=document.querySelector("#event_notif").checked;
+                let payments=document.querySelector("#payment_notif").checked;
+
+                window.location.href="<%= request.getContextPath() %>/updateSettings?id=<%= activeUser.getId() %>&messages="+messages+"&followers="+followers+"&events="+events+"&payments="+payments;
+            }
+
+            window.addEventListener("load", function() {
+
+                document.querySelector("#message_notif").addEventListener("change", updatePreferences);
+                document.querySelector("#follower_notif").addEventListener("change", updatePreferences);
+                document.querySelector("#event_notif").addEventListener("change", updatePreferences);
+                document.querySelector("#payment_notif").addEventListener("change", updatePreferences);
+            });
+        </script>
     </head>
     <body>
         <%@include file="../include/sidebar.jsp"%>
@@ -35,19 +54,19 @@
                     <div id="notif-settings-container">
                         <p>Selezionare le categorie di notifiche da ricevere</p>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="message_notif" checked="<%= userPreferences[0] ? "selected" : ""%>">
+                            <input type="checkbox" id="message_notif" <%= userPreferences[0] ? "checked" : ""%>>
                             <label for="message_notif">Messaggi</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="follower_notif" checked="<%= userPreferences[1] ? "selected" : ""%>">
+                            <input type="checkbox" id="follower_notif" <%= userPreferences[1] ? "checked" : ""%>>
                             <label for="follower_notif">Follower</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="event_notif" checked="<%= userPreferences[2] ? "selected" : ""%>">
+                            <input type="checkbox" id="event_notif" <%= userPreferences[2] ? "checked" : ""%>>
                             <label for="event_notif">Eventi</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="payment_notif" checked="<%= userPreferences[3] ? "selected" : ""%>">
+                            <input type="checkbox" id="payment_notif" <%= userPreferences[3] ? "checked" : ""%>>
                             <label for="payment_notif">Pagamenti</label>
                         </div>
                     </div>
