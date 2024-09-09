@@ -1,6 +1,7 @@
 package it.unife.ingsw2024.repositories;
 
 import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.models.NotificationPreferencesMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Modifying
     @Query(value="delete from NOTIFICATIONS where UserDST = ?1 and Viewed = 1", nativeQuery=true)
     void deleteAllRead(int userId);
+
+    @Query(value="select npm from NotificationPreferencesMapping npm where npm.id = ?1")
+    NotificationPreferencesMapping findUserPreferences(int userId);
 }

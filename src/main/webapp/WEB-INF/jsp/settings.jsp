@@ -3,6 +3,7 @@
 <% var activeUser=(User)request.getAttribute("user"); %>
 <%
     var blockedUsers=(List<User>)request.getAttribute("blockedUsers");
+    var userPreferences=(boolean[])request.getAttribute("userPreferences");
     String titoloSidebar = "Impostazioni";
 %>
 <!DOCTYPE html>
@@ -34,19 +35,19 @@
                     <div id="notif-settings-container">
                         <p>Selezionare le categorie di notifiche da ricevere</p>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="message_notif">
+                            <input type="checkbox" id="message_notif" checked="<%= userPreferences[0] ? "selected" : ""%>">
                             <label for="message_notif">Messaggi</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="follower_notif">
+                            <input type="checkbox" id="follower_notif" checked="<%= userPreferences[1] ? "selected" : ""%>">
                             <label for="follower_notif">Follower</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="event_notif">
+                            <input type="checkbox" id="event_notif" checked="<%= userPreferences[2] ? "selected" : ""%>">
                             <label for="event_notif">Eventi</label>
                         </div>
                         <div class="notif-settings-option">
-                            <input type="checkbox" id="payment_notif">
+                            <input type="checkbox" id="payment_notif" checked="<%= userPreferences[3] ? "selected" : ""%>">
                             <label for="payment_notif">Pagamenti</label>
                         </div>
                     </div>

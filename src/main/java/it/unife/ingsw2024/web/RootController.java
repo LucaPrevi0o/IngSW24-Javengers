@@ -23,6 +23,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller public class RootController {
@@ -134,11 +135,14 @@ import java.util.List;
 
         var user=this.userService.getUserById(id);
         var blockedUsers=this.userService.getBlockedUsersList(id);
-        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+        var notifications=this.notificationService.getAllByUserDstId(id);
+        var userNotifPref=this.notificationService.getUserPreferences(id);
+        var notifPref=new boolean[]{userNotifPref.isMessages(), userNotifPref.isFollowers(), userNotifPref.isEvents(), userNotifPref.isPayments()};
 
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
         model.addAttribute("blockedUsers", blockedUsers);
+        model.addAttribute("userPreferences", notifPref);
 
         return "settings";
     }

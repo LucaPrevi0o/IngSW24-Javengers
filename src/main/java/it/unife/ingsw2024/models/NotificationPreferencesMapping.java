@@ -18,15 +18,15 @@ public class NotificationPreferencesMapping {
     @Id @Column(name = "id")
     private int id;
 
-    @Column(name = "messages")
+    @Column(name = "messages", columnDefinition = "TINYINT")
     private boolean messages;
 
-    @Column(name = "followers")
+    @Column(name = "followers", columnDefinition = "TINYINT")
     private boolean followers;
 
-    @Column(name = "events")
+    @Column(name = "events", columnDefinition = "TINYINT")
     private boolean events;
 
-    @Column(name = "payments")
+    @Column(name = "payments", columnDefinition = "TINYINT")
     private boolean payments;
 }
