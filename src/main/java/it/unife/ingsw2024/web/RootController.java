@@ -23,7 +23,6 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller public class RootController {
@@ -145,6 +144,14 @@ import java.util.List;
         model.addAttribute("userPreferences", notifPref);
 
         return "settings";
+    }
+
+    @RequestMapping("/updateSettings")
+    public ModelAndView updateSettings(@RequestParam int id, @RequestParam boolean messages, @RequestParam boolean followers, @RequestParam boolean events, @RequestParam boolean payments) {
+
+        this.notificationService.updatePreferences(id, new boolean[]{messages, followers, events, payments});
+        RedirectView redirectView=new RedirectView("/settings?id="+id);
+        return new ModelAndView(redirectView);
     }
 
     @RequestMapping("/unfollow")

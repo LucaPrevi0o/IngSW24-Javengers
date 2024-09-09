@@ -34,6 +34,9 @@ import java.util.List;
 
     public NotificationPreferencesMapping getUserPreferences(int id) { return notificationRepository.findUserPreferences(id); }
 
+    @Transactional
+    public void updatePreferences(int id, boolean[] preferences) { notificationRepository.updatePreferences(id, preferences[0], preferences[1], preferences[2], preferences[3]); }
+
     //stuff
     public List<Notification> addElements() { return this.getAll(); }
 }
