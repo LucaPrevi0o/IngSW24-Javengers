@@ -1,4 +1,4 @@
-DROP SCHEMA IF EXISTS `Javengers_DB`;
+DROP DATABASE IF EXISTS `Javengers_DB`;
 CREATE DATABASE  IF NOT EXISTS `Javengers_DB` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `Javengers_DB`;
 -- MySQL dump 10.13  Distrib 8.0.36, for Linux (x86_64)
@@ -34,7 +34,7 @@ CREATE TABLE `BLOCKED_USERS` (
                                  KEY `blocker_user_idx` (`BlockerUser`),
                                  CONSTRAINT `blocked_user` FOREIGN KEY (`BlockedUser`) REFERENCES `USER` (`id`),
                                  CONSTRAINT `blocker_user` FOREIGN KEY (`BlockerUser`) REFERENCES `USER` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `BLOCKED_USERS` (
 
 LOCK TABLES `BLOCKED_USERS` WRITE;
 /*!40000 ALTER TABLE `BLOCKED_USERS` DISABLE KEYS */;
-INSERT INTO `BLOCKED_USERS` VALUES (1,1,3),(2,4,3),(4,2,3),(5,5,3);
 /*!40000 ALTER TABLE `BLOCKED_USERS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -111,6 +110,34 @@ INSERT INTO `NOTIFICATIONS` VALUES (46,2,3,'@<b>marcobianchi00</b> ha cominciato
 UNLOCK TABLES;
 
 --
+-- Table structure for table `PREFERENCES`
+--
+
+DROP TABLE IF EXISTS `PREFERENCES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PREFERENCES` (
+                               `id` int NOT NULL,
+                               `messages` tinyint NOT NULL DEFAULT '1',
+                               `followers` tinyint NOT NULL DEFAULT '1',
+                               `events` tinyint NOT NULL DEFAULT '1',
+                               `payments` tinyint NOT NULL DEFAULT '1',
+                               PRIMARY KEY (`id`),
+                               CONSTRAINT `userId` FOREIGN KEY (`id`) REFERENCES `USER` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PREFERENCES`
+--
+
+LOCK TABLES `PREFERENCES` WRITE;
+/*!40000 ALTER TABLE `PREFERENCES` DISABLE KEYS */;
+INSERT INTO `PREFERENCES` VALUES (1,1,1,1,1),(2,1,1,1,1),(3,1,0,1,1),(4,1,1,1,1),(5,1,1,1,1),(6,1,1,1,1);
+/*!40000 ALTER TABLE `PREFERENCES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `USER`
 --
 
@@ -145,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-08 11:04:06
+-- Dump completed on 2024-09-09 11:26:44
