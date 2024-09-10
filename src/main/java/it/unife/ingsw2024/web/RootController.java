@@ -103,7 +103,12 @@ import java.util.List;
     @RequestMapping("/getByUserId")
     public String getByUserId(Model model, @RequestParam int id) {
 
-        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+        var notifications=this.notificationService.getAllByUserDstId(id);
+        var userPref=this.notificationService.getUserPreferences(id);
+        notifications.removeIf(n -> n.getNotificationType()==0 && !userPref.isMessages() ||
+                                    n.getNotificationType()==1 && !userPref.isFollowers() ||
+                                    n.getNotificationType()==2 && !userPref.isEvents() ||
+                                    n.getNotificationType()==3 && !userPref.isPayments());
         var user=this.userService.getUserById(id);
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
