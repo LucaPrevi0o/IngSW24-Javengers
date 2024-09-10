@@ -5,6 +5,13 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.with_notif {
+
+    filter: brightness(0.1) invert(.6) sepia(.9) hue-rotate(320deg) saturate(300%)
+    drop-shadow(1px 1px 0.5px #660000) drop-shadow(1px -1px 0.5px #660000) drop-shadow(-1px -1px 0.5px #660000) drop-shadow(-1px 1px 0.5px #660000)
+    /*drop-shadow(-10px -10px 10px lightgray) drop-shadow(-10px 10px 10px lightgray) drop-shadow(10px -10px 10px lightgray) drop-shadow(10px 10px 10px lightgray)*/
+}
+
 #bell-container {
     position: relative;
     margin-left: 95%;

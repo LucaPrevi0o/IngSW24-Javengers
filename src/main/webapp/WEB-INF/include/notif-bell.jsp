@@ -23,10 +23,13 @@
 </script>
     <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end; justify-content: center">
     <div id="bell-container">
-        <img src="../../images/notif.png" alt="" width="30" height="30" />
+        <img src="../../images/notif.png" alt="" width="30" height="30" <%= !nonRead.isEmpty() ? "class=\"with_notif\"" : ""%>/>
     </div>
     <ul id="notifiche-container">
-        <li><a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a></li>
+        <li>
+            <a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a>
+            <% if (!nonRead.isEmpty()) { %> - Hai <%= nonRead.size() %> notifiche non lette<% } %>
+        </li>
         <% for (var n: nonRead) { %>
             <li class="notifica da-leggere">
                 <a href="">
