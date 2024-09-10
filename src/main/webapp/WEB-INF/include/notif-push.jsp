@@ -5,7 +5,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script language="javascript">
     var stompClient = null;
-    var id = 1;
 
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
@@ -24,30 +23,32 @@
         console.log(frame);
         stompClient.subscribe('/private/'+ <%= currentUser.getId() %> +'/messages', function(result) {
 
-            let newNotif = document.createElement("li");
-            newNotif.className = "push-notif-container";
-            newNotif.id = "push-notif-" + id;
             var resultBody = JSON.parse(result.body);
             var payload = atob(resultBody.payload);
             var jsonData = JSON.parse(payload);
+
             console.log(jsonData.notificationMsg);
+
+            let newNotif = document.createElement("li");
+            newNotif.className = "push-notif-container";
+            newNotif.id = "push-notif-" + jsonData.id;
 
             newNotif.innerHTML = `
                 <div class="push-notif-content">
-                    <p>`+ jsonData.title +` -
-                        <a href=\"<%= request.getContextPath() %>/following?id=` + jsonData.userSrcId + `&loggedId=<%= currentUser.getId() %>\">
-                            @<b id="username-push">`+jsonData.usernameSrc+`</b>
+                    <p>Nuova notifica -
+                        <a href=\"<%= request.getContextPath() %>/following?id=` + jsonData.userSrc.id + `&loggedId=<%= currentUser.getId() %>\">
+                            @<b id="username-push">`+jsonData.userSrc.username +`</b>
                         </a>
                     </p>
                     <div class="push-notif-details">
-                        <a href=\" <%= request.getContextPath() %> /notifclick?id=` + jsonData.insNotifId + `&userId=<%= currentUser.getId() %>\">
+                        <a href=\" <%= request.getContextPath() %> /notifclick?id=` + jsonData.id + `&userId=<%= currentUser.getId() %>\">
                             <p style="font-size: 21px;"><b style="color: cornflowerblue">`+ getLiteralType(jsonData.notificationType)+ `</b></p>
                             <p style="font-size: 20px;">`+ jsonData.notificationMsg +`</p>
                         </a>
                     </div>
                     <p>`+ jsonData.notificationDate +` - `+ jsonData.notificationTime +`</p>
                 </div>
-                <div onclick="closeNotification(`+ id +`)" class="close-push-notif">
+                <div onclick="closeNotification(`+ jsonData.id +`)" class="close-push-notif">
                     <img src="../../images/cross.png" alt="Close" height="20" width="20"/>
                 </div>
             `;
@@ -70,16 +71,16 @@
                 /* Aggiungo notifica in cima */
                 let notifica = document.createElement("li");
                 notifica.innerHTML = `
-                <li class="notif-container"  tipoNotifica="`+ jsonData.notificationType +`" usernameSrc="`+ jsonData.usernameSrc +`" contenutoNotifica="`+ jsonData.notificationMsg +`">
+                <li class="notif-container"  tipoNotifica="`+ jsonData.notificationType +`" usernameSrc="`+ jsonData.userSrc.username +`" contenutoNotifica="`+ jsonData.notificationMsg +`">
                     <div class="notifica">
                         <div class="da-leggere notif-wrapper">
                             <div>
-                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= currentUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                             </div>
                             <div class="notif-content">
-                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrcId +`&loggedId=<%= currentUser.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.usernameSrc +`</b>:</p></a>
+                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.userSrc.username +`</b>:</p></a>
                                 <hr style="margin-bottom: 5px; margin-top: 2px">
-                                <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.insNotifId +`&userId=<%= currentUser.getId() %>">
+                                <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.id +`&userId=<%= currentUser.getId() %>">
                                     <div class="notif-details">
                                         <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
                                         <p>`+ jsonData.notificationMsg +`</p>
@@ -96,13 +97,10 @@
                 adesso.after(notifica);
             }
 
-            id++;
         });
     });
 
     function closeNotification(id){
-
-        console.log("id: " + id);
         document.getElementById("push-notif-" + id).style.display = "none";
     }
 

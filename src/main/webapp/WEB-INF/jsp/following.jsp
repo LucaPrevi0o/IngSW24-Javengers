@@ -32,13 +32,15 @@
 
                 stompClient.send('/app/application/' + <%= selectedUser.getId() %>, {}, JSON.stringify({
 
-                    usernameSrc: "<%= user.getUsername() %>", //username of user that sends notification
-                    userSrcId: <%= user.getId() %>,
+                    userSrc: {
+                        id: <%= user.getId() %>,
+                        username: "<%= user.getUsername() %>",
+                    },
+                    notificationMsg: "@<b><%= user.getUsername() %></b> ha cominciato a seguirti",  //notification text
                     notificationDate: date,
                     notificationTime: time,
-                    notificationType: 1,
-                    title: title, //notification title
-                    notificationMsg: "@<b><%= user.getUsername() %></b> ha cominciato a seguirti" })) //notification text
+                    notificationType: 1
+                }))
             }
 
             function sendNotifica(){

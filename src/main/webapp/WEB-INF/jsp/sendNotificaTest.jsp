@@ -17,7 +17,6 @@
             });
 
             function sendMessage() {
-                var title = "Nuova notifica";
                 var userId=document.querySelector("#userId").value;
                 var type=document.querySelector("#notifType").value;
                 var msg=document.querySelector("#message").value;
@@ -27,13 +26,16 @@
 
                 stompClient.send('/app/application/' + userId, {}, JSON.stringify({
 
-                    usernameSrc: "<%= user.getUsername() %>", //username of user that sends notification
-                    userSrcId: <%= user.getId() %>,
+                    userSrc: {
+                        id: <%= user.getId() %>,
+                        username: "<%= user.getUsername() %>",
+                    },
+                    notificationMsg: msg,  //notification text
                     notificationDate: date,
                     notificationTime: time,
-                    notificationType: type,
-                    title: title, //notification title
-                    notificationMsg: msg })) //notification text
+                    notificationType: type
+
+                }))
             }
         </script>
     </head>

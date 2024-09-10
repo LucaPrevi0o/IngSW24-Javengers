@@ -62,37 +62,24 @@ import java.util.List;
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         var notification = objectMapper.readValue(payload, Notification.class);
 
-        /* Inserisco userDst e userSrc */
+        /* Inserisco userDst all'interno della notifica */
         var userDst = this.userService.getUserById(usrDstId);
-        User userSrc = null;
-
-        /* UserSrc lo ottengo dall'attributo userSrcId salvato nell'oggetto Json */
-        var rootNode = objectMapper.readTree(payload);
-        var userSrcIdNode = rootNode.get("userSrcId");
-        if (userSrcIdNode != null) {
-
-            var userSrcId = userSrcIdNode.asInt();
-            userSrc = this.userService.getUserById(userSrcId);
-        }
-
         notification.setUserDst(userDst);
-        notification.setUserSrc(userSrc);
 
-        /* Aggiungo la notifica al db */
+
         if (isNotificationReceivable(usrDstId, notification)) {
 
             System.out.println("posso inviare la notifica");
-            var insertedNotification = this.notificationService.insert(notification);
-            var insNotifId = insertedNotification.getId();
 
-            // Faccio il parsing del payload in un JsonNode per aggiungere insNotifId
-            var updatedPayloadNode = (ObjectNode) rootNode;
-            updatedPayloadNode.put("insNotifId", insNotifId);
-            var updatedPayload = objectMapper.writeValueAsString(updatedPayloadNode);
+            /* Aggiungo la notifica al db */
+            var insertedNotification = this.notificationService.insert(notification);;
 
-            /* Creo il messaggio aggiornato con l'insNotifId */
+            // Converto insertedNotification in un array di bytes in formato Json
+            var updatedPayload = objectMapper.writeValueAsBytes(insertedNotification);
+
+            /* Creo il messaggio con la notifica aggiornata */
             var headers = message.getHeaders();
-            var updatedMessage = new GenericMessage<>(updatedPayload.getBytes(), headers);
+            var updatedMessage = new GenericMessage<>(updatedPayload, headers);
 
             System.out.println("Messaggio aggiornato: " + updatedPayload);
             return updatedMessage;
