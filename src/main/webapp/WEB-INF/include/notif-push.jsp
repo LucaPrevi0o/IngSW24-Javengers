@@ -53,6 +53,11 @@
                 </div>
             `;
 
+            /* Quando ricevo una notifica push viene riprodotto un jingle e si chiude dopo 10 secondi */
+            var audio = new Audio("../../sounds/notif.mp3");
+            audio.play();
+            setTimeout(() => closeNotification(jsonData.id), 10000);
+
             document.getElementById("push-notif-list").prepend(newNotif);
 
             /* Se sono nella jsp notifiche aggiungo la notifica in cima */
