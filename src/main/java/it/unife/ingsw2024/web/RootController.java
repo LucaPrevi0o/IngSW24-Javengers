@@ -22,7 +22,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-
 import java.util.List;
 
 @Controller public class RootController {
@@ -33,13 +32,12 @@ import java.util.List;
 
     @MessageMapping("/application")
     @SendTo("/all/messages")
-    public Message send(final Message message) throws Exception {
-        return message;
-    }
+    public Message send(final Message message) throws Exception { return message; }
 
     @MessageMapping("/application/{userId}")
     @SendTo("/private/{userId}/messages")
     public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
+
         /* Decodifico il body del messaggio che contiene la notifica */
         String payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
 
@@ -96,7 +94,7 @@ import java.util.List;
     public ModelAndView deleteAllRead(@RequestParam int id) {
 
         this.notificationService.deleteAllRead(id);
-        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        var redirectView=new RedirectView("/getByUserId?id="+id);
         return new ModelAndView(redirectView);
     }
 
@@ -118,19 +116,20 @@ import java.util.List;
     @RequestMapping("/setAllAsRead")
     public ModelAndView setAllAsRead(@RequestParam int id) {
 
-        List<Notification> notifications=this.notificationService.getAllByUserDstId(id);
+        var notifications=this.notificationService.getAllByUserDstId(id);
         for (var n: notifications) n.setViewed(true);
         this.notificationService.insertAll(notifications);
 
-        RedirectView redirectView=new RedirectView("/getByUserId?id="+id);
+        var redirectView=new RedirectView("/getByUserId?id="+id);
         return new ModelAndView(redirectView);
     }
 
     @RequestMapping("/follow")
     public ModelAndView followProfile(@RequestParam int id, @RequestParam int followedId) {
 
-        this.userService.follow(id, followedId);
-        RedirectView redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
+        var blockedUsers=this.userService.getBlockedUsersList(followedId);
+        if (!blockedUsers.contains(this.userService.getUserById(id))) this.userService.follow(id, followedId);
+        var redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
         return new ModelAndView(redirectView);
     }
 
@@ -155,7 +154,7 @@ import java.util.List;
     public ModelAndView updateSettings(@RequestParam int id, @RequestParam boolean messages, @RequestParam boolean followers, @RequestParam boolean events, @RequestParam boolean payments) {
 
         this.notificationService.updatePreferences(id, new boolean[]{messages, followers, events, payments});
-        RedirectView redirectView=new RedirectView("/settings?id="+id);
+        var redirectView=new RedirectView("/settings?id="+id);
         return new ModelAndView(redirectView);
     }
 
@@ -163,14 +162,14 @@ import java.util.List;
     public ModelAndView unfollowProfile(@RequestParam int id, @RequestParam int followedId) {
 
         this.userService.unfollow(id, followedId);
-        RedirectView redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
+        var redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
         return new ModelAndView(redirectView);
     }
 
     @RequestMapping("/notifiche")
     public String notifiche(Model model, @RequestParam int id) {
 
-        List<Notification> notifications=this.notificationService.getAll();
+        var notifications=this.notificationService.getAll();
         var user=this.userService.getUserById(id);
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
@@ -180,11 +179,11 @@ import java.util.List;
     @RequestMapping("/notifclick")
     public ModelAndView viewandredirect(@RequestParam int id, @RequestParam int userId)  {
 
-        Notification toUpdate=this.notificationService.getById(id);
+        var toUpdate=this.notificationService.getById(id);
         toUpdate.setViewed(true);
         this.notificationService.insert(toUpdate);
 
-        RedirectView redirectView=new RedirectView("/getByUserId?id="+userId);
+        var redirectView=new RedirectView("/getByUserId?id="+userId);
         return new ModelAndView(redirectView);
     }
 
@@ -192,7 +191,7 @@ import java.util.List;
     public ModelAndView block(@RequestParam int blockedId, @RequestParam int userId)  {
 
         this.userService.block(blockedId, userId);
-        RedirectView redirectView=new RedirectView("/settings?id="+userId);
+        var redirectView=new RedirectView("/settings?id="+userId);
         return new ModelAndView(redirectView);
     }
 
@@ -200,7 +199,7 @@ import java.util.List;
     public ModelAndView unblock(@RequestParam int blockedId, @RequestParam int userId)  {
 
         this.userService.unblock(blockedId, userId);
-        RedirectView redirectView=new RedirectView("/settings?id="+userId);
+        var redirectView=new RedirectView("/settings?id="+userId);
         return new ModelAndView(redirectView);
     }
 
