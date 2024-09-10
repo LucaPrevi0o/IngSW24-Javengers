@@ -94,11 +94,11 @@
             <div class="filter-container">
                 <label for="search_notiftype">Filtra in base al tipo di notifica</label>
                 <select id="search_notiftype" style="width: 200px; height: 30px;">
+                    <option value="4">Tutte</option>
                     <option value="0">Messaggi</option>
                     <option value="1">Follower</option>
                     <option value="2">Eventi</option>
                     <option value="3">Pagamenti</option>
-                    <option value="4">Tutte</option>
                 </select>
             </div>
             <div class="filter-container">
