@@ -8,6 +8,7 @@ import it.unife.ingsw2024.models.Notification;
 import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -30,6 +31,19 @@ import java.util.List;
     @Autowired UserService userService;
     @Autowired SimpMessagingTemplate simpMessagingTemplate;
 
+    private <T> boolean isContained(T usr, List<T> list) { return list.contains(usr); }
+
+    private boolean isNotificationReceivable(int usrDstId, Notification n) {
+
+        var userPref=this.notificationService.getUserPreferences(usrDstId);
+        var blockedUsersList=this.userService.getBlockedUsersList(usrDstId);
+        return !isContained(n.getUserSrc(), blockedUsersList) && (
+            n.getNotificationType()==0 && userPref.isMessages() ||
+            n.getNotificationType()==1 && userPref.isFollowers() ||
+            n.getNotificationType()==2 && userPref.isEvents() ||
+            n.getNotificationType()==3 && userPref.isPayments());
+    }
+
     @MessageMapping("/application")
     @SendTo("/all/messages")
     public Message send(final Message message) throws Exception { return message; }
@@ -38,23 +52,26 @@ import java.util.List;
     @SendTo("/private/{userId}/messages")
     public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
 
+        var usrDstId=Integer.parseInt(userId);
+
         /* Decodifico il body del messaggio che contiene la notifica */
-        String payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
+        var payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
 
         /* Creo la notifica da aggiungere al database decodificandola con Jackson in un oggetto di tipo Notifica */
-        ObjectMapper objectMapper = new ObjectMapper();
+        var objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Notification notification = objectMapper.readValue(payload, Notification.class);
+        var notification = objectMapper.readValue(payload, Notification.class);
 
         /* Inserisco userDst e userSrc */
-        User userDst = this.userService.getUserById(Integer.parseInt(userId));
+        var userDst = this.userService.getUserById(usrDstId);
         User userSrc = null;
 
         /* UserSrc lo ottengo dall'attributo userSrcId salvato nell'oggetto Json */
-        JsonNode rootNode = objectMapper.readTree(payload);
-        JsonNode userSrcIdNode = rootNode.get("userSrcId");
+        var rootNode = objectMapper.readTree(payload);
+        var userSrcIdNode = rootNode.get("userSrcId");
         if (userSrcIdNode != null) {
-            int userSrcId = userSrcIdNode.asInt();
+
+            var userSrcId = userSrcIdNode.asInt();
             userSrc = this.userService.getUserById(userSrcId);
         }
 
@@ -62,21 +79,24 @@ import java.util.List;
         notification.setUserSrc(userSrc);
 
         /* Aggiungo la notifica al db */
-        Notification insertedNotification = this.notificationService.insert(notification);
-        int insNotifId = insertedNotification.getId();
+        if (isNotificationReceivable(usrDstId, notification)) {
 
-        // Faccio il parsing del payload in un JsonNode per aggiungere insNotifId
-        ObjectNode updatedPayloadNode = (ObjectNode) rootNode;
-        updatedPayloadNode.put("insNotifId", insNotifId);
-        String updatedPayload = objectMapper.writeValueAsString(updatedPayloadNode);
+            System.out.println("posso inviare la notifica");
+            var insertedNotification = this.notificationService.insert(notification);
+            var insNotifId = insertedNotification.getId();
 
-        /* Creo il messaggio aggiornato con l'insNotifId */
-        MessageHeaders headers = message.getHeaders();
-        Message updatedMessage = new GenericMessage<>(updatedPayload.getBytes(), headers);
+            // Faccio il parsing del payload in un JsonNode per aggiungere insNotifId
+            var updatedPayloadNode = (ObjectNode) rootNode;
+            updatedPayloadNode.put("insNotifId", insNotifId);
+            var updatedPayload = objectMapper.writeValueAsString(updatedPayloadNode);
 
-        System.out.println("Messaggio aggiornato: " + updatedPayload);
+            /* Creo il messaggio aggiornato con l'insNotifId */
+            var headers = message.getHeaders();
+            var updatedMessage = new GenericMessage<>(updatedPayload.getBytes(), headers);
 
-        return updatedMessage;
+            System.out.println("Messaggio aggiornato: " + updatedPayload);
+            return updatedMessage;
+        } else return null;
     }
 
     @RequestMapping("/sendNotifica")
@@ -102,11 +122,7 @@ import java.util.List;
     public String getByUserId(Model model, @RequestParam int id) {
 
         var notifications=this.notificationService.getAllByUserDstId(id);
-        var userPref=this.notificationService.getUserPreferences(id);
-        notifications.removeIf(n -> n.getNotificationType()==0 && !userPref.isMessages() ||
-                                    n.getNotificationType()==1 && !userPref.isFollowers() ||
-                                    n.getNotificationType()==2 && !userPref.isEvents() ||
-                                    n.getNotificationType()==3 && !userPref.isPayments());
+        notifications.removeIf(n -> !isNotificationReceivable(id, n));
         var user=this.userService.getUserById(id);
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
