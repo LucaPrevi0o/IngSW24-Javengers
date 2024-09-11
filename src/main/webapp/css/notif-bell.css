@@ -20,10 +20,13 @@
     align-items: center;
     background-color: red;
     border-radius: 50px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 #notif-bell-number > span {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: bold;
 }
 

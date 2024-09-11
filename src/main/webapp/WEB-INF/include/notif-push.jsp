@@ -62,8 +62,8 @@
 
             /* Aggiungo la notifica alla campanella */
             let notificaBell = document.createElement("li");
+            notificaBell.className = "notifica da-leggere";
             notificaBell.innerHTML = `
-            <li class="notifica da-leggere">
                 <a href="<%= request.getContextPath() %>/notifclick?id=` + jsonData.id + `&userId=<%= currentUser.getId() %>">
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <div class="notif-details">
@@ -77,10 +77,9 @@
                     </div>
                 <span class="data-ora">` + jsonData.notificationDate + ` - ` + jsonData.notificationTime + `</span>
                 </a>
-            </li>
             `;
 
-            document.getElementById("vedi-tutto").after(notificaBell);
+            document.getElementById("vedi-tutto-container").after(notificaBell);
 
             /* Aggiorno il counter della campanella */
             notifCounter++;

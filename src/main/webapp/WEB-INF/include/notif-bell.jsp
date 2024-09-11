@@ -30,7 +30,7 @@
 
     </div>
     <ul id="notifiche-container">
-        <li>
+        <li id="vedi-tutto-container">
             <a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a>
         </li>
         <% if (nonRead.isEmpty()) { %><p style="font-size: 18px; margin: 10px 5px;">Nessuna nuova notifica</p><% } %>
