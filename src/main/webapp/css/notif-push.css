@@ -15,6 +15,7 @@
     border-radius: 5px;
     list-style-type: none;
     background-color: #b6a79c;
+    box-shadow: 0 0 8px 1px #363533;
 }
 
 .push-notif-container a {

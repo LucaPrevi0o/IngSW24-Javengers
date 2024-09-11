@@ -12,6 +12,21 @@
     /*drop-shadow(-10px -10px 10px lightgray) drop-shadow(-10px 10px 10px lightgray) drop-shadow(10px -10px 10px lightgray) drop-shadow(10px 10px 10px lightgray)*/
 }
 
+#notif-bell-number {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    border-radius: 50px;
+}
+
+#notif-bell-number > span {
+    font-size: 19px;
+    font-weight: bold;
+}
+
 #bell-container {
     position: relative;
     margin-left: 95%;
@@ -51,13 +66,14 @@
 
 #notifiche-container {
     background-color: #b6a79c;
+    box-shadow: 0 0 6px 1px #363533;
     border-radius: 10px;
     padding: 10px;
     margin: 0 10px;
     display: none;
     position: absolute;
     top: 65px;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 500px;
 }
 

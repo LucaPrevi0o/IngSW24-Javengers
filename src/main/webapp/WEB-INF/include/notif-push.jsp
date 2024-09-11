@@ -60,6 +60,33 @@
 
             document.getElementById("push-notif-list").prepend(newNotif);
 
+            /* Aggiungo la notifica alla campanella */
+            let notificaBell = document.createElement("li");
+            notificaBell.innerHTML = `
+            <li class="notifica da-leggere">
+                <a href="<%= request.getContextPath() %>/notifclick?id=` + jsonData.id + `&userId=<%= currentUser.getId() %>">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
+                        <div class="notif-details">
+                            <p>
+                                <img src="../../images/icons/` + jsonData.notificationType + `.png" width="15" height="15">
+                                - @<b style="color: brown">` + jsonData.userSrc.username + `</b>:
+                            </p>
+                            <hr style="margin-bottom: 5px; margin-top: 2px">
+                            <p>` + jsonData.notificationMsg + `</p>
+                        </div>
+                    </div>
+                <span class="data-ora">` + jsonData.notificationDate + ` - ` + jsonData.notificationTime + `</span>
+                </a>
+            </li>
+            `;
+
+            document.getElementById("vedi-tutto").after(notificaBell);
+
+            /* Aggiorno il counter della campanella */
+            notifCounter++;
+            document.getElementById("notif-bell-number").innerHTML = `<span>`+ notifCounter +`</span>`;
+
+
             /* Se sono nella jsp notifiche aggiungo la notifica in cima */
             /* Aggiungo categoria "adesso" */
             if(document.getElementById("lista-notifiche")) {

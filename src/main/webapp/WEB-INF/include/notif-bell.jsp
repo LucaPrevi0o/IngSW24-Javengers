@@ -8,6 +8,8 @@
 
 <link rel="stylesheet" href="../../css/notif-bell.css" type="text/css" media="screen">
 <script language="javascript">
+    let notifCounter = <%= nonRead.size() %>;
+
     function showNotifiche() {
 
         const bell = document.getElementById("notifiche-container");
@@ -24,15 +26,17 @@
     <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end; justify-content: center">
     <div id="bell-container">
         <img src="../../images/notif.png" alt="" width="30" height="30" <%= !nonRead.isEmpty() ? "class=\"with_notif\"" : ""%>/>
+        <% if (!nonRead.isEmpty()) { %><div id="notif-bell-number"><span><%= nonRead.size() %></span></div><% } %>
+
     </div>
     <ul id="notifiche-container">
         <li>
             <a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a>
-            <% if (!nonRead.isEmpty()) { %> - Hai <%= nonRead.size() %> notifiche non lette<% } %>
         </li>
+        <% if (nonRead.isEmpty()) { %><p style="font-size: 18px; margin: 10px 5px;">Nessuna nuova notifica</p><% } %>
         <% for (var n: nonRead) { %>
             <li class="notifica da-leggere">
-                <a href="">
+                <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= bellUser.getId() %>">
                     <div style="display: flex; flex-direction: row; align-items: center;">
                         <div class="notif-details">
                             <p>
