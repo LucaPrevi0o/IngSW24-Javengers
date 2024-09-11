@@ -1,6 +1,5 @@
 package it.unife.ingsw2024.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
@@ -28,11 +27,9 @@ public class Notification {
     @Column(name="NotificationMessage")
     private String notificationMsg; //notification content
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd")
     @Column(name="NotificationDate")
     private Date notificationDate; //notification date reference
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(name="NotificationTime")
     private Time notificationTime; //notification date reference
 

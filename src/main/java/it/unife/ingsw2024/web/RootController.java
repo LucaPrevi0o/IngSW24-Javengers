@@ -44,25 +44,27 @@ import java.util.List;
             n.getNotificationType()==3 && userPref.isPayments());
     }
 
+    //da cancellare
     @MessageMapping("/application")
     @SendTo("/all/messages")
     public Message send(final Message message) throws Exception { return message; }
 
-    @MessageMapping("/application/{userId}")
+    //da cancellare
+    /*@MessageMapping("/application/{userId}")
     @SendTo("/private/{userId}/messages")
     public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
 
         var usrDstId=Integer.parseInt(userId);
 
-        /* Decodifico il body del messaggio che contiene la notifica */
+        *//* Decodifico il body del messaggio che contiene la notifica *//*
         var payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
 
-        /* Creo la notifica da aggiungere al database decodificandola con Jackson in un oggetto di tipo Notifica */
+        *//* Creo la notifica da aggiungere al database decodificandola con Jackson in un oggetto di tipo Notifica *//*
         var objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         var notification = objectMapper.readValue(payload, Notification.class);
 
-        /* Inserisco userDst all'interno della notifica */
+        *//* Inserisco userDst all'interno della notifica *//*
         var userDst = this.userService.getUserById(usrDstId);
         notification.setUserDst(userDst);
 
@@ -71,21 +73,22 @@ import java.util.List;
 
             System.out.println("posso inviare la notifica");
 
-            /* Aggiungo la notifica al db */
+            *//* Aggiungo la notifica al db *//*
             var insertedNotification = this.notificationService.insert(notification);;
 
             // Converto insertedNotification in un array di bytes in formato Json
             var updatedPayload = objectMapper.writeValueAsBytes(insertedNotification);
 
-            /* Creo il messaggio con la notifica aggiornata */
+            *//* Creo il messaggio con la notifica aggiornata *//*
             var headers = message.getHeaders();
             var updatedMessage = new GenericMessage<>(updatedPayload, headers);
 
             System.out.println("Messaggio aggiornato: " + updatedPayload);
             return updatedMessage;
         } else return null;
-    }
+    }*/
 
+    //da cancellare
     @RequestMapping("/sendNotifica")
     public String sendNotificaTest(Model model, @RequestParam int id) {
 
@@ -130,8 +133,14 @@ import java.util.List;
     @RequestMapping("/follow")
     public ModelAndView followProfile(@RequestParam int id, @RequestParam int followedId) {
 
+        User userSrc = this.userService.getUserById(id);
+        User userDst = this.userService.getUserById(followedId);
+
         var blockedUsers=this.userService.getBlockedUsersList(followedId);
-        if (!blockedUsers.contains(this.userService.getUserById(id))) this.userService.follow(id, followedId);
+        if (!blockedUsers.contains(userSrc)){
+            this.userService.follow(id, followedId);
+            this.notificationService.sendNotification(userSrc, userDst, 1, "@<b>" + userSrc.getUsername() + "</b> ha cominciato a seguirti");
+        }
         var redirectView=new RedirectView("/following?id=" + followedId + "&loggedId=" + id);
         return new ModelAndView(redirectView);
     }

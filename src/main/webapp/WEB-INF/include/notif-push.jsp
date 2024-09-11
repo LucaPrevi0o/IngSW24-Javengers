@@ -23,9 +23,9 @@
         console.log(frame);
         stompClient.subscribe('/private/'+ <%= currentUser.getId() %> +'/messages', function(result) {
 
-            var resultBody = JSON.parse(result.body);
-            var payload = atob(resultBody.payload);
-            var jsonData = JSON.parse(payload);
+            var jsonData = JSON.parse(result.body);
+            /*var payload = atob(resultBody.payload);
+            var jsonData = JSON.parse(payload);*/
 
             console.log(jsonData.notificationMsg);
 
