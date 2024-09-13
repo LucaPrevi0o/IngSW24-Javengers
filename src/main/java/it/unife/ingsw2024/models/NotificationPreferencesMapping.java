@@ -29,4 +29,6 @@ public class NotificationPreferencesMapping {
 
     @Column(name = "payments", columnDefinition = "TINYINT")
     private boolean payments;
+
+    public boolean[] asList() { return new boolean[]{messages, followers, events, payments}; }
 }
