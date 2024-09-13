@@ -1,19 +1,17 @@
 package it.unife.ingsw2024.services;
 
-import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.models.notification.Notification;
 import it.unife.ingsw2024.models.NotificationPreferencesMapping;
+import it.unife.ingsw2024.models.notification.NotificationType;
 import it.unife.ingsw2024.models.User;
 import it.unife.ingsw2024.repositories.NotificationRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 //notification service
@@ -22,15 +20,13 @@ import java.util.List;
     @Autowired private NotificationRepository notificationRepository;
     @Autowired private SimpMessagingTemplate simpMessagingTemplate;
 
-    public Notification sendNotification(User userSrc, User userDst, int notificationType, String notificationMessage) {
+    public Notification sendNotification(User userSrc, User userDst, NotificationType notificationType, String notificationMessage) {
 
-        Notification notification = new Notification();
-        LocalDateTime now = LocalDateTime.now();
+        var notification = new Notification();
+        var now = LocalDateTime.now();
 
-        LocalDate localDate = now.toLocalDate();
-        Date date = Date.valueOf(localDate);
-        LocalTime localTime = now.toLocalTime();
-        Time time = Time.valueOf(localTime);
+        var date = Date.valueOf(now.toLocalDate());
+        var time = Time.valueOf(now.toLocalTime());
 
         //Riempio la notifica con i parametri passati
         notification.setUserSrc(userSrc);
@@ -39,14 +35,15 @@ import java.util.List;
         notification.setNotificationDate(date);
         notification.setNotificationTime(time);
         notification.setNotificationType(notificationType);
-
-        System.out.println(notification);
+        System.out.println("Notification: "+notification);
 
         //Aggiungo la notifica al database, mi restituisce la notifica aggiornata con l'id
         var insertedNotification = notificationRepository.save(notification);
+        System.out.println("Inserted notification: "+insertedNotification);
 
         // Mando il messaggio a /private/userDstId/messages (la notifica viene serializzata in JSON automaticamente)
         simpMessagingTemplate.convertAndSend("/private/"+ userDst.getId() +"/messages", insertedNotification);
+        System.out.println("Converted/sent notification: "+insertedNotification);
 
         return insertedNotification;
     }

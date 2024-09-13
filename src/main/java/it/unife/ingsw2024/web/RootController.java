@@ -1,7 +1,7 @@
 package it.unife.ingsw2024.web;
 
-import it.unife.ingsw2024.models.Notification;
-import it.unife.ingsw2024.models.User;
+import it.unife.ingsw2024.models.notification.Notification;
+import it.unife.ingsw2024.models.notification.NotificationType;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import java.util.List;
 
 @Controller public class RootController {
 
@@ -26,58 +25,14 @@ import java.util.List;
     //funzione di controllo per verificare se l'utente destinatario può ricevere la notifica
     private boolean isNotificationReceivable(int usrDstId, Notification n) {
 
-        var userPref=this.notificationService.getUserPreferences(usrDstId);
-        var blockedUsersList=this.userService.getBlockedUsersList(usrDstId);
+        var userPref=this.notificationService.getUserPreferences(usrDstId); //lista preferenze notifiche utente loggato
+        var blockedUsersList=this.userService.getBlockedUsersList(usrDstId); //lista utenti bloccati utente loggato
         return !blockedUsersList.contains(n.getUserSrc()) && ( //controllo per verificare che l'utente non sia bloccato
-            n.getNotificationType()==0 && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
-            n.getNotificationType()==1 && userPref.isFollowers() ||
-            n.getNotificationType()==2 && userPref.isEvents() ||
-            n.getNotificationType()==3 && userPref.isPayments());
+            n.getNotificationType()==NotificationType.MESSAGES && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
+            n.getNotificationType()==NotificationType.FOLLOWERS && userPref.isFollowers() ||
+            n.getNotificationType()==NotificationType.EVENTS && userPref.isEvents() ||
+            n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
     }
-
-    //da cancellare
-    @MessageMapping("/application")
-    @SendTo("/all/messages")
-    public Message send(final Message message) { return message; } //
-
-    //da cancellare
-    /*@MessageMapping("/application/{userId}")
-    @SendTo("/private/{userId}/messages")
-    public Message sendToUser(@DestinationVariable String userId, final Message message) throws Exception {
-
-        var usrDstId=Integer.parseInt(userId);
-
-        *//* Decodifico il body del messaggio che contiene la notifica *//*
-        var payload = new String((byte[]) message.getPayload()); //oggetto di tipo Json che contiene attributi specificati in sendNotificaTest.jsp
-
-        *//* Creo la notifica da aggiungere al database decodificandola con Jackson in un oggetto di tipo Notifica *//*
-        var objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        var notification = objectMapper.readValue(payload, Notification.class);
-
-        *//* Inserisco userDst all'interno della notifica *//*
-        var userDst = this.userService.getUserById(usrDstId);
-        notification.setUserDst(userDst);
-
-
-        if (isNotificationReceivable(usrDstId, notification)) {
-
-            System.out.println("posso inviare la notifica");
-
-            *//* Aggiungo la notifica al db *//*
-            var insertedNotification = this.notificationService.insert(notification);;
-
-            // Converto insertedNotification in un array di bytes in formato Json
-            var updatedPayload = objectMapper.writeValueAsBytes(insertedNotification);
-
-            *//* Creo il messaggio con la notifica aggiornata *//*
-            var headers = message.getHeaders();
-            var updatedMessage = new GenericMessage<>(updatedPayload, headers);
-
-            System.out.println("Messaggio aggiornato: " + updatedPayload);
-            return updatedMessage;
-        } else return null;
-    }*/
 
     //da cancellare
     @RequestMapping("/sendNotifica")
@@ -126,7 +81,7 @@ import java.util.List;
         if (!blockedUsers.contains(userSrc)) { //il following del profilo è consentito solamente se l'utente seguito non ha bloccato l'utente loggato
 
             this.userService.follow(id, followedId); //aggiungi nuovo follower
-            this.notificationService.sendNotification(userSrc, userDst, 1, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
+            this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
         }
         var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo dell'utente seguito
@@ -190,7 +145,7 @@ import java.util.List;
     }
 
     @RequestMapping("/following")
-    public String following(Model model, @RequestParam int id, @RequestParam int loggedId) {
+    public String userProfile(Model model, @RequestParam int id, @RequestParam int loggedId) {
 
         var notifications=this.notificationService.getAllByUserDstId(loggedId); //lista notifiche utente loggato
         var selectedUser=this.userService.getUserById(id); //utente cercato nella pagina profilo

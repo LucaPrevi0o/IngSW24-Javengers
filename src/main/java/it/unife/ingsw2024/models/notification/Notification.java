@@ -1,5 +1,6 @@
-package it.unife.ingsw2024.models;
+package it.unife.ingsw2024.models.notification;
 
+import it.unife.ingsw2024.models.User;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
@@ -33,21 +34,10 @@ public class Notification {
     @Column(name="NotificationTime")
     private Time notificationTime; //notification date reference
 
-    @Column(name="NotificationType")
-    private int notificationType; //notification type (message, follower, event subscription...)
+    @Enumerated(value=EnumType.STRING) @Column(name="NotificationType")
+    private NotificationType notificationType; //notification type (message, follower, event subscription...)
 
     @Column(name="Viewed", columnDefinition="TINYINT(1)")
     private boolean viewed; //reference for viewed notifications
-
-    public String getNotificationLiteralType() {
-
-        return switch (notificationType) {
-
-            case 0 -> "Messaggi";
-            case 1 -> "Follower";
-            case 2 -> "Eventi";
-            case 3 -> "Pagamenti";
-            default -> "NULL";
-        };
-    }
 }
+

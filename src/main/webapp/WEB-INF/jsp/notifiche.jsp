@@ -1,6 +1,6 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.util.List" %>
-<%@ page import="it.unife.ingsw2024.models.Notification" %>
+<%@ page import="it.unife.ingsw2024.models.notification.Notification" %>
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
@@ -122,7 +122,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
                                     <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>
@@ -145,7 +145,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
                                     <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>
@@ -168,7 +168,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
                                     <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>
@@ -191,7 +191,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
                                     <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>
@@ -214,7 +214,7 @@
                             <hr style="margin-bottom: 5px; margin-top: 2px">
                             <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
                                 <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationLiteralType() %></b></p>
+                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
                                     <p><%= n.getNotificationMsg() %></p>
                                 </div>
                             </a>

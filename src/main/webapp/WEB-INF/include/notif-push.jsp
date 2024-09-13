@@ -4,10 +4,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script language="javascript">
-    var stompClient = null;
 
     var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
+    var stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
 
         function getLiteralType(testVal) {
@@ -24,10 +23,9 @@
         stompClient.subscribe('/private/'+ <%= currentUser.getId() %> +'/messages', function(result) {
 
             var jsonData = JSON.parse(result.body);
-            /*var payload = atob(resultBody.payload);
-            var jsonData = JSON.parse(payload);*/
 
-            console.log(jsonData.notificationMsg);
+            console.log("This is the message: "+jsonData.notificationMsg);
+            console.log("This is the type: "+jsonData.notificationType);
 
             let newNotif = document.createElement("li");
             newNotif.className = "push-notif-container";
@@ -42,7 +40,7 @@
                     </p>
                     <div class="push-notif-details">
                         <a href=\" <%= request.getContextPath() %> /notifclick?id=` + jsonData.id + `&userId=<%= currentUser.getId() %>\">
-                            <p style="font-size: 21px;"><b style="color: cornflowerblue">`+ getLiteralType(jsonData.notificationType)+ `</b></p>
+                            <p style="font-size: 21px;"><b style="color: cornflowerblue">`+ jsonData.notificationType + `</b></p>
                             <p style="font-size: 20px;">`+ jsonData.notificationMsg +`</p>
                         </a>
                     </div>
@@ -113,7 +111,7 @@
                                 <hr style="margin-bottom: 5px; margin-top: 2px">
                                 <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.id +`&userId=<%= currentUser.getId() %>">
                                     <div class="notif-details">
-                                        <p style="color: cornflowerblue"><b>`+ getLiteralType(jsonData.notificationType) +`</b></p>
+                                        <p style="color: cornflowerblue"><b>`+ jsonData.notificationType +`</b></p>
                                         <p>`+ jsonData.notificationMsg +`</p>
                                     </div>
                                 </a>

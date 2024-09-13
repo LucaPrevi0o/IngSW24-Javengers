@@ -1,6 +1,6 @@
 package it.unife.ingsw2024.repositories;
 
-import it.unife.ingsw2024.models.Notification;
+import it.unife.ingsw2024.models.notification.Notification;
 import it.unife.ingsw2024.models.NotificationPreferencesMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
