@@ -28,7 +28,7 @@
                     }
                 );
 
-                if(selectedNotifType != 4) {
+                if(selectedNotifType != "Tutto") {
                     /* Per ogni elemento con classe .notif-container setto display=none se l'attributo tipoNotifica è diverso da quello selezionato */
                     Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => {
                         var tipoNotifica = notif.getAttribute('tipoNotifica');
@@ -94,11 +94,11 @@
             <div class="filter-container">
                 <label for="search_notiftype">Filtra in base al tipo di notifica</label>
                 <select id="search_notiftype" style="width: 200px; height: 30px;">
-                    <option value="4">Tutte</option>
-                    <option value="0">Messaggi</option>
-                    <option value="1">Follower</option>
-                    <option value="2">Eventi</option>
-                    <option value="3">Pagamenti</option>
+                    <option value="Tutto">Tutto</option>
+                    <option value="Messaggi">Messaggi</option>
+                    <option value="Follower">Follower</option>
+                    <option value="Eventi">Eventi</option>
+                    <option value="Pagamenti">Pagamenti</option>
                 </select>
             </div>
             <div class="filter-container">
