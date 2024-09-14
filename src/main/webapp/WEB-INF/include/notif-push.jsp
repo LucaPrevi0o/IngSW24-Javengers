@@ -9,16 +9,6 @@
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
 
-        function getLiteralType(testVal) {
-
-            testVal++;
-            testVal--;
-            if (testVal===0) return "Messaggi";
-            else if (testVal===1) return "Follower";
-            else if (testVal===2) return "Eventi";
-            else if (testVal===3) return "Pagamenti";
-        }
-
         console.log(frame);
         stompClient.subscribe('/private/'+ <%= currentUser.getId() %> +'/messages', function(result) {
 

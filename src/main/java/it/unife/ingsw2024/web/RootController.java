@@ -34,15 +34,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
             n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
     }
 
-    //da cancellare
-    @RequestMapping("/sendNotifica")
-    public String sendNotificaTest(Model model, @RequestParam int id) {
-
-        var user=this.userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "sendNotificaTest";
-    }
-
     @RequestMapping("/deleteAllRead")
     public ModelAndView deleteAllRead(@RequestParam int id) {
 
@@ -161,5 +152,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         model.addAttribute("followedList", followedList);
         model.addAttribute("blockedUsers", blockedUsers);
         return "following"; //redirection alla jsp "following.jso"
+    }
+
+    @RequestMapping("/")
+    public String welcome() {
+        return "welcome";
     }
 }

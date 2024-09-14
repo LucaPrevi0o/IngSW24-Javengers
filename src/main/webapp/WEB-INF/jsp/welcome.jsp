@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Test: hello</title>
+<title>Welcome</title>
 </head>
 <body>
-	<h1>Hello, Ing Sw 2024!</h1>
+	<p>Quest'applicazione si occupa della gestione delle notifiche e del following per il sito di eventi.</p>
+	<p>Per iniziare andare sul mapping <a href="<%=request.getContextPath()%>/getByUserId?id=1">/getByUserId?id=1</a></p>
 </body>
 </html>
