@@ -81,7 +81,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         if (!blockedUsers.contains(userSrc)) { //il following del profilo è consentito solamente se l'utente seguito non ha bloccato l'utente loggato
 
             this.userService.follow(id, followedId); //aggiungi nuovo follower
-            this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
+            var test=this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
+            System.out.println(test.getNotificationType());
         }
         var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo dell'utente seguito
