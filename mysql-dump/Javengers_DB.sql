@@ -34,7 +34,7 @@ CREATE TABLE `BLOCKED_USERS` (
                                  KEY `blocker_user_idx` (`BlockerUser`),
                                  CONSTRAINT `blocked_user` FOREIGN KEY (`BlockedUser`) REFERENCES `USER` (`id`),
                                  CONSTRAINT `blocker_user` FOREIGN KEY (`BlockerUser`) REFERENCES `USER` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `FOLLOWERS` (
                              KEY `fk_FOLLOWERS_2_idx` (`Follower`),
                              CONSTRAINT `fk_FOLLOWERS_1` FOREIGN KEY (`Followed`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
                              CONSTRAINT `fk_FOLLOWERS_2` FOREIGN KEY (`Follower`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `FOLLOWERS` (
 
 LOCK TABLES `FOLLOWERS` WRITE;
 /*!40000 ALTER TABLE `FOLLOWERS` DISABLE KEYS */;
-INSERT INTO `FOLLOWERS` VALUES (4,2,6),(5,1,2),(6,4,2),(8,2,4),(13,2,3),(14,6,2),(15,3,2),(16,3,5);
+INSERT INTO `FOLLOWERS` VALUES (4,2,6),(5,1,2),(6,4,2),(8,2,4),(13,2,3),(14,6,2),(15,3,2),(34,1,3);
 /*!40000 ALTER TABLE `FOLLOWERS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,14 +89,14 @@ CREATE TABLE `NOTIFICATIONS` (
                                  `NotificationMessage` varchar(200) DEFAULT NULL,
                                  `NotificationDate` date NOT NULL,
                                  `NotificationTime` time NOT NULL,
-                                 `NotificationType` int NOT NULL,
+                                 `NotificationType` enum('MESSAGES','FOLLOWERS','EVENTS','PAYMENTS') NOT NULL,
                                  `Viewed` tinyint NOT NULL,
                                  PRIMARY KEY (`id`),
                                  KEY `fk_NOTIFICATIONS_1_idx` (`UserSRC`,`UserDST`),
                                  KEY `fk_NOTIFICATIONS_2_idx` (`UserDST`),
                                  CONSTRAINT `fk_NOTIFICATIONS_1` FOREIGN KEY (`UserSRC`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
                                  CONSTRAINT `fk_NOTIFICATIONS_2` FOREIGN KEY (`UserDST`) REFERENCES `USER` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `NOTIFICATIONS` (
 
 LOCK TABLES `NOTIFICATIONS` WRITE;
 /*!40000 ALTER TABLE `NOTIFICATIONS` DISABLE KEYS */;
-INSERT INTO `NOTIFICATIONS` VALUES (46,2,3,'@<b>marcobianchi00</b> ha cominciato a seguirti','2024-09-08','10:58:15',1,0),(47,5,3,'@<b>chiara0214</b> ha cominciato a seguirti','2024-09-08','11:01:00',1,0);
+INSERT INTO `NOTIFICATIONS` VALUES (89,3,1,'@<b>xx_antonio_xx</b> ha cominciato a seguirti','2024-09-13','17:24:25','FOLLOWERS',0),(90,3,1,'@<b>xx_antonio_xx</b> ha cominciato a seguirti','2024-09-13','17:33:00','FOLLOWERS',0);
 /*!40000 ALTER TABLE `NOTIFICATIONS` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,7 +133,7 @@ CREATE TABLE `PREFERENCES` (
 
 LOCK TABLES `PREFERENCES` WRITE;
 /*!40000 ALTER TABLE `PREFERENCES` DISABLE KEYS */;
-INSERT INTO `PREFERENCES` VALUES (1,1,1,1,1),(2,1,1,1,1),(3,1,0,1,1),(4,1,1,1,1),(5,1,1,1,1),(6,1,1,1,1);
+INSERT INTO `PREFERENCES` VALUES (1,1,1,1,1),(2,1,1,1,1),(3,1,1,1,1),(4,1,1,1,1),(5,1,1,1,1),(6,1,1,1,1);
 /*!40000 ALTER TABLE `PREFERENCES` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,4 +172,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-09 11:26:44
+-- Dump completed on 2024-09-14 10:56:32
