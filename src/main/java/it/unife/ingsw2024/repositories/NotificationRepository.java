@@ -15,8 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query(value="SELECT n FROM Notification n order by n.notificationDate desc, n.notificationTime desc")
     List<Notification> findAll();
 
-    @Modifying
-    @Query(value="delete from NOTIFICATIONS where UserDST = ?1 and Viewed = 1", nativeQuery=true)
+    @Modifying @Query(value="delete from NOTIFICATIONS where UserDST = ?1 and Viewed = 1", nativeQuery=true)
     void deleteAllRead(int userId);
 
     @Query(value="select npm from NotificationPreferencesMapping npm where npm.id = ?1")
