@@ -13,31 +13,28 @@ import java.sql.Time;
 @NoArgsConstructor
 public class Notification {
 
-    @Id @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //notification unique id (auto-incremented value)
+    @Id @Column(name="id") @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id; //id notifica (auto-generato)
 
-    @ManyToOne
-    @JoinColumn(name="UserSRC", referencedColumnName = "id")
-    private User userSrc; //reference to User account id that generates the notification
+    @ManyToOne @JoinColumn(name="UserSRC", referencedColumnName="id")
+    private User userSrc; //id utente che invia la notifica
 
-    @ManyToOne
-    @JoinColumn(name="UserDST", referencedColumnName = "id")
-    private User userDst; //reference to User account id that receives the notification
+    @ManyToOne @JoinColumn(name="UserDST", referencedColumnName="id")
+    private User userDst; //id utente che riceve la notifica
 
     @Column(name="NotificationMessage")
-    private String notificationMsg; //notification content
+    private String notificationMsg; //messaggio notifica
 
     @Column(name="NotificationDate")
-    private Date notificationDate; //notification date reference
+    private Date notificationDate; //data di invio notifica
 
     @Column(name="NotificationTime")
-    private Time notificationTime; //notification date reference
+    private Time notificationTime; //ora di invio notifica
 
     @Enumerated(value=EnumType.STRING) @Column(name="NotificationType")
-    private NotificationType notificationType; //notification type (message, follower, event subscription...)
+    private NotificationType notificationType; //tipo notifica
 
     @Column(name="Viewed", columnDefinition="TINYINT(1)")
-    private boolean viewed; //reference for viewed notifications
+    private boolean viewed; //stato visualizzazione notifica
 }
 

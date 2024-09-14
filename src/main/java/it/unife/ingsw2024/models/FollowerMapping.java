@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FollowerMapping {
 
-    @Id @Column(name = "id")
+    @Id @Column(name="id")
     private int id;
 
-    @Column(name = "Follower")
-    private int followerId;
+    @Column(name="Follower")
+    private int followerId; //id utente follower
 
-    @Column(name = "Followed")
-    private int followedId;
+    @Column(name="Followed")
+    private int followedId; //id utente seguito
 }

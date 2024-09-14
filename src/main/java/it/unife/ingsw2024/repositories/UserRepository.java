@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-//user DAO (list of allowed database operations, each one associated to a specific query)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.id = ?1 ")
-    Optional<User> findById(Integer userId);
+    Optional<User> findById(int userId);
 
     @Query("select u from User u where u.id in (select fm.followerId from FollowerMapping fm where fm.followedId = ?1)")
     List<User> findFollowersById(int id);
@@ -22,19 +21,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("select u from User u where u.id in (select bl.blockedUserId from BlockedUserMapping bl where bl.blockerUserId = ?1)")
     List<User> findBlockedById(int id);
 
-    @Modifying
-    @Query(value="insert into FOLLOWERS (follower, followed) values (?1, ?2)", nativeQuery=true)
+    @Modifying @Query(value="insert into FOLLOWERS (follower, followed) values (?1, ?2)", nativeQuery=true)
     void follow(int followerId, int followedId);
 
-    @Modifying
-    @Query(value="delete from FOLLOWERS where follower = ?1 and followed = ?2", nativeQuery=true)
+    @Modifying @Query(value="delete from FOLLOWERS where follower = ?1 and followed = ?2", nativeQuery=true)
     void unfollow(int followerId, int followedId);
 
-    @Modifying
-    @Query(value="insert into BLOCKED_USERS (BlockedUser, BlockerUser) value (?1, ?2)", nativeQuery=true)
+    @Modifying @Query(value="insert into BLOCKED_USERS (BlockedUser, BlockerUser) value (?1, ?2)", nativeQuery=true)
     void block(int blockedUserId, int userId);
 
-    @Modifying
-    @Query(value="delete from BLOCKED_USERS where BlockedUser = ?1 and BlockerUser = ?2", nativeQuery=true)
+    @Modifying @Query(value="delete from BLOCKED_USERS where BlockedUser = ?1 and BlockerUser = ?2", nativeQuery=true)
     void unblock(int blockedUserId, int userId);
 }
