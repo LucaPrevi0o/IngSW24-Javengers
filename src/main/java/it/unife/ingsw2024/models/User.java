@@ -15,8 +15,8 @@ import java.util.List;
 public class User {
 
     @Id @Column(name="id")
-    private int id; //user unique id (auto-incremented value)
+    private int id; //id utente
 
     @Column(name="Username")
-    private String username; //username
+    private String username; //username utente
 }

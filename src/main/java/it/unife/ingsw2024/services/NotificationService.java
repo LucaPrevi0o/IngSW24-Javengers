@@ -27,21 +27,22 @@ import java.util.List;
         var userPref=this.getUserPreferences(n.getUserDst().getId()); //lista preferenze notifiche utente loggato
         var blockedUsersList=this.userService.getBlockedUsersList(n.getUserDst().getId()); //lista utenti bloccati utente loggato
         return !blockedUsersList.contains(n.getUserSrc()) && ( //controllo per verificare che l'utente non sia bloccato
-                n.getNotificationType()==NotificationType.MESSAGES && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
-                        n.getNotificationType()==NotificationType.FOLLOWERS && userPref.isFollowers() ||
-                        n.getNotificationType()==NotificationType.EVENTS && userPref.isEvents() ||
-                        n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
+            n.getNotificationType()==NotificationType.MESSAGES && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
+            n.getNotificationType()==NotificationType.FOLLOWERS && userPref.isFollowers() ||
+            n.getNotificationType()==NotificationType.EVENTS && userPref.isEvents() ||
+            n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
     }
 
-    public Notification sendNotification(User userSrc, User userDst, NotificationType notificationType, String notificationMessage) {
+    //funzione di invio messaggio come notifica push
+    public void sendNotification(User userSrc, User userDst, NotificationType notificationType, String notificationMessage) {
 
-        var notification = new Notification();
-        var now = LocalDateTime.now();
+        var notification=new Notification();
+        var now=LocalDateTime.now();
 
-        var date = Date.valueOf(now.toLocalDate());
-        var time = Time.valueOf(now.toLocalTime());
+        var date=Date.valueOf(now.toLocalDate());
+        var time=Time.valueOf(now.toLocalTime());
 
-        //Riempio la notifica con i parametri passati
+        //costruzione oggetto Notification attraverso i parametri
         notification.setUserSrc(userSrc);
         notification.setUserDst(userDst);
         notification.setNotificationType(notificationType);
@@ -49,43 +50,37 @@ import java.util.List;
         notification.setNotificationDate(date);
         notification.setNotificationTime(time);
 
-        if(isNotificationReceivable(notification)) {
+        if (isNotificationReceivable(notification)) {
 
-            //Aggiungo la notifica al database, mi restituisce la notifica aggiornata con l'id
-            var insertedNotification = notificationRepository.save(notification);
+            //aggiunta notifica al database, la funzione restituisce la notifica aggiornata con l'id
+            var insertedNotification=notificationRepository.save(notification);
 
-            // Mando il messaggio a /private/userDstId/messages (la notifica viene serializzata in JSON automaticamente)
-            simpMessagingTemplate.convertAndSend("/private/"+ userDst.getId() +"/messages", insertedNotification);
-
-            return insertedNotification;
+            //invio il messaggio a "/private/{userDstId}/messages" (la notifica viene serializzata in JSON automaticamente)
+            simpMessagingTemplate.convertAndSend("/private/"+userDst.getId()+"/messages", insertedNotification);
         }
-
-        return null;
     }
 
-    //return every notification registered in database
+    //lettura insieme di record dal database
     public List<Notification> getAll() { return notificationRepository.findAll(); }
 
-    //return a notification filtering data by id
+    //lettura record da database con campo "id" specificato
     public Notification getById(int id) { return notificationRepository.findById(id).orElse(null); }
 
-    //return every notification received by a specific user dst account
+    //lettura insieme di record da database con campo "UserDST" specificato
     public List<Notification> getAllByUserDstId(int id) { return notificationRepository.findAllByUserDst(id); }
 
-    //insert a new notification
-    @Transactional
-    public Notification insert(Notification record) { return notificationRepository.save(record); }
+    @Transactional //inserimento nuovo record
+    public void insert(Notification record) { notificationRepository.save(record); }
 
+    @Transactional //inserimento lista record
     public void insertAll(List<Notification> recordSet) { notificationRepository.saveAll(recordSet); }
 
-    @Transactional
+    @Transactional //cancellazione record notifiche visualizzate
     public void deleteAllRead(int id) { notificationRepository.deleteAllRead(id); }
 
+    //lettura preferenze notifiche utente
     public NotificationPreferencesMapping getUserPreferences(int id) { return notificationRepository.findUserPreferences(id); }
 
-    @Transactional
+    @Transactional //aggiornamento preferenze notifiche utente
     public void updatePreferences(int id, boolean[] preferences) { notificationRepository.updatePreferences(id, preferences[0], preferences[1], preferences[2], preferences[3]); }
-
-    //stuff
-    public List<Notification> addElements() { return this.getAll(); }
 }

@@ -12,30 +12,27 @@ import java.util.List;
 
     @Autowired private UserRepository userRepository;
 
-    //return every user account registered in database
-    public List<User> getAll() { return userRepository.findAll(); }
-
-    //return a user account filtering data by user id
+    //lettura record da database con campo "id" specificato
     public User getUserById(int id) { return userRepository.findById(id).orElse(null); }
 
-    //register a new user account
-    public void insert(User record) { userRepository.save(record); }
-
+    //lettura lista follower utente
     public List<User> getFollowerList(int id) { return userRepository.findFollowersById(id); }
 
+    //lettura lista profili seguiti utente
     public List<User> getFollowedList(int id) { return userRepository.findFollowedById(id); }
 
+    //lettura lista profili bloccati utente
     public List<User> getBlockedUsersList(int id) { return userRepository.findBlockedById(id); }
 
-    @Transactional
+    @Transactional //operazione di following
     public void follow(int followerId, int followedId) { this.userRepository.follow(followerId, followedId); }
 
-    @Transactional
+    @Transactional //rimozione following
     public void unfollow(int followerId, int followedId) { this.userRepository.unfollow(followerId, followedId); }
 
-    @Transactional
+    @Transactional //blocco profilo utente
     public void block(int blockedId, int blockerId) { this.userRepository.block(blockedId, blockerId); }
 
-    @Transactional
+    @Transactional //rimozione blocco profilo utente
     public void unblock(int blockedId, int blockerId) { this.userRepository.unblock(blockedId, blockerId); }
 }

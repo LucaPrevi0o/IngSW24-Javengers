@@ -24,7 +24,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
     @Query(value="select npm from NotificationPreferencesMapping npm where npm.id = ?1")
     NotificationPreferencesMapping findUserPreferences(int userId);
 
-    @Modifying
-    @Query(value="update PREFERENCES set messages = ?2, followers = ?3, events = ?4, payments = ?5 where id = ?1", nativeQuery=true)
+    @Modifying @Query(value="update PREFERENCES set messages = ?2, followers = ?3, events = ?4, payments = ?5 where id = ?1", nativeQuery=true)
     void updatePreferences(int userId, boolean messages, boolean followers, boolean events, boolean payments);
 }

@@ -31,6 +31,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
         var notifications=this.notificationService.getAllByUserDstId(id); //lettura lista notifiche indirizzate all'utente loggato
         var user=this.userService.getUserById(id); //utente loggato
+
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
         return "notifiche"; //redirection alla jsp "notifiche.jsp"
@@ -42,6 +43,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         var notifications=this.notificationService.getAllByUserDstId(id); //lettura lista notifiche indirizzate all'utente loggato
         for (var n: notifications) n.setViewed(true); //aggiornamento stato di lettura di ogni notifica
         this.notificationService.insertAll(notifications); //aggiornamento notifiche all'interno del database
+
         var redirectView=new RedirectView("/getByUserId?id="+id);
         return new ModelAndView(redirectView); //redirection alla pagina notifiche aggiornata
     }
@@ -57,6 +59,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
             this.userService.follow(id, followedId); //aggiungi nuovo follower
             this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
         }
+
         var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo dell'utente seguito
     }
@@ -68,6 +71,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         var blockedUsers=this.userService.getBlockedUsersList(id); //lista utenti bloccati dell'utente bloccato
         var notifications=this.notificationService.getAllByUserDstId(id); //lettura lista notifiche indirizzate all'utente loggato
         var notifPref=this.notificationService.getUserPreferences(id).asList(); //lista preferenze notifiche utente loggato
+
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
         model.addAttribute("blockedUsers", blockedUsers);
@@ -97,6 +101,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         var toUpdate=this.notificationService.getById(id); //lettura notifica in base a id
         toUpdate.setViewed(true); //aggiornamento stato di lettura
         this.notificationService.insert(toUpdate); //aggiornamento notifica letta
+
         var redirectView=new RedirectView("/getByUserId?id="+userId);
         return new ModelAndView(redirectView); //redirection alla pagina notifiche aggiornata
     }
@@ -104,8 +109,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @RequestMapping("/block")
     public ModelAndView block(@RequestParam int blockedId, @RequestParam int userId)  {
 
-        this.userService.unfollow(userId, blockedId); //rimozione following utente bloccato (quando l'utente viene bloccato perde in automatico il following dell'utente loggato)
+        this.userService.unfollow(userId, blockedId); //rimozione following reciproco
+        this.userService.unfollow(blockedId, userId);
         this.userService.block(blockedId, userId); //aggiornamento stato di blocco dell'utente
+
         var redirectView=new RedirectView("/settings?id="+userId);
         return new ModelAndView(redirectView); //redirection alla pagina impostazioni profilo con lista utenti bloccati aggiornata
     }
@@ -127,6 +134,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         var followerList=this.userService.getFollowerList(id); //lista follower utente cercato
         var followedList=this.userService.getFollowedList(id); //lista utenti seguiti utente cercato
         var blockedUsers=this.userService.getBlockedUsersList(loggedId); //lista utenti bloccati utente loggato
+
         model.addAttribute("notifications", notifications);
         model.addAttribute("selectedUser", selectedUser);
         model.addAttribute("user", user);
@@ -137,7 +145,5 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     }
 
     @RequestMapping("/")
-    public String welcome() {
-        return "welcome";
-    }
+    public String welcome() { return "welcome"; }
 }
