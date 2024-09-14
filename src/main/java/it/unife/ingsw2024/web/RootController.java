@@ -1,6 +1,5 @@
 package it.unife.ingsw2024.web;
 
-import it.unife.ingsw2024.models.notification.Notification;
 import it.unife.ingsw2024.models.notification.NotificationType;
 import it.unife.ingsw2024.services.NotificationService;
 import it.unife.ingsw2024.services.UserService;
@@ -11,9 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 @Controller public class RootController {
@@ -21,18 +17,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @Autowired NotificationService notificationService; //service per gestione notifiche
     @Autowired UserService userService; //service per gestione utenti
     @Autowired SimpMessagingTemplate simpMessagingTemplate; //template per gestione notifiche push
-
-    //funzione di controllo per verificare se l'utente destinatario può ricevere la notifica
-    private boolean isNotificationReceivable(int usrDstId, Notification n) {
-
-        var userPref=this.notificationService.getUserPreferences(usrDstId); //lista preferenze notifiche utente loggato
-        var blockedUsersList=this.userService.getBlockedUsersList(usrDstId); //lista utenti bloccati utente loggato
-        return !blockedUsersList.contains(n.getUserSrc()) && ( //controllo per verificare che l'utente non sia bloccato
-            n.getNotificationType()==NotificationType.MESSAGES && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
-            n.getNotificationType()==NotificationType.FOLLOWERS && userPref.isFollowers() ||
-            n.getNotificationType()==NotificationType.EVENTS && userPref.isEvents() ||
-            n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
-    }
 
     @RequestMapping("/deleteAllRead")
     public ModelAndView deleteAllRead(@RequestParam int id) {
@@ -46,7 +30,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     public String getByUserId(Model model, @RequestParam int id) {
 
         var notifications=this.notificationService.getAllByUserDstId(id); //lettura lista notifiche indirizzate all'utente loggato
-        notifications.removeIf(n -> !isNotificationReceivable(id, n)); //cancellazione notifiche non visualizzabili
         var user=this.userService.getUserById(id); //utente loggato
         model.addAttribute("notifications", notifications);
         model.addAttribute("user", user);
@@ -72,8 +55,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         if (!blockedUsers.contains(userSrc)) { //il following del profilo è consentito solamente se l'utente seguito non ha bloccato l'utente loggato
 
             this.userService.follow(id, followedId); //aggiungi nuovo follower
-            var test=this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
-            System.out.println(test.getNotificationType());
+            this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
         }
         var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo dell'utente seguito

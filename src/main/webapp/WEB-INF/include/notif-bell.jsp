@@ -26,14 +26,14 @@
     <div style="position: relative; display: flex; flex-direction: column; align-items: flex-end; justify-content: center">
     <div id="bell-container">
         <img src="../../images/notif.png" alt="" width="30" height="30" <%= !nonRead.isEmpty() ? "class=\"with_notif\"" : ""%>/>
-        <% if (!nonRead.isEmpty()) { %><div id="notif-bell-number"><span><%= nonRead.size() %></span></div><% } %>
+        <div id="notif-bell-number" style="<%= nonRead.isEmpty() ? "display: none;" : ""%>"><span><%= nonRead.size() %></span></div>
 
     </div>
     <ul id="notifiche-container">
         <li id="vedi-tutto-container">
             <a href="<%= request.getContextPath() %>/getByUserId?id=<%= bellUser.getId() %>"><button id="vedi-tutto">Vedi tutto</button></a>
         </li>
-        <% if (nonRead.isEmpty()) { %><p style="font-size: 18px; margin: 10px 5px;">Nessuna nuova notifica</p><% } %>
+        <% if (nonRead.isEmpty()) { %><p id="no-new-notif" style="font-size: 18px; margin: 10px 5px;">Nessuna nuova notifica</p><% } %>
         <% for (var n: nonRead) { %>
             <li class="notifica da-leggere">
                 <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= bellUser.getId() %>">

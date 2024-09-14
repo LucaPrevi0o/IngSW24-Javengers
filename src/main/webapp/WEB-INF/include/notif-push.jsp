@@ -72,6 +72,9 @@
             /* Aggiorno il counter della campanella */
             notifCounter++;
             document.getElementById("notif-bell-number").innerHTML = `<span>`+ notifCounter +`</span>`;
+            /* In caso la campanella era vuota rimetto il display del numero di notifiche e tolgo "Nessuna nuova notifica" */
+            document.getElementById("notif-bell-number").style.display = "flex";
+            if(document.getElementById("no-new-notif")) document.getElementById("no-new-notif").style.display = "none";
 
 
             /* Se sono nella jsp notifiche aggiungo la notifica in cima */

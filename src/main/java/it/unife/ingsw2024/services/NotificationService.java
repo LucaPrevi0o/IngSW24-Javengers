@@ -18,7 +18,20 @@ import java.util.List;
 @Service public class NotificationService {
 
     @Autowired private NotificationRepository notificationRepository;
+    @Autowired private UserService userService;
     @Autowired private SimpMessagingTemplate simpMessagingTemplate;
+
+    //funzione di controllo per verificare se l'utente destinatario può ricevere la notifica
+    private boolean isNotificationReceivable(Notification n) {
+
+        var userPref=this.getUserPreferences(n.getUserDst().getId()); //lista preferenze notifiche utente loggato
+        var blockedUsersList=this.userService.getBlockedUsersList(n.getUserDst().getId()); //lista utenti bloccati utente loggato
+        return !blockedUsersList.contains(n.getUserSrc()) && ( //controllo per verificare che l'utente non sia bloccato
+                n.getNotificationType()==NotificationType.MESSAGES && userPref.isMessages() || //controllo preferenze sulle categorie di notifiche
+                        n.getNotificationType()==NotificationType.FOLLOWERS && userPref.isFollowers() ||
+                        n.getNotificationType()==NotificationType.EVENTS && userPref.isEvents() ||
+                        n.getNotificationType()==NotificationType.PAYMENTS && userPref.isPayments());
+    }
 
     public Notification sendNotification(User userSrc, User userDst, NotificationType notificationType, String notificationMessage) {
 
@@ -31,21 +44,23 @@ import java.util.List;
         //Riempio la notifica con i parametri passati
         notification.setUserSrc(userSrc);
         notification.setUserDst(userDst);
+        notification.setNotificationType(notificationType);
         notification.setNotificationMsg(notificationMessage);
         notification.setNotificationDate(date);
         notification.setNotificationTime(time);
-        notification.setNotificationType(notificationType);
-        System.out.println("Notification: "+notification);
 
-        //Aggiungo la notifica al database, mi restituisce la notifica aggiornata con l'id
-        var insertedNotification = notificationRepository.save(notification);
-        System.out.println("Inserted notification: "+insertedNotification);
+        if(isNotificationReceivable(notification)) {
 
-        // Mando il messaggio a /private/userDstId/messages (la notifica viene serializzata in JSON automaticamente)
-        simpMessagingTemplate.convertAndSend("/private/"+ userDst.getId() +"/messages", insertedNotification);
-        System.out.println("Converted/sent notification: "+insertedNotification);
+            //Aggiungo la notifica al database, mi restituisce la notifica aggiornata con l'id
+            var insertedNotification = notificationRepository.save(notification);
 
-        return insertedNotification;
+            // Mando il messaggio a /private/userDstId/messages (la notifica viene serializzata in JSON automaticamente)
+            simpMessagingTemplate.convertAndSend("/private/"+ userDst.getId() +"/messages", insertedNotification);
+
+            return insertedNotification;
+        }
+
+        return null;
     }
 
     //return every notification registered in database
