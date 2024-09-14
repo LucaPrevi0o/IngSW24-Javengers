@@ -1,4 +1,5 @@
 /* --------- Sidebar --------- */
+
 .sidebar {
     z-index: 99;
     position: fixed;
@@ -27,6 +28,8 @@
     border-radius: 5px;
 }
 
+/* --- Username --- */
+
 .sidebar .username {
     margin-bottom: 10px;
 }
@@ -43,6 +46,8 @@
 .sidebar .username-link b:hover {
     color: #bf5555;
 }
+
+/* --- Opzioni della sidebar --- */
 
 .sidebar .notif {
     background: url('../images/notif.png') no-repeat 5% 50%;

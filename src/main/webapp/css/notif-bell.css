@@ -1,8 +1,36 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+/* --------- Campanella delle notifiche --------- */
+
+#bell-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center
+}
+
+#bell-container {
+     position: relative;
+     margin-left: 95%;
+     width: 50px;
+     height: 50px;
+     border-radius: 50%;
+     transition: background-color 0.2s;
+ }
+
+#bell-container:hover {
+    cursor: pointer;
+    background-color: #c2a998;
+}
+
+/* Icona della campanella */
+
+#bell-container img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 .with_notif {
@@ -11,6 +39,8 @@
     drop-shadow(1px 1px 0.5px #660000) drop-shadow(1px -1px 0.5px #660000) drop-shadow(-1px -1px 0.5px #660000) drop-shadow(-1px 1px 0.5px #660000)
     /*drop-shadow(-10px -10px 10px lightgray) drop-shadow(-10px 10px 10px lightgray) drop-shadow(10px -10px 10px lightgray) drop-shadow(10px 10px 10px lightgray)*/
 }
+
+/* Numero di notifiche non lette */
 
 #notif-bell-number {
     width: 25px;
@@ -30,28 +60,22 @@
     font-weight: bold;
 }
 
-#bell-container {
-    position: relative;
-    margin-left: 95%;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    transition: background-color 0.2s;
-}
+/* Lista drop-down delle notifiche */
 
-#bell-container img {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
+#notifiche-container {
+     background-color: #b6a79c;
+     box-shadow: 0 0 6px 1px #363533;
+     border-radius: 10px;
+     padding: 10px;
+     margin: 0 10px;
+     display: none;
+     position: absolute;
+     top: 65px;
+     overflow-y: auto;
+     max-height: 500px;
+ }
 
-#bell-container:hover {
-    cursor: pointer;
-    background-color: #c2a998;
-}
+/* Pulsante "Vedi tutto" */
 
 #vedi-tutto {
     background-color: #EAE0DA;
@@ -67,18 +91,7 @@
     background-color: #e0d3cc;
 }
 
-#notifiche-container {
-    background-color: #b6a79c;
-    box-shadow: 0 0 6px 1px #363533;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 0 10px;
-    display: none;
-    position: absolute;
-    top: 65px;
-    overflow-y: auto;
-    max-height: 500px;
-}
+/* Notifica */
 
 #notifiche-container .notifica {
     list-style-type: none;
@@ -87,6 +100,10 @@
     margin-top: 10px;
     background-color: #EAE0DA;
     border-radius: 10px;
+}
+
+#notifiche-container .notifica:hover .notif-details {
+    background-color: #f4f0ed;
 }
 
 #notifiche-container .notifica a {
@@ -107,6 +124,17 @@
     margin-bottom: 3px;
 }
 
+#notif-details-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.notif-details hr {
+    margin-bottom: 5px;
+    margin-top: 2px
+}
+
 #notifiche-container .data-ora {
     font-size: 15px;
     margin-left: 2px;
@@ -114,4 +142,11 @@
 
 #notifiche-container .da-leggere {
     border: 3px solid #895732;
+}
+
+/* Nessuna nuova notifica */
+
+#no-new-notif {
+    font-size: 18px;
+    margin: 10px 5px;
 }

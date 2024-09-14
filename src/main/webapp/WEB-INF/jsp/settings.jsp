@@ -2,9 +2,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% var activeUser=(User)request.getAttribute("user"); %>
 <%
+    var titoloSidebar = "Impostazioni";
     var blockedUsers=(List<User>)request.getAttribute("blockedUsers");
     var userPreferences=(boolean[])request.getAttribute("userPreferences");
-    String titoloSidebar = "Impostazioni";
+
 %>
 <!DOCTYPE html>
 <html>

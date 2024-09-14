@@ -4,7 +4,7 @@
 <%@ page import="it.unife.ingsw2024.models.User" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%
-    String titoloSidebar = "Notifiche";
+    var titoloSidebar = "Notifiche";
     var user=(User)request.getAttribute("user");
     var notifications=(List<Notification>)request.getAttribute("notifications");
     var todaysDate=LocalDate.now();
@@ -20,6 +20,8 @@
         <title>Notifiche - @<%= user.getUsername() %></title>
         <link rel="stylesheet" href="../../css/notifiche.css" type="text/css" media="screen">
         <script type="text/javascript">
+
+            /* Funzione per filtrare le notifiche in base al tipo */
             function changeViewByType(selectedNotifType){
                 /* Resetto la view rimettendo tutti i display a flex */
                 Array.from(document.querySelectorAll('.notif-container')).forEach(
@@ -43,6 +45,7 @@
 
             }
 
+            /* Funzione per filtrare le notifiche in base al nome utente del mittente */
             function changeViewByUsername(username){
                 /* Converto tutto a lowercase per fare un confronto case-insensitive */
                 var searchUsername = username.toLowerCase();
@@ -59,6 +62,7 @@
                 });
             }
 
+            /* Funzione per filtrare le notifiche in base al messaggio */
             function changeViewByContent(selectedContent){
                 /* Converto tutto a lowercase per fare un confronto case-insensitive */
                 var content = selectedContent.toLowerCase();
@@ -89,8 +93,10 @@
         <section class="content">
             <%@include file="../include/notif-bell.jsp"%>
             <%@include file="../include/notif-push.jsp"%>
+            <%-- Pulsanti per segnare tutto come letto/cancellare notifiche lette --%>
             <a href="<%= request.getContextPath() %>/setAllAsRead?id=<%= user.getId() %>"><button id="read-button">Segna tutto come letto</button></a>
             <a href="<%= request.getContextPath() %>/deleteAllRead?id=<%= user.getId() %>"><button id="delete-button">Elimina notifiche lette</button></a><br/>
+            <%-- Filtro delle notifiche in base al tipo --%>
             <div class="filter-container">
                 <label for="search_notiftype">Filtra in base al tipo di notifica</label>
                 <select id="search_notiftype" style="width: 200px; height: 30px;">
@@ -101,129 +107,42 @@
                     <option value="Pagamenti">Pagamenti</option>
                 </select>
             </div>
+            <%-- Filtro delle notifiche in base al nome utente --%>
             <div class="filter-container">
                 <label for="search_notifuser">Cerca in base al nome utente</label>
                 <input type="search" id="search_notifuser" placeholder="Username..." style="width: 200px; height: 30px;">
             </div>
+            <%-- Filtro delle notifiche in base al contenuto --%>
             <div class="filter-container">
                 <label for="search_notifcontent">Cerca in base al contenuto</label>
                 <input type="search" id="search_notifcontent" placeholder="Cerca..." style="width: 200px; height: 30px;">
             </div>
+            <%-- Lista delle notifiche divise per periodo temporale --%>
             <ul id="lista-notifiche">
                 <% if (!today.isEmpty()) { %><li class="giorno"><p>Oggi</p></li><% } %>
+                <%-- Lista delle notifiche ricevute oggi --%>
                 <% for (var n: today) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
-                    <div class="notifica">
-                        <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
-                        <% } else { %><div class="notif-wrapper"><% } %>
-                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
-                                    <p><%= n.getNotificationMsg() %></p>
-                                </div>
-                            </a>
-                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
-                        </div>
-                    </div>
-                    </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                </li>
+                    <%@include file="../include/notif-single.jsp"%>
                 <% } %>
                 <% if (!yesterday.isEmpty()) { %><li class="giorno"><p>Ieri</p></li><% } %>
+                <%-- Lista delle notifiche ricevute ieri --%>
                 <% for (var n: yesterday) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
-                    <div class="notifica">
-                        <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
-                            <% } else { %><div class="notif-wrapper"><% } %>
-                            <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
-                                    <p><%= n.getNotificationMsg() %></p>
-                                </div>
-                            </a>
-                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
-                        </div>
-                    </div>
-                    </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                </li>
+                    <%@include file="../include/notif-single.jsp"%>
                 <% } %>
                 <% if(!lastWeek.isEmpty()) {%><li class="giorno"><p>Ultima settimana</p></li><%}%>
+                <%-- Lista delle notifiche ricevute durante l'ultima settimana --%>
                 <% for (var n: lastWeek) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
-                    <div class="notifica">
-                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
-                        <% } else { %><div class="notif-wrapper"><% } %>
-                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
-                                    <p><%= n.getNotificationMsg() %></p>
-                                </div>
-                            </a>
-                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
-                        </div>
-                    </div>
-                    </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                </li>
+                    <%@include file="../include/notif-single.jsp"%>
                 <% } %>
                 <% if(!lastMonth.isEmpty()) {%><li class="giorno"><p>Ultimo mese</p></li><%}%>
+                <%-- Lista delle notifiche ricevute durante l'ultimo mese --%>
                 <% for (var n: lastMonth) { %>
-                <li class="notif-container"  tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
-                    <div class="notifica">
-                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
-                        <% } else { %><div class="notif-wrapper"><% } %>
-                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
-                                    <p><%= n.getNotificationMsg() %></p>
-                                </div>
-                            </a>
-                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
-                        </div>
-                    </div>
-                    </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                </li>
+                    <%@include file="../include/notif-single.jsp"%>
                 <% } %>
                 <% if(!older.isEmpty()) {%><li class="giorno"><p>Meno recenti</p></li><%}%>
+                <%-- Lista delle notifiche ricevute più di un mese fa --%>
                 <% for (var n: older) { %>
-                <li class="notif-container" tipoNotifica="<%=n.getNotificationType()%>" usernameSrc="<%= n.getUserSrc().getUsername() %>" contenutoNotifica="<%= n.getNotificationMsg() %>">
-                    <div class="notifica">
-                            <% if (!n.isViewed()) { %><div class="da-leggere notif-wrapper">
-                        <% } else { %><div class="notif-wrapper"><% } %>
-                        <div><a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a></div>
-                        <div class="notif-content">
-                            <a href="<%= request.getContextPath() %>/following?id=<%=n.getUserSrc().getId()%>&loggedId=<%= loggedUser.getId() %>"><p class="username">@<b style="color: brown"><%= n.getUserSrc().getUsername() %></b>:</p></a>
-                            <hr style="margin-bottom: 5px; margin-top: 2px">
-                            <a href="<%= request.getContextPath() %>/notifclick?id=<%= n.getId() %>&userId=<%= loggedUser.getId() %>">
-                                <div class="notif-details">
-                                    <p style="color: cornflowerblue"><b><%= n.getNotificationType() %></b></p>
-                                    <p><%= n.getNotificationMsg() %></p>
-                                </div>
-                            </a>
-                            <span class="ora"><%= n.getNotificationDate() %> - <%= n.getNotificationTime().toLocalTime() %></span>
-                        </div>
-                    </div>
-                    </div>
-                    <% if (!n.isViewed()) { %><img class="da-leggere-icon" src="../../images/1268.png" alt="da-leggere" height="25" width="25"/><% } %>
-                </li>
+                    <%@include file="../include/notif-single.jsp"%>
                 <% } %>
             </ul>
         </section>

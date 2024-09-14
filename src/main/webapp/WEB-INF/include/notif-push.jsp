@@ -1,22 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%-- JSP che si occupa della ricezione e display delle notifiche push --%>
 <% var currentUser=(User)request.getAttribute("user"); %>
 <link rel="stylesheet" href="../../css/notif-push.css" type="text/css" media="screen">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script language="javascript">
 
+    /* Stabilimento di una connessione WebSocket per ricevere messaggi */
     var socket = new SockJS('/ws');
     var stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
 
         console.log(frame);
+        /* Iscrizione ad un canale personalizzato in base all'id dell'utente, la funzione viene eseguita quando si riceve un messaggio */
         stompClient.subscribe('/private/'+ <%= currentUser.getId() %> +'/messages', function(result) {
 
+            /* Parsing del contenuto del messaggio ricevuto */
             var jsonData = JSON.parse(result.body);
 
-            console.log("This is the message: "+jsonData.notificationMsg);
-            console.log("This is the type: "+jsonData.notificationType);
-
+            /* Creazione della notifica push */
             let newNotif = document.createElement("li");
             newNotif.className = "push-notif-container";
             newNotif.id = "push-notif-" + jsonData.id;
@@ -46,6 +48,7 @@
             audio.play();
             setTimeout(() => closeNotification(jsonData.id), 10000);
 
+            /* Aggiungo la notifica push a push-notif-list */
             document.getElementById("push-notif-list").prepend(newNotif);
 
             /* Aggiungo la notifica alla campanella */
@@ -122,6 +125,7 @@
         });
     });
 
+    /* Funzione per chiudere la notifica quando si clicca sull'icona a forma di croce */
     function closeNotification(id){
         document.getElementById("push-notif-" + id).style.display = "none";
     }
