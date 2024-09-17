@@ -20,72 +20,34 @@
         <title>Notifiche - @<%= user.getUsername() %></title>
         <link rel="stylesheet" href="../../css/notifiche.css" type="text/css" media="screen">
         <script type="text/javascript">
+            //Funzione di filtraggio notifiche, in base al tipo di filtraggio e al valore del campo
+            function filter(field, filterType) {
 
-            /* Funzione per filtrare le notifiche in base al tipo */
-            function changeViewByType(selectedNotifType){
-                /* Resetto la view rimettendo tutti i display a flex */
-                Array.from(document.querySelectorAll('.notif-container')).forEach(
-                    (notif) => {
-                        notif.style.display = "flex";
-                    }
-                );
+                //Resetto la view rimettendo tutti i display a flex
+                Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => { notif.style.display = "flex"; });
 
-                if(selectedNotifType != "Tutto") {
-                    /* Per ogni elemento con classe .notif-container setto display=none se l'attributo tipoNotifica è diverso da quello selezionato */
+                //Converto tutto a lowercase per fare un confronto case-insensitive
+                let searchFilter=field.toLowerCase();
+
+                //Il filtraggio non viene applicato solo se il filtro è in base al tipo e viene applicato il valore "Tutto"
+                if (filterType!=='tipoNotifica' || field!=="Tutto") {
+
+                    //Per ogni elemento con classe .notif-container setto display=none se l'attributo usernameSrc è diverso da quello selezionato
                     Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => {
-                        var tipoNotifica = notif.getAttribute('tipoNotifica');
 
-                        if (tipoNotifica == selectedNotifType) {
-                            notif.style.display = "flex";
-                        } else {
-                            notif.style.display = "none";
-                        }
+                        let selectedField=notif.getAttribute(filterType).toLowerCase(); //confronto attributi lower-case
+                        if (selectedField.includes(searchFilter)) notif.style.display="flex";
+                        else notif.style.display="none";
                     });
                 }
-
             }
 
-            /* Funzione per filtrare le notifiche in base al nome utente del mittente */
-            function changeViewByUsername(username){
-                /* Converto tutto a lowercase per fare un confronto case-insensitive */
-                var searchUsername = username.toLowerCase();
+            window.addEventListener("load", function() {
 
-                /* Per ogni elemento con classe .notif-container setto display=none se l'attributo usernameSrc è diverso da quello selezionato */
-                Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => {
-                    var notifUsername = notif.getAttribute('usernameSrc').toLowerCase();
-
-                    if (notifUsername.includes(searchUsername)) {
-                        notif.style.display = "flex";
-                    } else {
-                        notif.style.display = "none";
-                    }
-                });
-            }
-
-            /* Funzione per filtrare le notifiche in base al messaggio */
-            function changeViewByContent(selectedContent){
-                /* Converto tutto a lowercase per fare un confronto case-insensitive */
-                var content = selectedContent.toLowerCase();
-
-                /* Per ogni elemento con classe .notif-container setto display=none se l'attributo contenutoNotifica è diverso da quello selezionato */
-                Array.from(document.querySelectorAll('.notif-container')).forEach((notif) => {
-                    var notifContent = notif.getAttribute('contenutoNotifica').toLowerCase();
-
-                    if (notifContent.includes(content)) {
-                        notif.style.display = "flex";
-                    } else {
-                        notif.style.display = "none";
-                    }
-                });
-            }
-
-            function onLoadHandler() {
-                document.getElementById("search_notiftype").addEventListener("change", (event) => changeViewByType(event.currentTarget.value));
-                document.getElementById("search_notifuser").addEventListener("input", (event) => changeViewByUsername(event.currentTarget.value));
-                document.getElementById("search_notifcontent").addEventListener("input", (event) => changeViewByContent(event.currentTarget.value));
-            }
-
-            window.addEventListener("load", onLoadHandler);
+                document.getElementById("search_notiftype").addEventListener("change", (event) => filter(event.currentTarget.value, "tipoNotifica"));
+                document.getElementById("search_notifuser").addEventListener("input", (event) => filter(event.currentTarget.value, "usernameSrc"));
+                document.getElementById("search_notifcontent").addEventListener("input", (event) => filter(event.currentTarget.value, "contenutoNotifica"));
+            });
         </script>
     </head>
     <body>
@@ -121,29 +83,19 @@
             <ul id="lista-notifiche">
                 <% if (!today.isEmpty()) { %><li class="giorno"><p>Oggi</p></li><% } %>
                 <%-- Lista delle notifiche ricevute oggi --%>
-                <% for (var n: today) { %>
-                    <%@include file="../include/notif-single.jsp"%>
-                <% } %>
+                <% for (var n: today) { %><%@include file="../include/notif-single.jsp"%><% } //display lista notifiche %>
                 <% if (!yesterday.isEmpty()) { %><li class="giorno"><p>Ieri</p></li><% } %>
                 <%-- Lista delle notifiche ricevute ieri --%>
-                <% for (var n: yesterday) { %>
-                    <%@include file="../include/notif-single.jsp"%>
-                <% } %>
-                <% if(!lastWeek.isEmpty()) {%><li class="giorno"><p>Ultima settimana</p></li><%}%>
+                <% for (var n: yesterday) { %><%@include file="../include/notif-single.jsp"%><% } //display lista notifiche %>
+                <% if (!lastWeek.isEmpty()) { %><li class="giorno"><p>Ultima settimana</p></li><% } %>
                 <%-- Lista delle notifiche ricevute durante l'ultima settimana --%>
-                <% for (var n: lastWeek) { %>
-                    <%@include file="../include/notif-single.jsp"%>
-                <% } %>
-                <% if(!lastMonth.isEmpty()) {%><li class="giorno"><p>Ultimo mese</p></li><%}%>
+                <% for (var n: lastWeek) { %><%@include file="../include/notif-single.jsp"%><% } //display lista notifiche %>
+                <% if (!lastMonth.isEmpty()) { %><li class="giorno"><p>Ultimo mese</p></li><% } %>
                 <%-- Lista delle notifiche ricevute durante l'ultimo mese --%>
-                <% for (var n: lastMonth) { %>
-                    <%@include file="../include/notif-single.jsp"%>
-                <% } %>
-                <% if(!older.isEmpty()) {%><li class="giorno"><p>Meno recenti</p></li><%}%>
+                <% for (var n: lastMonth) { %><%@include file="../include/notif-single.jsp"%><% } //display lista notifiche %>
+                <% if (!older.isEmpty()) { %><li class="giorno"><p>Meno recenti</p></li><% } %>
                 <%-- Lista delle notifiche ricevute più di un mese fa --%>
-                <% for (var n: older) { %>
-                    <%@include file="../include/notif-single.jsp"%>
-                <% } %>
+                <% for (var n: older) { %><%@include file="../include/notif-single.jsp"%><% } //display lista notifiche %>
             </ul>
         </section>
     </body>
