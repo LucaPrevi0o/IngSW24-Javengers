@@ -54,13 +54,13 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         var userSrc=this.userService.getUserById(id); //utente loggato
         var userDst=this.userService.getUserById(followedId); //nuovo utente seguito dall'utente loggato
         var blockedUsers=this.userService.getBlockedUsersList(followedId); //lista utenti bloccati dall'utente seguito
-        if (!blockedUsers.contains(userSrc)) { //il following del profilo è consentito solamente se l'utente seguito non ha bloccato l'utente loggato
+        if (!blockedUsers.contains(userSrc)) { //il userProfile del profilo è consentito solamente se l'utente seguito non ha bloccato l'utente loggato
 
             this.userService.follow(id, followedId); //aggiungi nuovo follower
             this.notificationService.sendNotification(userSrc, userDst, NotificationType.FOLLOWERS, "@<b>"+userSrc.getUsername()+"</b> ha cominciato a seguirti"); //invia notifica
         }
 
-        var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
+        var redirectView=new RedirectView("/userProfile?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo dell'utente seguito
     }
 
@@ -90,8 +90,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @RequestMapping("/unfollow")
     public ModelAndView unfollowProfile(@RequestParam int id, @RequestParam int followedId) {
 
-        this.userService.unfollow(id, followedId); //rimozione following profilo utente
-        var redirectView=new RedirectView("/following?id="+followedId+"&loggedId="+id);
+        this.userService.unfollow(id, followedId); //rimozione userProfile profilo utente
+        var redirectView=new RedirectView("/userProfile?id="+followedId+"&loggedId="+id);
         return new ModelAndView(redirectView); //redirection alla pagina profilo utente aggiornata
     }
 
@@ -109,7 +109,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @RequestMapping("/block")
     public ModelAndView block(@RequestParam int blockedId, @RequestParam int userId)  {
 
-        this.userService.unfollow(userId, blockedId); //rimozione following reciproco
+        this.userService.unfollow(userId, blockedId); //rimozione userProfile reciproco
         this.userService.unfollow(blockedId, userId);
         this.userService.block(blockedId, userId); //aggiornamento stato di blocco dell'utente
 
@@ -125,7 +125,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         return new ModelAndView(redirectView); //redirection alla pagina impostazioni profilo con lista utenti bloccati aggiornata
     }
 
-    @RequestMapping("/following")
+    @RequestMapping("/userProfile")
     public String userProfile(Model model, @RequestParam int id, @RequestParam int loggedId) {
 
         var notifications=this.notificationService.getAllByUserDstId(loggedId); //lista notifiche utente loggato
@@ -141,7 +141,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
         model.addAttribute("followerList", followerList);
         model.addAttribute("followedList", followedList);
         model.addAttribute("blockedUsers", blockedUsers);
-        return "following"; //redirection alla jsp "following.jso"
+        return "user-profile"; //redirection alla jsp "user-profile.jso"
     }
 
     @RequestMapping("/")

@@ -26,7 +26,7 @@
             newNotif.innerHTML = `
                 <div class="push-notif-content">
                     <p>Nuova notifica -
-                        <a href=\"<%= request.getContextPath() %>/following?id=` + jsonData.userSrc.id + `&loggedId=<%= currentUser.getId() %>\">
+                        <a href=\"<%= request.getContextPath() %>/userProfile?id=` + jsonData.userSrc.id + `&loggedId=<%= currentUser.getId() %>\">
                             @<b id="username-push">`+jsonData.userSrc.username +`</b>
                         </a>
                     </p>
@@ -100,10 +100,10 @@
                     <div class="notifica">
                         <div class="da-leggere notif-wrapper">
                             <div>
-                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
+                                <a href="<%= request.getContextPath() %>/userProfile?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>" style="display: inline-block"><img src="../../images/propic.jpg" alt="immagine profilo" width="50" height="50"/></a>
                             </div>
                             <div class="notif-content">
-                                <a href="<%= request.getContextPath() %>/following?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.userSrc.username +`</b>:</p></a>
+                                <a href="<%= request.getContextPath() %>/userProfile?id=`+ jsonData.userSrc.id +`&loggedId=<%= currentUser.getId() %>"><p class="username">@<b style="color: brown">`+ jsonData.userSrc.username +`</b>:</p></a>
                                 <hr style="margin-bottom: 5px; margin-top: 2px">
                                 <a href="<%= request.getContextPath() %>/notifclick?id=`+ jsonData.id +`&userId=<%= currentUser.getId() %>">
                                     <div class="notif-details">
