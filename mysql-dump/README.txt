@@ -1,1 +1,0 @@
-In questa cartella ci mettiamo semplicemente i dump di MySQL dei vari DB che ci servono per il progetto. Dovrebbe essere uno solo e contenere almeno 2 tabelle se ho ben capito
