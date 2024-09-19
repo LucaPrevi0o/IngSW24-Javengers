@@ -37,7 +37,7 @@
                             <div class="followers-list">
                                 <% for (var f: followerList) { %>
                                     <%-- Ogni username ha un link che porta al profilo corrispondente --%>
-                                    <a href="<%= request.getContextPath() %>/following?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<b><%= f.getUsername() %></b></p></a>
+                                    <a href="<%= request.getContextPath() %>/userProfile?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<b><%= f.getUsername() %></b></p></a>
                                 <% } %>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="followers-list">
                                 <% for (var f: followedList) { %>
                                     <%-- Ogni username ha un link che porta al profilo corrispondente --%>
-                                    <a href="<%= request.getContextPath() %>/following?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<b><%= f.getUsername() %></b></p></a>
+                                    <a href="<%= request.getContextPath() %>/userProfile?id=<%= f.getId() %>&loggedId=<%= user.getId() %>"><p>@<b><%= f.getUsername() %></b></p></a>
                                 <% } %>
                             </div>
                         </div>

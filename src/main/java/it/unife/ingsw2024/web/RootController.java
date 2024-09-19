@@ -18,6 +18,22 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @Autowired UserService userService; //service per gestione utenti
     @Autowired SimpMessagingTemplate simpMessagingTemplate; //template per gestione notifiche push
 
+    @RequestMapping("/sendNotif")
+    public void sendNotif(@RequestParam int id, @RequestParam int destId, @RequestParam int type) {
+        var userSrc=this.userService.getUserById(id);
+        var userDst=this.userService.getUserById(destId);
+        switch (type) {
+            case 0:
+                this.notificationService.sendNotification(userSrc, userDst, NotificationType.EVENTS, "@<b>" + userSrc.getUsername() + "</b> ti ha invitato a un evento"); break;
+            case 1:
+                this.notificationService.sendNotification(userSrc, userDst, NotificationType.PAYMENTS, "@<b>" + userSrc.getUsername() + "</b> ha effettuato il pagamento per il tuo evento"); break;
+            case 2:
+                this.notificationService.sendNotification(userSrc, userDst, NotificationType.MESSAGES, "@<b>" + userSrc.getUsername() + "</b> ti ha inviato un messaggio privato"); break;
+            case 3:
+                this.notificationService.sendNotification(userSrc, userDst, NotificationType.EVENTS, "@<b>" + userSrc.getUsername() + "</b> ha creato un nuovo evento"); break;
+        }
+    }
+
     @RequestMapping("/deleteAllRead")
     public ModelAndView deleteAllRead(@RequestParam int id) {
 
