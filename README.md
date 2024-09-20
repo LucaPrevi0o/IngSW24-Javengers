@@ -1,5 +1,5 @@
 # Ingegneria del Software - Javengers
-## Università degli Studi di Ferrara - Anno Accademico 2024-2025
+## Università degli Studi di Ferrara - Anno Accademico 2023-2024
 
 <hr>
 
@@ -7,22 +7,38 @@
 * **Luca Previati**: *ARCH*
 * **Chiara Caselli**: *UX-UI*
 * **Giovanni Pio Caterino**: *QA*
-* **Wissal Kharbouchi**: *non ricordo lol*
+* **Wissal Kharbouchi**: *Data Analyst*
+
+### Link:
+* [Trello](https://trello.com/b/SFYsZ2Gy/javengers)
+* [Demo video]()
+
 
 >[!NOTE]
-> Qui si può aggiungere anche roba come il link di Trello (che ora non ricordo), qualche screenshot del progetto (quando sarà finito) e altre robe utili
+> Questo progetto utilizza una struttura monolitica (JSP, Java, MySQL) basata sul framework Spring.
+
+>[!IMPORTANT]
+> Per il corretto funzionamento dell'applicazione è necessario importare in MySQL il dump contenuto nella cartella *mysql-dump*.
 
 <hr>
 
->[!NOTE]
-> Questo titolo non va bene, bisogna trovarne uno migliore
-### Obiettivi del progetto: 
-* Progettazione di una classe **Notifica**, che abiliti il sistema alla gestione delle notifiche tra gli utenti
-    * Le notifiche possono riguardare la ricezione di un nuovo messaggio, la richiesta di following di un utente, la pubblicazione di un nuovo evento da parte di un organizzatore tra i propri seguiti...
-    * Ogni notifica può essere visualizzata all'interno di una pagina dedicata all'interno delle impostazioni del profilo, da cui è possibile visualizzare direttamente il contenuto della notifica stessa, segnare come già lette le notifiche visualizzate ed eliminare tutte le notifiche già lette
-* Progettazione di un sistema di following tra gli utenti del sistema, attraverso un meccanismo di scambio di richieste di following che permettono ad ogni utente di visualizzare gli aggiornamenti recenti relativi ad ogni utente seguito, e in cambio poter mostrare le proprie attività recenti nella pagina principale di tutti i propri follower
+### Funzionalità del progetto: 
+* Funzionalità **notifiche**:
+   * Il progetto prevede una pagina principale "Notifiche" dalla quale l'utente può visualizzare le notifiche ricevute, con possibilità di filtrarle in base a tipo, username o contenuto, segnarle come lette o eliminarle.
+   * L'utente può modificare le proprie preferenze sulle notifiche da ricevere, specificando quale tipo di notifica desidera ricevere tra *Eventi*, *Follower*, *Messaggi*, *Pagamenti*.
+   * Ogni pagina prevedere un'icona *campanella* in alto a destra, con un menu drop-down contenente le notifiche non lette dell'utente.
+   * *Notifiche push*: pop-up alla ricezione della notifica con riproduzione di un breve jingle, può essere chiuso manualmente o si chiude automaticamente dopo 10 secondi.
+* Funzionalità **following**:
+   * Possibilità di seguire altri utenti cliccando su un pulsante "Segui" sul profilo corrispondente.
+   * Possibilità di rimuovere il follow cliccando su un pulsante "Smetti di seguire".
+   * Ogni profilo utente contiene la lista di utenti seguiti/che si sta seguendo, con relativo counter.
+   * Possibilità di bloccare o sbloccare utenti, con visualizzazione della lista di utenti bloccati all'interno di una pagina di impostazioni.
 
 <hr>
 
->[!NOTE]
-> E poi qui ci possiamo copia-incollare il resto del file di Wissal con i dettagli per l'esame. Non vi preoccupate della formattazione, al Markdown ci penso io :)
+### Screenshots:
+![Screenshot from 2024-09-21 00-37-16](https://github.com/user-attachments/assets/7cacef33-2a39-4dda-88f5-9d2b582d9373)
+
+![Screenshot from 2024-09-21 00-38-46](https://github.com/user-attachments/assets/a798fbc4-3a97-4e49-8cfb-b928176c4029)
+
+![Screenshot from 2024-09-21 00-38-11](https://github.com/user-attachments/assets/69d5a1fd-da34-4c9d-8705-4824314570be)
