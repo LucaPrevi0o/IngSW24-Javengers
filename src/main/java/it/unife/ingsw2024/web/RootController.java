@@ -18,8 +18,9 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
     @Autowired UserService userService; //service per gestione utenti
     @Autowired SimpMessagingTemplate simpMessagingTemplate; //template per gestione notifiche push
 
+    /* Mapping per simulare l'invio di una notifica */
     @RequestMapping("/sendNotif")
-    public void sendNotif(@RequestParam int id, @RequestParam int destId, @RequestParam int type) {
+    public void sendNotif(@RequestParam int id, @RequestParam int destId, @RequestParam int type) { //id è l'id dell'utente che invia la notifica, destId quello dell'utente che la riceve, type è il tipo della notifica (0,1,2,3)
         var userSrc=this.userService.getUserById(id);
         var userDst=this.userService.getUserById(destId);
         switch (type) {
